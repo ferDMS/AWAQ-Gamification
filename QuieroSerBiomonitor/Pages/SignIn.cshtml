@@ -1,0 +1,37 @@
+﻿@page
+@model SignInModel
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+<!DOCTYPE html>
+<html lang="en">
+<body class="background-signin">
+    <div class="text-center" >
+        <div class="container">
+            <h1>¡Bienvenid@@!</h1>
+        </div>
+
+        <div class="form-container">
+            <form method="post" class="form-group">
+                <div class="px-4">
+                    <div class="p-3">
+                        <input asp-for="email" type="text" class="form-control" id="emailInput" placeholder="Correo Electrónico">
+                    </div>
+
+                    <div class="p-3">
+                        <input asp-for="pass_word" type="password" class="form-control" id="passWord" placeholder="Contraseña">
+                    </div>
+
+                    <div class="p-3">
+                        <input id="Submit1" type="submit" value="Ingresar" />
+                    </div>
+                </div>
+            </form>
+
+            <div class="validation-message">
+                @Model.message
+            </div>
+        </div>
+    </div>
+</body>
+</html>

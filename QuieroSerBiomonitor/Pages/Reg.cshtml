@@ -1,0 +1,38 @@
+﻿@page
+@model RegModel
+@{
+    ViewData["Title"] = "Cambiar Contraseña";
+}
+<!DOCTYPE html>
+<html lang="en">
+<body class="background-signin">
+    <div class="text-center" >
+        <div class="container">
+            <h1>Cambiar Contraseña</h1>
+        </div>
+
+        <div class="form-container">
+            <form method="post" class="form-group">
+                <div class="px-4">
+                    <div class="p-3">
+                        <input asp-for="pass_word" type="password" class="form-control" id="oldPassword" placeholder="Contraseña actual">
+                    </div>
+                    <div class="p-3">
+                        <input asp-for="pass_word" type="password" class="form-control" id="newPassword" placeholder="Contraseña nueva">
+                    </div>
+                    <div class="p-3">
+                        <input asp-for="pass_word" type="password" class="form-control" id="newCPassword" placeholder="Confirma contraseña nueva">
+                    </div>
+                    <div class="p-3">
+                        <input id="Submit1" type="submit" value="Ingresar" />
+                    </div>
+                </div>
+            </form>
+
+            <div class="validation-message">
+                @Model.Mensaje
+            </div>
+        </div>
+    </div>
+</body>
+</html>

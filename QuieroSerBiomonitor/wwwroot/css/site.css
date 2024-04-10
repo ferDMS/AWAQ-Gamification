@@ -1,0 +1,213 @@
+﻿
+.background-biomonitor {
+    background-color: #E0DCCC;
+    margin-top: 100px;
+}
+
+.background-img {
+    position: fixed; 
+    width: 100%;
+    height: 100vh;
+    background-image: url('/img/background.jpeg');
+    background-size: cover;
+    background-position: bottom;
+    z-index: -1; 
+}
+
+.background-signin {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    margin-top: 300px;
+    background-image: url('/img/signinback.png');
+    background-size: cover;
+    background-position: bottom;
+    background-attachment: fixed;
+}
+
+body {
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.btn-format {
+    padding-right: 20px;
+}
+
+.btn-format-text {
+    background-color: #E0DCCC;
+    width: 250px;
+}
+
+.column {
+    display: inline-block; 
+    width: 70%;
+    margin-right: 5%;
+    vertical-align: top; 
+    box-sizing: border-box; 
+}
+
+footer {
+    background-color: #4B4D35;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+.form-container {
+    max-width: 400px; 
+    margin: auto;
+    padding-top: 2rem;
+}
+
+.form-control {
+    border-radius: 20px; 
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    font-size: 14px;
+    height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+header {
+    margin: 0; 
+    padding: 0; 
+}
+
+html, body {
+    height: 100vh; 
+    margin: 0; 
+    padding: 0; 
+    overflow-x: hidden; 
+}
+
+.info-col {
+    padding-top: 40px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    border-left: 100px;
+    margin-right: 40px;
+    float: right;
+}
+
+.info-title {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 300%;
+    color: white;
+    font-weight: 900;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.info-title-format {
+    background-color: #787C53;
+}
+
+.landing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+main {
+    flex: 1;
+}
+
+.main-title {
+    padding-top: 15%;
+    font-size: 660%;
+    color: white;
+    font-weight:900;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.navbar {
+    background-color: #2B3019 !important;
+    padding-left: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar .nav-item {
+    margin-right: 20px; 
+}
+
+.navbar .nav-link {
+    padding: 15px 15px; 
+}
+
+#Submit1 {
+    color: #E0DCCC;
+    background-color: #2B3019;
+    border-radius: 20px;
+    border: 1px solid #ced4da;
+    padding: 10px 20px; 
+    cursor: pointer; 
+}
+
+.sign-in-button {
+    background-color: #E0DCCC;
+    color: #2B3019; 
+    border-color: #E0DCCC; 
+}
+
+.sign-in-button:hover {
+    background-color: #D6CBB0; 
+    color: #1F2614; 
+    border-color: #D6CBB0; 
+}
+
+.text-shadow {
+    text-shadow: 1.5px 1px 5px black;
+}
+
+.validation-message {
+    text-align: center;
+    padding-top: 10px; 
+}
+
+.vid-format {
+    height: 40%;
+    margin-left: 60px;
+    margin-top: 50px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.imageVideo{
+    width: 100%;
+    height: 100%;
+}
+
+.imageVideo img {
+     max-width: 100%;
+     height: auto;
+     width: auto\9;
+}
