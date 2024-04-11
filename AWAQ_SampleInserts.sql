@@ -4,7 +4,7 @@
 -- Estas tablas unifican las dos secciones anteriores de usuarios y mecánicas del juego
 -- ------------------------------------------------------------------------------------------
 
-USE sprint2;
+USE awaqDB;
 
 -- Tabla para guardar sesiones de juego de diferentes usuarios
 INSERT INTO sesiones(user_id, start_time, end_time) VALUES

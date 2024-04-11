@@ -1,8 +1,8 @@
 
 -- Para crear la base de datos y usarla para los siguientes DDLs
-DROP SCHEMA IF EXISTS sprint2;
-create database if not exists sprint2;
-use sprint2;
+DROP SCHEMA IF EXISTS awaqDB;
+create database if not exists awaqDB;
+use awaqDB;
 -- ------------------------------------------------------------------------------------------
 
 
@@ -21,7 +21,7 @@ create table if not exists usuarios (
 	fechaNacimiento date not null,
 	correo varchar(30) not null,
 	pass_word varchar(20) not null,
-	lastLogin datetime not null,
+	lastLogin datetime default null,
 	primary key(user_id)
 );
 -- Información de los administradores / moderadores de AWAQ
