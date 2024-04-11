@@ -48,43 +48,63 @@ INSERT INTO regiones(nombre_region) VALUES
 	('Selvas tropicales'),
 	('Páramos');
 
+-- Tipos de progreso donde puedes obtener XP (desafio ó captura)
+INSERT INTO tipos_de_fuente(tipo) VALUES ('Desafío'), ('Captura');
+
+-- Tabla de todas las fuentes de progreso en el juego (xp), que incluye desafíos y capturas
+INSERT INTO fuentes_xp (fuente_tipo_id, xp_desbloqueo, xp_exito) VALUES
+	(1, 0, 200),
+	(1, 2500, 375),
+	(1, 7500, 475),
+	(1, 20000, 500),
+	(1, 30000, 250),
+	(1, 50000, 675),
+	(1, 0, 500),
+	(1, 2500, 600),
+	(1, 7500, 750),
+	(1, 20000, 1000),
+	(1, 30000, 1500),
+	(1, 50000, 2000),
+	(2, 0, 0),
+	(2, 6000, 1500),
+	(2, 17000, 3000),
+	(2, 42000, 8000),
+	(2, 85000, 15000);
+
 -- Tipos de especies existentes dentro del juego (flora y fauna)
 INSERT INTO tipos_de_especies(tipo) VALUES ('Flora'), ('Fauna');
 
 -- Lista de especies que pueden aparecer dentro del juego
 INSERT INTO especies(
-	-- Información básica de la especie
+	-- Información específica de las fuentes de xp tipo especie
+	fuente_id,
 	nombre_especie,
 	nombre_cientifico,
 	region_id,
 	especie_tipo_id,
-	-- Información necesaria para mecánicas de videojuego
-	xp_desbloqueo,
-	xp_registro,
-	xp_captura,
 	herramienta_id
 ) 
 VALUES
-	('Cóndor Andino', 'Vultur Gryphus', 1, 2, 0, 200, 600, 2),
-	('Oso de Anteojos', 'Tremarctos Ornatus', 2, 2, 2500, 375, 750, 3),
-	('Lagarto Punteado', 'Diploglossus Millepunctatus', 3, 2, 7500, 475, 950, 4),
-	('Tucán Pechiblanco', 'Ramphastidae Tucanus', 4, 2, 20000, 500, 1000, 5),
-	('Polilla Esfinge Tersa', 'Xylophanes Tersa', 2, 2, 30000, 250, 1500, 6),
-	('Tití Ornamentado', 'Callicebus Ornatus', 5, 2, 50000, 675, 2000, 4),
-	('Ave del Paraíso', 'Heliconia Latispatha', 6, 1, 0, 500, NULL, 1),
-	('Orquídea flor de Mayo', 'Cattleya trianae', 2, 1, 2500, 600, NULL, 1),
-	('Arbusto de la mermelada', 'Streptosolen jamesonii', 2, 1, 7500, 750, NULL, 1),
-	('Palma de Cera del Quindío', 'Ceroxylon Quindiuense', 2, 1, 20000, 1000, NULL, 1),
-	('Frailejones', 'Espeletia Pycnophylla', 7, 1, 30000, 1500, NULL, 1),
-	('Arbol de Cacao', 'Theobroma cacao', 5, 1, 50000, 2000, NULL, 1);
+	(1, 'Cóndor Andino', 'Vultur Gryphus', 1, 2, 2),
+	(2, 'Oso de Anteojos', 'Tremarctos Ornatus', 2, 2, 3),
+	(3, 'Lagarto Punteado', 'Diploglossus Millepunctatus', 3, 2, 4),
+	(4, 'Tucán Pechiblanco', 'Ramphastidae Tucanus', 4, 2, 5),
+	(5, 'Polilla Esfinge Tersa', 'Xylophanes Tersa', 2, 2, 6),
+	(6, 'Tití Ornamentado', 'Callicebus Ornatus', 5, 2, 4),
+	(7, 'Ave del Paraíso', 'Heliconia Latispatha', 6, 1, 1),
+	(8, 'Orquídea flor de Mayo', 'Cattleya trianae', 2, 1, 1),
+	(9, 'Arbusto de la mermelada', 'Streptosolen jamesonii', 2, 1, 1),
+	(10, 'Palma de Cera del Quindío', 'Ceroxylon Quindiuense', 2, 1, 1),
+	(11, 'Frailejones', 'Espeletia Pycnophylla', 7, 1, 1),
+	(12, 'Arbol de Cacao', 'Theobroma cacao', 5, 1, 1);
 
 -- Lista de desafíos que deben ser superados a través del juego
-INSERT INTO desafios(xp_desbloqueo, xp_completar, xp_fallar) VALUES
-	(0, 0, 0),
-	(6000, 1500, 1500),
-	(17000, 3000, 2000),
-	(42000, 8000, 7000),
-	(85000, 15000, 10000);
+INSERT INTO desafios(fuente_id, xp_fallar) VALUES
+	(13, 0),
+	(14, 1500),
+	(15, 2000),
+	(16, 7000),
+	(17, 10000);
 
 -- Los desafíos desbloquean herramientas
 -- Debemos detallar cuales desafíos desbloquean cuales herrramientas

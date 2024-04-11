@@ -6,12 +6,31 @@
 
 USE sprint2;
 
-TRUNCATE TABLE progreso_especies;
-TRUNCATE TABLE progreso_desafios;
+-- Tabla para guardar sesiones de juego de diferentes usuarios
+INSERT INTO sesiones(user_id, start_time, end_time) VALUES
+	(1, '2024-04-01 08:00:00', '2024-04-01 08:10:00'),
+    (1, '2024-04-01 04:20:00', '2024-04-01 04:30:00'),
+    (2, '2024-04-01 09:45:00', '2024-04-01 09:55:00'),
+    (2, '2024-04-03 11:30:00', '2024-04-03 11:40:00'),
+    (1, '2024-04-05 15:20:00', '2024-04-05 15:30:00'),
+    (1, '2024-04-04 02:10:00', '2024-04-04 02:20:00'),
+    (2, '2024-04-07 19:05:00', '2024-04-07 19:15:00'),
+    (1, '2024-04-02 14:00:00', '2024-04-02 14:10:00'),
+    (2, '2024-04-02 20:40:00', '2024-04-02 20:50:00'),
+    (2, '2024-04-06 13:55:00', '2024-04-06 14:05:00'),
+    (1, '2024-04-01 06:30:00', '2024-04-01 06:40:00'),
+    (1, '2024-04-03 22:15:00', '2024-04-03 22:25:00'),
+    (2, '2024-04-05 11:00:00', '2024-04-05 11:10:00'),
+    (2, '2024-04-04 04:45:00', '2024-04-04 04:55:00'),
+    (1, '2024-04-07 17:50:00', '2024-04-07 18:00:00'),
+    (2, '2024-04-02 07:25:00', '2024-04-02 07:35:00'),
+    (1, '2024-04-08 09:40:00', '2024-04-08 09:50:00'),
+    (2, '2024-04-06 01:30:00', '2024-04-06 01:40:00'),
+    (1, '2024-04-05 00:05:00', '2024-04-05 00:15:00'),
+    (1, '2024-04-02 18:20:00', '2024-04-02 18:30:00');
 
--- Tabla para salvar el progreso del usuario en materia de cada captura / avistamiento de especies
--- Óptimamente ingresaríamos datos a esta table con inserts de múltiples entradas correspondientes a una sesión de juego
-INSERT INTO progreso_especies(user_id, especie_id, fecha) VALUES
+-- Salvar el progreso del usuario en materia de cada captura / avistamiento de especies
+INSERT INTO progreso(user_id, fuente_id, fecha) VALUES
     (1, 2, '2024-04-01 09:32:15'),
     (2, 3, '2024-04-01 14:20:45'),
     (1, 4, '2024-04-01 18:05:23'),
@@ -41,13 +60,10 @@ INSERT INTO progreso_especies(user_id, especie_id, fecha) VALUES
     (1, 2, '2024-04-07 16:50:26'),
     (2, 1, '2024-04-07 20:15:34'),
     (1, 3, '2024-04-08 08:40:47'),
-    (2, 4, '2024-04-08 12:55:55');
-
--- Tabla para salvar el progreso del usuario en materia de desafíos completados
-INSERT INTO progreso_desafios(desafio_id, user_id, start_time, end_time) VALUES
-	(1, 1, '2024-04-01 06:50:26', '2024-04-01 06:57:26'),
-	(2, 1, '2024-04-02 18:50:26', '2024-04-02 18:59:26'),
-	(1, 2, '2024-04-01 11:00:23', '2024-04-01 11:07:27');
+    (2, 4, '2024-04-08 12:55:55'),
+    (1, 13, '2024-04-01 06:50:26'),
+	(2, 13, '2024-04-02 18:50:26'),
+	(1, 14, '2024-04-01 11:00:23');
 
 -- ------------------------------------------------------------------------------------------
 
