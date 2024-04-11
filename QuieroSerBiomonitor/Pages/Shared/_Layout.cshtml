@@ -55,6 +55,7 @@
                 <form method="post" asp-page="/Logout" class="form-inline">
                     <button type="submit" class="btn btn-link nav-link btn rounded-pill sign-in-button">Cerrar Sesión</button>
                 </form>
+
             }
             else if (!Context.Request.Path.Value.Contains("/SignIn", StringComparison.OrdinalIgnoreCase))
             {
@@ -71,28 +72,29 @@
         @RenderBody()
     </main>
 
-
-    <footer class="page-footer mt-auto py-3">
-        <div class="container">
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="col btn-format">
-                                <a href="https://www.somosawaq.org/contact" target ="_blank" class="btn-format-text btn  text-dark btn-lg active rounded-pill" role="button" aria-pressed="true">Contáctanos</a>
-                            </div>
-                        </td>
-                        <td class="text-light">
-                            C/Doctor Torres Feced 20, Casa19 - 28770 Colmenar Viejo (España)
-                            <br>
-                            info@somosawaq.org
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </footer>
-
+    @if (Context.Request.Path.Value.Equals("/", StringComparison.OrdinalIgnoreCase))
+     {
+        <footer class="page-footer mt-auto py-3">
+            <div class="container">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="col btn-format">
+                                    <a href="https://www.somosawaq.org/contact" target="_blank" class="btn-format-text btn  text-dark btn-lg active rounded-pill" role="button" aria-pressed="true">Contáctanos</a>
+                                </div>
+                            </td>
+                            <td class="text-light">
+                                C/Doctor Torres Feced 20, Casa19 - 28770 Colmenar Viejo (España)
+                                <br>
+                                info@somosawaq.org
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </footer>
+     }
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -56,9 +56,10 @@ body {
 
 footer {
     background-color: #4B4D35;
+    height:10%;
     width: 100%;
-    position: fixed;
     bottom: 0;
+    position:fixed;
 }
 
 .form-container {
@@ -68,7 +69,13 @@ footer {
 }
 
 .form-control {
-    border-radius: 20px; 
+    border-radius: 20px;
+}
+
+.form-label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px; /* Optional: adds some space below the label */
 }
 
 html {
@@ -136,10 +143,11 @@ main {
     padding-top: 15%;
     font-size: 660%;
     color: white;
-    font-weight:900;
+    font-weight: 900;
     text-align: center;
     margin-bottom: 0;
 }
+
 
 .navbar {
     background-color: #2B3019 !important;

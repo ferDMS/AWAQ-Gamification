@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <body class="background-signin">
-    <div class="text-center" >
+    <div class="text-center">
         <div class="container">
             <h1>¡Bienvenid@@!</h1>
         </div>
@@ -15,11 +15,12 @@
             <form method="post" class="form-group">
                 <div class="px-4">
                     <div class="p-3">
-                        <input asp-for="email" type="text" class="form-control" id="emailInput" placeholder="Correo Electrónico">
+                        <label for="emailInput" class="form-label">Correo Electrónico</label>
+                        <input asp-for="email" type="text" class="form-control" id="emailInput" placeholder="user@awaq.org">
                     </div>
-
-                    <div class="p-3">
-                        <input asp-for="pass_word" type="password" class="form-control" id="passWord" placeholder="Contraseña">
+                    <div class="p-3">       
+                        <label for="passWord" class="form-label">Contraseña</label>
+                        <input asp-for="pass_word" type="password" class="form-control" id="passWord" placeholder="*****">
                     </div>
 
                     <div class="p-3">
