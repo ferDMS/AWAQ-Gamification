@@ -27,6 +27,7 @@ public class GameControl : MonoBehaviour
 
     //Puntacion
     public int PuntutacionTotal = 0;
+    public int PuntuacionMaxima = 0;
 
     // Animadores para las herramientas, inicialmente no asignados.
     private Animator animatorObjetoCaja, animatorObjetoRed;
@@ -102,7 +103,7 @@ public class GameControl : MonoBehaviour
     {
         AnimationOfHerramientas();
         //Debug.Log(PuntutacionTotal);
-        if (PuntutacionTotal >= 5000)
+        if (PuntutacionTotal >= PuntuacionMaxima)
         {
             MenuScene();
         }

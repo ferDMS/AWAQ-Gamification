@@ -6,9 +6,6 @@ using UnityEngine.EventSystems;
 
 public class FaunaBehaver : MonoBehaviour
 {
-    //Llamamos al GameControl
-    public GameControl GameContoler;
-
     // Variables para guardar los estados
     private bool estadoHerramientaCaja;
     private bool estadoHerramientaRed;
