@@ -6,6 +6,19 @@
 
 USE awaqDB;
 
+TRUNCATE TABLE sesiones;
+TRUNCATE TABLE progreso;
+DELETE FROM usuarios;
+ALTER TABLE usuarios AUTO_INCREMENT = 1;
+
+-- Información de los biomonitores / usuarios de ejemplo
+INSERT INTO usuarios(nombre, apellido, genero, pais, ciudad, fechaNacimiento, correo, pass_word, lastLogin) VALUES
+	('Fernando', 'Monroy', 'H', 'México', 'Monterrey', '2004-01-15', 'fernando@awaq.org', 'monroy', '2024-03-13 14:04:00'),
+    ('Nicolás', 'Mendoza', 'H', 'México', 'Monterrey', '2003-01-01', 'nicolas@awaq.org', 'mendoza', '2024-03-12 08:01:00'),
+    ('Sofía', 'Sandoval', 'M', 'México', 'Monterrey', '2003-05-01', 'sofia@awaq.org', 'sandoval', '2024-03-11 17:45:00'),
+    ('Regina', 'Cavazos', 'M', 'México', 'Monterrey', '2003-08-01', 'regina@awaq.org', 'cavazos', '2024-03-12 20:25:00'),
+    ('Rodrigo', 'López', 'H', 'México', 'Monterrey', '2003-09-01', 'rodrigo@awaq.org', 'lopez', '2024-03-13 09:30:00');
+
 -- Tabla para guardar sesiones de juego de diferentes usuarios
 INSERT INTO sesiones(user_id, start_time, end_time) VALUES
 	(1, '2024-04-01 08:00:00', '2024-04-01 08:10:00'),

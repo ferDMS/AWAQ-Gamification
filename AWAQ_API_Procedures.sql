@@ -73,6 +73,8 @@ END //
 DROP PROCEDURE IF EXISTS `deleteUser`//
 CREATE PROCEDURE `deleteUser`(IN user_id_in INT)
 BEGIN
+	DELETE FROM progreso WHERE user_id = user_id_in;
+	DELETE FROM sesiones WHERE user_id = user_id_in;
 	DELETE FROM usuarios WHERE user_id = user_id_in;
 END//
 
@@ -94,37 +96,32 @@ END//
 -- Verificar credenciales de usuario desde su correo
 	-- Correctas: regresar user_id (para guardar en la session de WEB)
 	-- Incorrectas: No regresar nada
-DROP PROCEDURE IF EXISTS `verifyUserLogin`//
-CREATE PROCEDURE `verifyUserLogin` (IN correo_in VARCHAR(30), IN pass_word_in VARCHAR(20))
+DROP PROCEDURE IF EXISTS `verifyUserCredentials`//
+CREATE PROCEDURE `verifyUserCredentials` (IN correo_in VARCHAR(30), IN pass_word_in VARCHAR(20))
 BEGIN
 	SELECT user_id FROM usuarios WHERE correo = correo_in AND CAST(pass_word AS BINARY) = CAST(pass_word_in AS BINARY) LIMIT 1;
 END//
 
 -- Verificar credenciales de usuario desde su ID
 DROP PROCEDURE IF EXISTS `verifyUserPassword`//
-CREATE PROCEDURE `verifyUserPassword`(IN user_id_in INT, IN pass_word_in VARCHAR(20), OUT user_id_out INT)
+CREATE PROCEDURE `verifyUserPassword`(IN user_id_in INT, IN pass_word_in VARCHAR(20))
 BEGIN
 	DECLARE correo VARCHAR(30);
 	SELECT u.correo INTO correo FROM usuarios u WHERE u.user_id = user_id_in LIMIT 1;
-	SELECT `verifyUserLogin`(correo, pass_word_in) INTO user_id_out;
+	CALL `verifyUserCredentials`(correo, pass_word_in);
 END//
 
 -- Verificar credenciales de admin desde su correo
 	-- Correctas: regresar user_id (para guardar en la session de WEB)
 	-- Incorrectas: No regresar nada
-DROP PROCEDURE IF EXISTS `verifyAdminLogin`//
-CREATE PROCEDURE `verifyAdminLogin` (IN correo_in VARCHAR(30), IN pass_word_in VARCHAR(20))
+DROP PROCEDURE IF EXISTS `verifyAdminCredentials`//
+CREATE PROCEDURE `verifyAdminCredentials` (IN correo_in VARCHAR(30), IN pass_word_in VARCHAR(20))
 BEGIN
-	SELECT admin_in FROM admin WHERE correo = correo_in AND CAST(pass_word AS BINARY) = CAST(pass_word_in AS BINARY) LIMIT 1;
+	SELECT admin_id FROM admin WHERE correo = correo_in AND CAST(pass_word AS BINARY) = CAST(pass_word_in AS BINARY) LIMIT 1;
 END//
--- ------------------------------------------------------------------------------------------
 
+-- ------------------------------------------------------------------------------------------
 
 DELIMITER ;
 
 COMMIT;
-
--- CALL `allXpPerDay`();
--- CALL `allTimePerDay`();
-
-CALL verifyUserLogin('fernando@awaq.org', 'monroy');

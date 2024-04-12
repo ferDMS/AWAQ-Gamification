@@ -3,19 +3,11 @@ USE awaqDB;
 
 
 -- ------------------------------------------------------------------------------------------
--- Tablas para guardar información de usuarios y admins
+-- Tablas para guardar información de admins
 -- Para autentificar en el log in y guardar información personal
 -- ------------------------------------------------------------------------------------------
 
--- Información de los biomonitores / usuarios
-INSERT INTO usuarios(nombre, apellido, genero, pais, ciudad, fechaNacimiento, correo, pass_word, lastLogin) VALUES
-	('Fernando', 'Monroy', 'H', 'México', 'Monterrey', '2004-01-15', 'fernando@awaq.org', 'monroy', '2024-03-13 14:04:00'),
-    ('Nicolás', 'Mendoza', 'H', 'México', 'Monterrey', '2003-01-01', 'nicolas@awaq.org', 'mendoza', '2024-03-12 08:01:00'),
-    ('Sofía', 'Sandoval', 'M', 'México', 'Monterrey', '2003-05-01', 'sofia@awaq.org', 'sandoval', '2024-03-11 17:45:00'),
-    ('Regina', 'Cavazos', 'M', 'México', 'Monterrey', '2003-08-01', 'regina@awaq.org', 'cavazos', '2024-03-12 20:25:00'),
-    ('Rodrigo', 'López', 'H', 'México', 'Monterrey', '2003-09-01', 'rodrigo@awaq.org', 'lopez', '2024-03-13 09:30:00');
-
-   -- Información de los administradores / moderadores de AWAQ
+-- Información de los administradores / moderadores de AWAQ
 INSERT INTO admin(nombre, apellido, correo, pass_word) VALUES
 	('Angélica', 'Lozano', 'angelica@awaq.org', 'lozano'),
     ('José', 'Serna', 'jose@awaq.org', 'serna');
