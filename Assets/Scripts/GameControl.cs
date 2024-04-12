@@ -30,7 +30,7 @@ public class GameControl : MonoBehaviour
     public int PuntuacionMaxima = 0;
 
     // Animadores para las herramientas, inicialmente no asignados.
-    private Animator animatorObjetoCaja, animatorObjetoRed;
+    public Animator animatorObjetoCaja, animatorObjetoRed, animatorObjetoLupa, animatorObjetoLinterna;
 
     public static GameControl instance;
 
@@ -39,13 +39,31 @@ public class GameControl : MonoBehaviour
     // Declarar una lista de los Tags de los animales Terrestres
     List<string> animalesTerrestres = new List<string>();
 
+    //Animales Registrados
+    public List<string> animalesRegistrados = new List<string>();
+
+    //Desafios Terminados
+    public bool Desafio1Finished;
+    public bool Desafio2Finished;
+    public bool Desafio3Finished;
+
     public delegate void ToolStateChangedEventHandler(string toolName, bool newState);
     public static event ToolStateChangedEventHandler OnToolStateChanged;
 
     [SerializeField]
     //Lista de variables con propiedades booleanas
     public List<BooleanVariable> objectStatus = new List<BooleanVariable>();
-    
+
+    public string[] GetRegistrados()
+    {
+        return animalesRegistrados.ToArray();
+    }
+
+    public void Registrar(string Tag)
+    {
+        animalesRegistrados.Add(Tag);
+    }
+
     private void Awake()
     {
         if (instance == null)
@@ -93,6 +111,8 @@ public class GameControl : MonoBehaviour
     {
         GameObject objetoConAnimatorCaja = GameObject.Find("Herramientas_Caja");
         GameObject objetoConAnimatorRed = GameObject.Find("Herramientas_Red");
+        GameObject objetoConAnimatorLupa = GameObject.Find("Herramientas_Lupa");
+        GameObject objetoConAnimatorLinterna = GameObject.Find("Herramientas_Linterna");
         if (objetoConAnimatorCaja != null)
         {
             animatorObjetoCaja = objetoConAnimatorCaja.GetComponent<Animator>();
@@ -100,6 +120,14 @@ public class GameControl : MonoBehaviour
         if (objetoConAnimatorRed != null)
         {
             animatorObjetoRed = objetoConAnimatorRed.GetComponent<Animator>();
+        }
+        if (objetoConAnimatorLupa != null)
+        {
+            animatorObjetoLupa = objetoConAnimatorLupa.GetComponent<Animator>();
+        }
+        if (objetoConAnimatorLinterna != null)
+        {
+            animatorObjetoLinterna = objetoConAnimatorLinterna.GetComponent<Animator>();
         }
     }
 
@@ -109,7 +137,7 @@ public class GameControl : MonoBehaviour
         //Debug.Log(PuntutacionTotal);
         if (PuntutacionTotal >= PuntuacionMaxima)
         {
-            MenuScene();
+            GameResultScene();
         }
     }
 
@@ -168,6 +196,22 @@ public class GameControl : MonoBehaviour
             {
                 Debug.LogWarning("Animator de Objeto Red es null.");
             }
+            if (animatorObjetoLupa != null)
+            {
+                animatorObjetoLupa.SetTrigger("LupaDeselected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Red es null.");
+            }
+            if (animatorObjetoLinterna != null)
+            {
+                animatorObjetoLinterna.SetTrigger("LinternaDeselected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Linterna es null.");
+            }
         }
         else if (objectStatus[1].state == true)
         {
@@ -188,13 +232,105 @@ public class GameControl : MonoBehaviour
             {
                 Debug.LogWarning("Animator de Objeto Caja es null.");
             }
+            if (animatorObjetoLupa != null)
+            {
+                animatorObjetoLupa.SetTrigger("LupaDeselected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Red es null.");
+            }
+            if (animatorObjetoLinterna != null)
+            {
+                animatorObjetoLinterna.SetTrigger("LinternaDeselected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Red es null.");
+            }
         }
+        else if (objectStatus[2].state == true)
+        {
+            if (animatorObjetoLupa != null)
+            {
+                animatorObjetoLupa.SetTrigger("LupaSelected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Red es null.");
+            }
+
+            if (animatorObjetoCaja != null)
+            {
+                animatorObjetoCaja.SetTrigger("CajaDeselected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Caja es null.");
+            }
+            if (animatorObjetoRed != null)
+            {
+                animatorObjetoRed.SetTrigger("RedDeselected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Red es null.");
+            }
+            if (animatorObjetoLinterna != null)
+            {
+                animatorObjetoLinterna.SetTrigger("LinternaDeselected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Red es null.");
+            }
+        }
+        else if (objectStatus[3].state == true)
+        {
+            if (animatorObjetoLinterna != null)
+            {
+                animatorObjetoLinterna.SetTrigger("LinternaSelected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Red es null.");
+            }
+
+            if (animatorObjetoLupa != null)
+            {
+                animatorObjetoLupa.SetTrigger("LupaDeselected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Caja es null.");
+            }
+            if (animatorObjetoCaja != null)
+            {
+                animatorObjetoCaja.SetTrigger("CajaDeselected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Red es null.");
+            }
+            if (animatorObjetoRed != null)
+            {
+                animatorObjetoRed.SetTrigger("RedDeselected");
+            }
+            else
+            {
+                Debug.LogWarning("Animator de Objeto Red es null.");
+            }
+        }
+    }
+
+    public void GameResultScene()
+    {
+        SceneManager.LoadScene("GameResult");
     }
 
     public void MenuScene()
     {
         SceneManager.LoadScene("MenuJuego");
-        Destroy(this.gameObject);
     }
     private void UpdateToolState(string toolName, bool newState)
     {

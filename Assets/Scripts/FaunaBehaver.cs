@@ -7,10 +7,10 @@ using UnityEngine.EventSystems;
 public class FaunaBehaver : MonoBehaviour
 {
     // Variables para guardar los estados
-    private bool estadoHerramientaCaja;
-    private bool estadoHerramientaRed;
-    private bool estadoHerramientaLupa;
-    private bool estadoHerramientaLinterna;
+    public bool estadoHerramientaCaja;
+    public bool estadoHerramientaRed;
+    public bool estadoHerramientaLupa;
+    public bool estadoHerramientaLinterna;
 
     public float velocity;
     public float limitePositivo;

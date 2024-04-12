@@ -15,7 +15,13 @@ public class RegistroController : MonoBehaviour
     public Dropdown ConteoDropdown;
     public Dropdown ColorDropdown;
 
+    public Image animalImagen;
 
+    public Sprite tucanSprite;
+    public Sprite monoSprite;
+    public Sprite osoSprite;
+    public Sprite buitreSprite;
+    public Sprite lagartoSprite;
 
     String[] answers = new String[5];
 
@@ -31,6 +37,7 @@ public class RegistroController : MonoBehaviour
         {
             case "Tucan":
                 answers = new string[5] { "Tucán Pechiblanco", "20-30 cm", "Ave", "Red de Niebla", "Negro" };
+                animalImagen.sprite = tucanSprite;
 
                 SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Oso Polar", "Titi Ornamentado", "Colibrí" });
                 SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10-20 cm", "5-10 cm", "30-40 cm" });
@@ -41,12 +48,43 @@ public class RegistroController : MonoBehaviour
 
             case "Mono":
                 answers = new string[5] { "Tití Ornamentado", "50-60 cm", "Mamifero", "Cámara", "Café" };
+                animalImagen.sprite = monoSprite;
 
                 SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Oso Polar", "Tucán Pechiblanco", "Colibrí" });
                 SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10-20 cm", "5-10 cm", "30-40 cm" });
                 SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Ave", "Reptil", "Insecto" });
                 SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Linterna", "Libreta", "Pala" });
                 SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Gris", "Rosa", "Negro" });
+                break;
+            case "Oso":
+                answers = new string[5] { "Oso de Anteojos", "1.5 m", "Mamifero", "Cámara", "Negro" };
+                animalImagen.sprite = osoSprite;
+
+                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Oso Polar", "Lagarto", "Tití Ornamentado" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10-20 cm", "5-10 m", "3 m" });
+                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Ave", "Reptil", "Insecto" });
+                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Linterna", "Libreta", "Pala" });
+                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Gris", "Azul", "Rojo" });
+                break;
+            case "Buitre":
+                answers = new string[5] { "Cóndor Andino", "1 m", "Ave", "Red de Niebla", "Negro" };
+                animalImagen.sprite = buitreSprite;
+
+                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Oso Polar", "Lagarto", "Tití Ornamentado" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10-20 cm", "5-10 m", "3 m" });
+                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Oso Amistoso", "Reptil", "Insecto" });
+                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Dardos", "Caña de Pescar", "Pala" });
+                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Amarillo", "Azul", "Rojo" });
+                break;
+            case "Lagarto":
+                answers = new string[5] { "Lagarto Punteado", "20-30 cm", "Reptil", "Cámara", "Amarillo" };
+                animalImagen.sprite = lagartoSprite;
+
+                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Salamandra", "Cóndor Andino", "Oso Ornamentado" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10-20 cm", "5-10 cm", "3 m" });
+                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Ave", "Planta", "Insecto" });
+                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Linterna", "Libreta", "Pala" });
+                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Gris", "Azul", "Rojo" });
                 break;
         }
     }

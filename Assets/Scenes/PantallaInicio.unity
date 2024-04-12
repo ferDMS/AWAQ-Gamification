@@ -797,7 +797,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1767377790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -810,6 +810,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5015274dcd101d143a5d46e5eb7d04ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Bruite: 600
+  Oso: 750
+  Lagarto: 950
+  Tucan: 1000
+  Mono: 2000
+  PuntutacionTotal: 0
+  PuntuacionMaxima: 0
+  animatorObjetoCaja: {fileID: 0}
+  animatorObjetoRed: {fileID: 0}
+  animatorObjetoLupa: {fileID: 0}
+  animatorObjetoLinterna: {fileID: 0}
+  animalesRegistrados: []
+  Desafio1Finished: 0
+  Desafio2Finished: 0
+  Desafio3Finished: 0
 --- !u!4 &1767377791
 Transform:
   m_ObjectHideFlags: 0
