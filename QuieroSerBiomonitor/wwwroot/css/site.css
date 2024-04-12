@@ -1,4 +1,12 @@
-﻿
+﻿.alert-info {
+    background-color: #4B5330; 
+    border-color: #2b3019; 
+    color: #FFFFFF; 
+    padding: 10px; 
+    border-radius: 4px; 
+    margin-bottom: 20px;
+}
+
 .background-biomonitor {
     background-color: #E0DCCC;
     margin-top: 100px;
@@ -75,7 +83,7 @@ footer {
 .form-label {
     display: block;
     text-align: left;
-    margin-bottom: 5px; /* Optional: adds some space below the label */
+    margin-bottom: 5px; 
 }
 
 html {
@@ -186,6 +194,10 @@ main {
     background-color: #D6CBB0; 
     color: #1F2614; 
     border-color: #D6CBB0; 
+}
+.reg-user {
+    padding-top: 200px;
+    background-image: url('/img/signinback.png');
 }
 
 .text-shadow {

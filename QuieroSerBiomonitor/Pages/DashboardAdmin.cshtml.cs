@@ -1,65 +1,54 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using MySql.Data.MySqlClient;
-using System.ComponentModel.DataAnnotations;
-
+﻿using System.Net.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using QuieroSerBiomonitor;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 public class DashboardAdminModel : AuthorizedPageModel
 {
-    [BindProperty]
-    public string email { get; set; }
-    [BindProperty]
-    public string pass_word { get; set; }
+    private readonly IHttpClientFactory _httpClientFactory;
 
-    public string Mensaje { get; set; }
-
-    public void OnPost()
+    public DashboardAdminModel(IHttpClientFactory httpClientFactory)
     {
-        Mensaje = ".";
-        string connectionString = "Server=127.0.0.1;Port=3306;Database=awaqgame;Uid=root;password=Sofia021204.;";
-        MySqlConnection conexion = new MySqlConnection(connectionString);
-        conexion.Open();
-
-        MySqlCommand cmd = new MySqlCommand();
-        cmd.Connection = conexion;
-        cmd.CommandText = "Select correo,pass_word from usuarios where correo='" + email + "'limit 1;";
-
-        using (var reader = cmd.ExecuteReader())
-        {
-            while (reader.Read())
-            {
-                if (email == reader["correo"].ToString() && pass_word == reader["pass_word"].ToString())
-                {
-                    Mensaje = "Acceso Correcto";
-                }
-            }
-        }
-        cmd.CommandText = "Select correo,pass_word from admin where correo='" + email + "'limit 1;";
-        using (var reader2 = cmd.ExecuteReader())
-        {
-            while(reader2.Read())
-            if (email == reader2["correo"].ToString() && pass_word == reader2["pass_word"].ToString())
-            {
-                Mensaje = "Acceso Administrador";
-            }
-        }
-        if (Mensaje == ".")
-        {
-            Mensaje = "Usuario o Contraseña Incorrectos";
-        }
-        conexion.Dispose();
+        _httpClientFactory = httpClientFactory;
     }
 
-    public IActionResult OnGet()
+    public List<User> users { get; set; }
+
+    public async Task LoadUsersAsync()
+    {
+        var client = _httpClientFactory.CreateClient("BypassSSLClient");
+        try
+        {
+            HttpResponseMessage response = await client.GetAsync("QSB/users"); // Uses the base address set in the HttpClient configuration
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                users = JsonConvert.DeserializeObject<List<User>>(jsonString);
+            }
+            else
+            {
+                users = new List<User>(); // Handle the case when the API call fails
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log the exception or handle it appropriately
+            Console.WriteLine($"An error occurred while fetching users: {ex.Message}");
+            users = new List<User>();
+        }
+    }
+
+    public async Task<IActionResult> OnGetAsync()
     {
         var authResult = CheckUserAuthorization("Admin");
         if (authResult != null)
         {
             return authResult;
         }
+
+        await LoadUsersAsync();
         return Page();
     }
-
 }
-
-

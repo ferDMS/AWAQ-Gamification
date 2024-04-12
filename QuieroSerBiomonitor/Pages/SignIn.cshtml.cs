@@ -16,7 +16,7 @@ public class SignInModel : PageModel
     public void OnPost()
     {
         message = ".";
-        string connectionString = "Server=127.0.0.1;Port=3306;Database=awaqgame;Uid=root;password=Sofia021204.;";
+        string connectionString = System.IO.File.ReadAllText("connectionString.secret");
         MySqlConnection conexion = new MySqlConnection(connectionString);
         conexion.Open();
 

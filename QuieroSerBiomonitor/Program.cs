@@ -3,8 +3,18 @@
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddDistributedMemoryCache();
+// Configure HttpClient with SSL bypass
+builder.Services.AddHttpClient("BypassSSLClient", client =>
+{
+    client.BaseAddress = new Uri("https://10.22.196.243:7044/"); // Set the base URL here
+})
+.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+});
 
+// Add session services
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(20);
@@ -18,7 +28,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -29,5 +38,3 @@ app.UseRouting();
 app.UseAuthorization();
 app.MapRazorPages();
 app.Run();
-
-
