@@ -29,7 +29,7 @@ public class RegistroController : MonoBehaviour
     {
         switch (panelRegistro.tag)
         {
-            case "TucanPechiblanco":
+            case "Tucan":
                 answers = new string[5] { "Tucán Pechiblanco", "20-30 cm", "Ave", "Red de Niebla", "Negro" };
 
                 SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Oso Polar", "Titi Ornamentado", "Colibrí" });
@@ -39,7 +39,7 @@ public class RegistroController : MonoBehaviour
                 SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Rojo", "Morado", "Azul" });
                 break;
 
-            case "TitiOrnamentado":
+            case "Mono":
                 answers = new string[5] { "Tití Ornamentado", "50-60 cm", "Mamifero", "Cámara", "Café" };
 
                 SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Oso Polar", "Tucán Pechiblanco", "Colibrí" });
@@ -69,7 +69,7 @@ public class RegistroController : MonoBehaviour
             ConteoDropdown.options[ConteoDropdown.value].text == answers[3] &&
             ColorDropdown.options[ColorDropdown.value].text == answers[4])
         {
-            return true;
+            return true;    
         }
         else //Volver de rojo las incorrectas y verde las correctas
         { 

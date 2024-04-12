@@ -4,9 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEditorInternal;
+using UnityEngine.InputSystem.XR;
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class Tutorial : MonoBehaviour
 {
+    //RegristroController
+    public GameObject panelRegistro;
+    public GameObject toolBar;
+    public GameObject UIExtras;
+    public GameObject menuPanel;
+
+    //GameControl
+    public GameObject _gameControl;
+
+    //Lo normal
     public GameObject ToucCollider;
     public Text Instrucciones;
     private int _contador = 0;
@@ -39,6 +52,9 @@ public class Tutorial : MonoBehaviour
     public Animator animacionCaja;
     public Animator animacionRed;
 
+    //Canvas del tutorial.
+    public Canvas miCanvas;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +65,7 @@ public class Tutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void FixedUpdate()
@@ -62,6 +78,16 @@ public class Tutorial : MonoBehaviour
             animationBuitre.enabled = false;
             animationMono.enabled = false;
             animationLagarto.enabled = false;
+        }
+        
+        if (panelRegistro.GetComponent<RegistroController>().CheckAnswers() == true && contador == 12)
+        {
+            contador = 13;
+            ActivarInstrucciones();
+            animacionCaja.enabled = false;
+            animacionRed.enabled = false;
+            miCanvas.sortingOrder = 1;
+            Button.SetActive(true);
         }
     }
 
@@ -108,14 +134,15 @@ public class Tutorial : MonoBehaviour
                 Instrucciones.text = "Y la red para la mayoria de los animales voladores.";
                 animacionCaja.SetTrigger("CajaDeselected");
                 animacionRed.SetTrigger("RedSelected");
+                Mono2.SetActive(true);
                 break;
             case 7:
                 Instrucciones.text = "Oh mira parece que se un mono se nos acerco, usa la caja para poder capturarlo";
                 animacionRed.SetTrigger("RedDeselected");
                 ToucCollider.SetActive(true);
                 Button.SetActive(false);
+                miCanvas.sortingOrder = 1;
                 StartCoroutine(movimientoMono2());
-
                 break;
             case 8:
                 Instrucciones.text = "Cada vez que encuentres un animal nuevo te aparecera esta ventana de registro.";
@@ -130,27 +157,44 @@ public class Tutorial : MonoBehaviour
                 Instrucciones.text = "Info del mono";
                 break;
             case 12:
-                Instrucciones.text = "A perdon me confundi con tu estatura y como puedes ver me marca con rojo cualquier cosa que tenga mal";
+                QuitarInstrucciones();
+                miCanvas.sortingOrder = 20;
                 break;
             case 13:
                 Instrucciones.text = "Una vez que registres un animal no va ser necesario volver a hacer el registro hasta que te encuentres con algun reto en el futuro.";
                 break;
             case 14:
                 Instrucciones.text = "Ya terminamos aqui por hoy, volvamos a los headquarters.";
-
+                break;
+            case 15:
+                toolBar.SetActive(false);
+                UIExtras.SetActive(false);
+                menuPanel.SetActive(true);
+                Instrucciones.text = "Este es el menu del juego donde podras encontrar informacion de las herramientas, flora y fauna del juego";
                 break;
             case 16:
-                Instrucciones.text = "";
-                ToucCollider.SetActive(true);
-                QuitarInstrucciones();
-                Resume();
-                StartCoroutine(DestroyAfterDelay());
+                Instrucciones.text = "En la 'Información' te puedes encontrar con la información de las herramientas y cuando se desbloquean";
+                break;
+            case 17:
+                Instrucciones.text = "En el apartado de Bodega puedes buscar información sobre la flora y fauna, como también la cantidad de veces que les haz echo registro";
+                break;
+            case 18:
+                Instrucciones.text = "Bueno, esto es todo por mi parte, si quieres aventurarte a pica al boton de \"Exterior\" para encontrarte con más animales increibles.";
+                break;
+            case 19:
+                Destroy(_gameControl);
+                MenuScene();
                 break;
             default:
                 // Opcionalmente maneja valores de contador inesperados.
                 Debug.Log("El contador está en un valor no manejado: " + currentCount);
                 break;
         }
+    }
+
+    public void MenuScene()
+    {
+        SceneManager.LoadScene("MenuJuego");
     }
     public void IncrementarContador()
     {
@@ -183,6 +227,27 @@ public class Tutorial : MonoBehaviour
         if (Button != null)
         {
             Button.SetActive(false); // O Destroy(Button) si realmente quieres destruirlo.
+        }
+        else
+        {
+            Debug.LogWarning("Intento de acceder a 'Button' que es null.");
+        }
+    }
+
+    public void ActivarInstrucciones()
+    {
+        if (panel != null)
+        {
+            panel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Intento de acceder a 'panel' que es null.");
+        }
+
+        if (Button != null)
+        {
+            Button.SetActive(true); // O Destroy(Button) si realmente quieres destruirlo.
         }
         else
         {

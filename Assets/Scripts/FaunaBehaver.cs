@@ -21,18 +21,30 @@ public class FaunaBehaver : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>(); // Obtener el componente SpriteRenderer
 
-        // Acceder a la variable específica por su nombre
-        BooleanVariable HerramientaCaja = GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Caja");
-        BooleanVariable HerramientaRed = GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Red");
-        BooleanVariable HerramientaLupa = GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Lupa");
-        BooleanVariable HerramientaLinterna = GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Linterna");
+        GameControl.OnToolStateChanged += UpdateToolState;
+        UpdateToolState("Herramienta_Caja", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Caja").state);
+        UpdateToolState("Herramienta_Red", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Red").state);
+        UpdateToolState("Herramienta_Lupa", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Lupa").state);
+        UpdateToolState("Herramienta_Linterna", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Linterna").state);
 
-        // Guardar el estado de cada variable
-        estadoHerramientaCaja = HerramientaCaja != null ? HerramientaCaja.state : false;
-        estadoHerramientaRed = HerramientaRed != null ? HerramientaRed.state : false;
-        estadoHerramientaLupa = HerramientaLupa != null ? HerramientaLupa.state : false;
-        estadoHerramientaLinterna = HerramientaLinterna != null ? HerramientaLinterna.state : false;
-
+    }
+    private void UpdateToolState(string toolName, bool newState)
+    {
+        switch (toolName)
+        {
+            case "Herramienta_Caja":
+                estadoHerramientaCaja = newState;
+                break;
+            case "Herramienta_Red":
+                estadoHerramientaRed = newState;
+                break;
+            case "Herramienta_Lupa":
+                estadoHerramientaLupa = newState;
+                break;
+            case "Herramienta_Linterna":
+                estadoHerramientaLinterna = newState;
+                break;
+        }
     }
 
     private void Update()

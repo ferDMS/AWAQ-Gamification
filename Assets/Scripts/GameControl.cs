@@ -39,6 +39,8 @@ public class GameControl : MonoBehaviour
     // Declarar una lista de los Tags de los animales Terrestres
     List<string> animalesTerrestres = new List<string>();
 
+    public delegate void ToolStateChangedEventHandler(string toolName, bool newState);
+    public static event ToolStateChangedEventHandler OnToolStateChanged;
 
     [SerializeField]
     //Lista de variables con propiedades booleanas
@@ -69,6 +71,7 @@ public class GameControl : MonoBehaviour
     }
 
     // Start is called before the first frame update
+    
     void Start()
     {
 
@@ -85,6 +88,7 @@ public class GameControl : MonoBehaviour
         animalAereos.Add("Tucan");
         animalesTerrestres.Add("Oso");
     }
+
     private void TryAssignAnimators()
     {
         GameObject objetoConAnimatorCaja = GameObject.Find("Herramientas_Caja");
@@ -112,35 +116,34 @@ public class GameControl : MonoBehaviour
     //HACER CLICK A LAS HERRAMIENTAS
     public void UsarHerramientaCaja()
     {
-        objectStatus[0].state = true;
-        objectStatus[1].state = false;
-        objectStatus[2].state = false;
-        objectStatus[3].state = false;
+        UpdateToolState("Herramienta_Caja", true);
+        UpdateToolState("Herramienta_Red", false);
+        UpdateToolState("Herramienta_Lupa", false);
+        UpdateToolState("Herramienta_Linterna", false);
     }
 
     public void UsarHerramientaRed()
     {
-        objectStatus[0].state = false;
-        objectStatus[1].state = true;
-        objectStatus[2].state = false;
-        objectStatus[3].state = false;
+        UpdateToolState("Herramienta_Caja", false);
+        UpdateToolState("Herramienta_Red", true);
+        UpdateToolState("Herramienta_Lupa", false);
+        UpdateToolState("Herramienta_Linterna", false);
     }
 
     public void UsarHerramientaLupa()
     {
-        objectStatus[0].state = false;
-        objectStatus[1].state = false;
-        objectStatus[2].state = true;
-        objectStatus[3].state = false;
-        
+        UpdateToolState("Herramienta_Caja", false);
+        UpdateToolState("Herramienta_Red", false);
+        UpdateToolState("Herramienta_Lupa", true);
+        UpdateToolState("Herramienta_Linterna", false);
     }
-    
+
     public void UsarHerramientaLinterna()
     {
-        objectStatus[0].state = false;
-        objectStatus[1].state = false;
-        objectStatus[2].state = false;
-        objectStatus[3].state = true;
+        UpdateToolState("Herramienta_Caja", false);
+        UpdateToolState("Herramienta_Red", false);
+        UpdateToolState("Herramienta_Lupa", false);
+        UpdateToolState("Herramienta_Linterna", true);
     }
 
     public void AnimationOfHerramientas()
@@ -192,5 +195,15 @@ public class GameControl : MonoBehaviour
     {
         SceneManager.LoadScene("MenuJuego");
         Destroy(this.gameObject);
+    }
+    private void UpdateToolState(string toolName, bool newState)
+    {
+        BooleanVariable tool = objectStatus.Find(variable => variable.name == toolName);
+        if (tool != null)
+        {
+            tool.state = newState;
+        }
+
+        OnToolStateChanged?.Invoke(toolName, newState);
     }
 }
