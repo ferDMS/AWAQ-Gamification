@@ -3,42 +3,163 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEditorInternal;
 
 public class Tutorial : MonoBehaviour
 {
     public GameObject ToucCollider;
-    public Text Instruciones;
-    private int contador;
+    public Text Instrucciones;
+    private int _contador = 0;
     public GameObject panel;
     public GameObject Button;
     public static bool GamePause = false;
-    
+    private bool detenerMovimiento = false;
+
+    //Animales para hardcodear todo el tutorial.
+    public GameObject Tucan;
+    public GameObject Buitre;
+    public GameObject Mono;
+    public GameObject Oso;
+    public GameObject Lagarto;
+    public GameObject Mono2;
+
+    //Herramientas para harcodear todo el tutorial
+    public GameObject herramientaCaja;
+    public GameObject herramientaRed;
+
+    //Animaciones Animales
+    public Animator animationTucan;
+    public Animator animationOso;
+    public Animator animationBuitre;
+    public Animator animationMono;
+    public Animator animationMono2;
+    public Animator animationLagarto;
+
+    //Animacion herramientas
+    public Animator animacionCaja;
+    public Animator animacionRed;
+
     // Start is called before the first frame update
     void Start()
     {
         ToucCollider.SetActive(false);
-        Pause();
+        contador = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (contador == 1)
+        
+    }
+
+    void FixedUpdate()
+    {
+        if (Lagarto.transform.position.x <= -25)
         {
-            Instruciones.text = " w";
-        }
-        else if (contador == 2)
-        {
-            ToucCollider.SetActive(true);
-            QuitarInstrucciones();
-            Resume();
-            StartCoroutine(DestroyAfterDelay());
+            detenerMovimiento = true;
+            animationTucan.enabled = false;
+            animationOso.enabled = false;
+            animationBuitre.enabled = false;
+            animationMono.enabled = false;
+            animationLagarto.enabled = false;
         }
     }
 
+    public int contador
+    {
+        get => _contador;
+        private set
+        {
+            _contador = value;
+            HandleCounterChange(_contador);
+        }
+    }
+    private void HandleCounterChange(int currentCount)
+    {
+        switch (currentCount)
+        {
+            case 1:
+                Instrucciones.text = "Como puedes notar nos encontramos en lo profundo de la selva, llena de diferentes tipos de flora y fauna,";
+                break;
+            case 2:
+                Instrucciones.text = "Tu tarea principal como biomonitar será hacer un registro de todos los seres vivos que te encuentres.";
+                StartCoroutine(AnimalsMove());
+                break;
+            // Añade más casos según sea necesario.
+            case 3:
+                Instrucciones.text = "Pero, ¿Como podre hacer esta complicada tarea?";
+                animationTucan.enabled = true;
+                animationOso.enabled = true;
+                animationBuitre.enabled = true;
+                animationMono.enabled = true;
+                animationLagarto.enabled = true;
+                StartCoroutine(continuarMoviemiento());
+                break;
+            case 4:
+                Instrucciones.text = "Ntp, como puedes ver en tu pantalla, en la parte inferior cuentas con una barra con diferentes herramientas para poder capturar a los diferentes animales que te encuentres.";
+                animacionCaja.SetTrigger("CajaSelected");
+                animacionRed.SetTrigger("RedSelected");
+                break;
+            case 5:
+                Instrucciones.text = "Cada hermienta sirve para diferentes cosas, por ejemplo la caja funciona para la mayoria de los animales terrestres";
+                animacionRed.SetTrigger("RedDeselected"); 
+                break;
+            case 6:
+                Instrucciones.text = "Y la red para la mayoria de los animales voladores.";
+                animacionCaja.SetTrigger("CajaDeselected");
+                animacionRed.SetTrigger("RedSelected");
+                break;
+            case 7:
+                Instrucciones.text = "Oh mira parece que se un mono se nos acerco, usa la caja para poder capturarlo";
+                animacionRed.SetTrigger("RedDeselected");
+                ToucCollider.SetActive(true);
+                Button.SetActive(false);
+                StartCoroutine(movimientoMono2());
+
+                break;
+            case 8:
+                Instrucciones.text = "Cada vez que encuentres un animal nuevo te aparecera esta ventana de registro.";
+                break;
+            case 9:
+                Instrucciones.text = "Tiene que llenar todos los datos de manera correcta para poder continuar.";
+                break;
+            case 10:
+                Instrucciones.text = "Ahorita yo te voy a llenar los datos";
+                break;
+            case 11:
+                Instrucciones.text = "Info del mono";
+                break;
+            case 12:
+                Instrucciones.text = "A perdon me confundi con tu estatura y como puedes ver me marca con rojo cualquier cosa que tenga mal";
+                break;
+            case 13:
+                Instrucciones.text = "Una vez que registres un animal no va ser necesario volver a hacer el registro hasta que te encuentres con algun reto en el futuro.";
+                break;
+            case 14:
+                Instrucciones.text = "Ya terminamos aqui por hoy, volvamos a los headquarters.";
+
+                break;
+            case 16:
+                Instrucciones.text = "";
+                ToucCollider.SetActive(true);
+                QuitarInstrucciones();
+                Resume();
+                StartCoroutine(DestroyAfterDelay());
+                break;
+            default:
+                // Opcionalmente maneja valores de contador inesperados.
+                Debug.Log("El contador está en un valor no manejado: " + currentCount);
+                break;
+        }
+    }
     public void IncrementarContador()
     {
         contador++;
+    }
+
+    public void BotonPresionado()
+    {
+        IncrementarContador();
     }
 
     IEnumerator DestroyAfterDelay()
@@ -67,6 +188,66 @@ public class Tutorial : MonoBehaviour
         {
             Debug.LogWarning("Intento de acceder a 'Button' que es null.");
         }
+    }
+
+    IEnumerator AnimalsMove()
+    {
+        float duration = 1f; // Mover por 1 segundo
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            Tucan.transform.position += Vector3.left * Time.deltaTime * 10;
+            Mono.transform.position += Vector3.right * Time.deltaTime * 10;
+            Buitre.transform.position += Vector3.left * Time.deltaTime * 10;
+            Oso.transform.position += Vector3.left * Time.deltaTime * 10;
+            Lagarto.transform.position += Vector3.left * Time.deltaTime * 10;
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        animationTucan.enabled = false;
+        animationOso.enabled = false;
+        animationBuitre.enabled = false;
+        animationMono.enabled = false;
+        animationLagarto.enabled = false;
+    }
+
+    IEnumerator continuarMoviemiento()
+    {
+        while (!detenerMovimiento)  // Este bucle infinito continuará hasta que explícitamente detengas la corutina
+        {
+            Tucan.transform.position += Vector3.left * Time.deltaTime * 10;
+            Mono.transform.position += Vector3.right * Time.deltaTime * 10;
+            Buitre.transform.position += Vector3.left * Time.deltaTime * 10;
+            Oso.transform.position += Vector3.left * Time.deltaTime * 10;
+            Lagarto.transform.position += Vector3.left * Time.deltaTime * 10;
+            yield return null;  // Esto causará que la corutina espere hasta el próximo frame antes de continuar
+        }
+    }
+
+    IEnumerator movimientoMono2()
+    {
+        float duration = 1f; // Duración del movimiento en segundos
+        float elapsed = 0f;
+
+        FaunaBehaver faunaBehaver = Mono2.GetComponent<FaunaBehaver>();
+
+        // Guardamos la velocidad original para restaurarla al final
+        float velocidadOriginal = faunaBehaver.velocity;
+
+        // Cambiamos la velocidad a 10 durante la animación
+        faunaBehaver.velocity = 10;
+
+        // Esperamos durante la duración especificada
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            yield return null; // Esperamos un frame
+        }
+
+        // Restauramos la velocidad original
+        faunaBehaver.velocity = velocidadOriginal;
     }
 
     public void Resume()
