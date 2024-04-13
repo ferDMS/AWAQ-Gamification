@@ -1,66 +1,76 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
-using MySql.Data.MySqlClient;
-using System.ComponentModel.DataAnnotations;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 public class SignInModel : PageModel
 {
-    [BindProperty]
-    public string email { get; set; }
-    [BindProperty]
-    public string pass_word { get; set; }
+    private readonly IHttpClientFactory _httpClientFactory;
 
-    public string message { get; set; }
-
-    public void OnPost()
+    public SignInModel(IHttpClientFactory httpClientFactory)
     {
-        message = ".";
-        string connectionString = System.IO.File.ReadAllText("connectionString.secret");
-        MySqlConnection conexion = new MySqlConnection(connectionString);
-        conexion.Open();
+        _httpClientFactory = httpClientFactory;
+    }
 
-        // Use parameterized query to avoid SQL injection
-        MySqlCommand cmd = new MySqlCommand("Select correo, pass_word from usuarios where correo = @correo limit 1", conexion);
-        cmd.Parameters.AddWithValue("@correo", email);
+    [BindProperty]
+    public string Email { get; set; }
 
-        using (var reader = cmd.ExecuteReader())
+    [BindProperty]
+    public string Password { get; set; }
+
+    public string Message { get; set; }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        HttpClient client = _httpClientFactory.CreateClient("BypassSSLClient");
+        var postData = new
         {
-            while (reader.Read())
+            email = Email,
+            password = Password
+        };
+
+        var content = new StringContent(JsonConvert.SerializeObject(postData), System.Text.Encoding.UTF8, "application/json");
+
+        try
+        {
+            HttpResponseMessage response = await client.PostAsync("https://10.22.196.243:7044/QSB/login", content);
+            if (response.IsSuccessStatusCode)
             {
-                if (email == reader["correo"].ToString() && pass_word == reader["pass_word"].ToString())
+                var result = await response.Content.ReadAsStringAsync();
+                var loginResult = JsonConvert.DeserializeObject<LoginResult>(result);
+
+                if (loginResult.UserId > 0)
                 {
-                    message = "Acceso Correcto";
-                    // Set session variables here
-                    HttpContext.Session.SetString("UserEmail", email);
-                    HttpContext.Session.SetString("UserRole", "User");
-                    Response.Redirect("DashboardUser");
-                    return; // Exit method to prevent further execution
+                    HttpContext.Session.SetString("UserEmail", Email);
+                    HttpContext.Session.SetInt32("UserId", loginResult.UserId);
+                    HttpContext.Session.SetString("UserRole", loginResult.Role);
+                    return RedirectToPage(loginResult.Role == "Admin" ? "DashboardAdmin" : "DashboardUser");
                 }
             }
+            else
+            {
+                var errorResult = JsonConvert.DeserializeObject<ErrorResult>(await response.Content.ReadAsStringAsync());
+                Message = errorResult.Error;
+            }
+        }
+        catch (Exception ex)
+        {
+            Message = $"An error occurred: {ex.Message}";
         }
 
-        // Adjusted for parameterized query
-        cmd.CommandText = "Select correo, pass_word from admin where correo = @correo limit 1";
-        // cmd.Parameters already contains the needed parameter
+        return Page();
+    }
 
-        using (var reader2 = cmd.ExecuteReader())
-        {
-            while (reader2.Read())
-                if (email == reader2["correo"].ToString() && pass_word == reader2["pass_word"].ToString())
-                {
-                    message = "Acceso Administrador";
-                    // Set different session variables for admin
-                    HttpContext.Session.SetString("UserEmail", email);
-                    HttpContext.Session.SetString("UserRole", "Admin");
-                    Response.Redirect("DashboardAdmin");
-                    return; // Exit method to prevent further execution
-                }
-        }
-        if (message == ".")
-        {
-            message = "Usuario o Contraseña Incorrectos";
-        }
-        conexion.Dispose();
+    public class LoginResult
+    {
+        public int UserId { get; set; }
+        public string Role { get; set; }
+    }
+
+    public class ErrorResult
+    {
+        public string Error { get; set; }
     }
 }

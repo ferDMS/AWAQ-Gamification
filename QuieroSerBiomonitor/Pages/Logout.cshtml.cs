@@ -10,10 +10,7 @@ namespace QuieroSerBiomonitor.Pages
     {
         public IActionResult OnPost()
         {
-            // Clear all session data
             HttpContext.Session.Clear();
-
-            // Redirect to the Index page after logout
             return RedirectToPage("/Index");
         }
     }
