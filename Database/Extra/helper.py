@@ -1,11 +1,21 @@
+# For web scraping of names
 import requests
 import re
-import random
-import time
-import pandas as pd
-import numpy as np
 from bs4 import BeautifulSoup
 from unidecode import unidecode
+
+# For random generation of dates
+import random
+import time
+
+# To perform mathematical operations and create dataframes
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import minmax_scale
+
+# To connect to the database and obtain information to generate progress
+import json
+import mysql.connector
 
 
 # Function to extract information from wikipedia Colombian cities website
@@ -193,5 +203,65 @@ def generatePeople(n):
     print("\nSuccesfully generated all data")
     return df
 
-# df = generatePeople(200)
-# df.to_csv('people.csv')
+
+# Function to perform a query to the specified MySql database
+# The connection details are inside of a JSON file of name `file_name`
+# Inside the JSON file, you can include multiple different connections which are labelled
+def queryDB(query, file_name="credentials.json", connection="cloud"):
+    # Import connection details using the specified connection (cloud or local)
+    with open(file_name) as json_file:
+        config = json.load(json_file)[connection]
+    # Establish connection
+    try:
+        connection = mysql.connector.connect(**config)
+        if connection.is_connected():
+            cursor = connection.cursor()
+            cursor.execute(query)
+            records = cursor.fetchall()
+            return records
+    # If something failed, display the error
+    except mysql.connector.Error as e:
+        print("Error while connecting to MySQL", e)
+    # Always close the connection before returning anything
+    finally:
+        # If the connection was opened succesfully, close it
+        if 'connection' in locals() and connection.is_connected():
+            cursor.close()
+            connection.close()
+
+
+# Function to distribute each of the n people a progress between 0% and 100%.
+# Based on a sigmoid + logarithmic function
+def distributeXP(n):
+    x1 = np.linspace(-35, 15, n)
+    x2 = np.linspace(0.0001, 0.25, n)
+    f_sigmoid = (1 / (1 + np.exp(-0.5*x1)))
+    f_log = -0.04*np.log(1/x2)
+    f_x = f_sigmoid + f_log
+    # Normalize the resultant function to be between 0 and 1. This is the final progress percentage result for every person prog_perc[i]
+    prog_perc = minmax_scale(f_x)
+    # Get the total xp for each person based on the progress percentage
+    rows = queryDB(connection="local", query=
+        """
+        SELECT
+            xp.xp_desbloqueo + xp.xp_exito
+        FROM
+            fuentes_xp xp
+        WHERE
+            xp.xp_desbloqueo = (SELECT MAX(fuentes_xp.xp_desbloqueo) FROM fuentes_xp)
+        """
+    )
+    completion_xp = rows[0]
+    prog_xp = np.round(prog_perc * completion_xp)
+    return prog_xp
+
+
+# Function to generate the progress of n number of people
+# Completely based off the selected db current information
+def generateProgress(n):
+    prog_xp = distributeXP(n)
+    print(prog_xp)
+
+
+def generateSessions(n):
+    pass
