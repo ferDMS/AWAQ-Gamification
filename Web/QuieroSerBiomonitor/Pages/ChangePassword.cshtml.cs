@@ -70,7 +70,7 @@ public class ChangePasswordModel : AuthorizedPageModel
                 cmd.Parameters.AddWithValue("@newPassword", new_password);
                 cmd.Parameters.AddWithValue("@correo", userEmail);
 
-                cmd.ExecuteNonQuery(); 
+                cmd.ExecuteNonQuery();
                 Message = "Contraseña actualizada correctamente.";
             }
             catch (MySqlException ex)

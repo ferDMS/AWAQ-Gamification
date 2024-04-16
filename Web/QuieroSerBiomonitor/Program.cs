@@ -6,14 +6,13 @@ builder.Services.AddRazorPages();
 // Configure HttpClient with SSL bypass
 builder.Services.AddHttpClient("BypassSSLClient", client =>
 {
-    client.BaseAddress = new Uri("https://10.22.196.243:7044/"); // Set the base URL here
+    client.BaseAddress = new Uri("https://localhost:7166/"); // Set the base URL here
 })
 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
 {
     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 });
 
-// Add session services
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -24,7 +23,6 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");

@@ -21,7 +21,7 @@ public class DashboardAdminModel : AuthorizedPageModel
         var client = _httpClientFactory.CreateClient("BypassSSLClient");
         try
         {
-            HttpResponseMessage response = await client.GetAsync("QSB/users"); // Uses the base address set in the HttpClient configuration
+            HttpResponseMessage response = await client.GetAsync("QSB/users"); 
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -29,12 +29,11 @@ public class DashboardAdminModel : AuthorizedPageModel
             }
             else
             {
-                users = new List<User>(); // Handle the case when the API call fails
+                users = new List<User>(); 
             }
         }
         catch (Exception ex)
         {
-            // Log the exception or handle it appropriately
             Console.WriteLine($"An error occurred while fetching users: {ex.Message}");
             users = new List<User>();
         }

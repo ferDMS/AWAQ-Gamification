@@ -23,7 +23,17 @@
 }
 
 .background-signin {
-    position: fixed;
+ 
+    width: 100%;
+    height: 100vh;
+    margin-top: 300px;
+    background-image: url('/img/signinback.png');
+    background-size: cover;
+    background-position: bottom;
+    background-attachment: fixed;
+}
+
+.background-cp {
     width: 100%;
     height: 100vh;
     margin-top: 300px;
@@ -34,6 +44,7 @@
 }
 
 body {
+    overflow-y: scroll;
     margin-bottom: 60px;
     display: flex;
     flex-direction: column;

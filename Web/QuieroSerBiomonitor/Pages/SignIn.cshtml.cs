@@ -35,7 +35,7 @@ public class SignInModel : PageModel
 
         try
         {
-            HttpResponseMessage response = await client.PostAsync("https://10.22.196.243:7044/QSB/login", content);
+            HttpResponseMessage response = await client.PostAsync("https://localhost:7166/QSB/login", content);
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
