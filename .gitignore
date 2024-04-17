@@ -1,4 +1,8 @@
 **/.DS_Store
-**/*.secret
-credentials.json
-ca.cer
+
+# THESE FILES NEED TO BE IGNORE WHENEVER THE REPO IS MADE PUBLIC (sensitive information)
+# WHILE THE REPO IS PRIVATE, THESE CAN STAY COMMENTED OUT (to be made available to the team)
+
+# **/*.secret
+# credentials.json
+# ca.cer
