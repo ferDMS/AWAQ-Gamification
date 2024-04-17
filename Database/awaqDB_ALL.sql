@@ -98,6 +98,10 @@ create table if not exists especies(
 	-- Atributos específicos de fuente de xp tipo especie
 	nombre_especie varchar(30) not null,
 	nombre_cientifico varchar(30) not null,
+	descripcion varchar(250) NOT NULL,
+	url_img varchar(250) NOT NULL,
+	color varchar(30) NOT NULL,
+	tamagno varchar(30) NOT NULL,
 	region_id int not null,
 	especie_tipo_id int NOT NULL,
 	herramienta_id int not null,
@@ -236,27 +240,30 @@ INSERT INTO tipos_de_especies(tipo) VALUES ('Flora'), ('Fauna');
 
 -- Lista de especies que pueden aparecer dentro del juego
 INSERT INTO especies(
-	-- Información específica de las fuentes de xp tipo especie
 	fuente_id,
 	nombre_especie,
 	nombre_cientifico,
+	descripcion,
+	url_img,
+	color,
+	tamagno,
 	region_id,
 	especie_tipo_id,
 	herramienta_id
-) 
-VALUES
-	(1, 'Cóndor Andino', 'Vultur Gryphus', 1, 2, 2),
-	(2, 'Oso de Anteojos', 'Tremarctos Ornatus', 2, 2, 3),
-	(3, 'Lagarto Punteado', 'Diploglossus Millepunctatus', 3, 2, 4),
-	(4, 'Tucán Pechiblanco', 'Ramphastidae Tucanus', 4, 2, 5),
-	(5, 'Polilla Esfinge Tersa', 'Xylophanes Tersa', 2, 2, 6),
-	(6, 'Tití Ornamentado', 'Callicebus Ornatus', 5, 2, 4),
-	(7, 'Ave del Paraíso', 'Heliconia Latispatha', 6, 1, 1),
-	(8, 'Orquídea flor de Mayo', 'Cattleya trianae', 2, 1, 1),
-	(9, 'Arbusto de la mermelada', 'Streptosolen jamesonii', 2, 1, 1),
-	(10, 'Palma de Cera del Quindío', 'Ceroxylon Quindiuense', 2, 1, 1),
-	(11, 'Frailejones', 'Espeletia Pycnophylla', 7, 1, 1),
-	(12, 'Arbol de Cacao', 'Theobroma cacao', 5, 1, 1);
+) VALUES
+	(1, 'Cóndor Andino', 'Vultur Gryphus', 'El Cóndor Andino es una de las aves voladoras más grandes del mundo, reconocible por su majestuoso vuelo sobre las montañas de los Andes.', 'https://i.pinimg.com/564x/82/fb/b6/82fbb6af33d8b552bd67dae441698653.jpg', 'Negro y blanco', '100 - 130 cm', 1, 2, 2),
+	(2, 'Oso de Anteojos', 'Tremarctos Ornatus', 'El Oso de Anteojos, también conocido como el oso andino, es el único oso nativo de Sudamérica y se caracteriza por sus distintivas marcas faciales que recuerdan a anteojos.', 'https://static.nationalgeographicla.com/files/styles/image_3200/public/01-andean-bear-minden_00910199.jpg?w=400&h=400&q=75', 'Marrón', '1.2-2 m', 2, 2, 3),
+	(3, 'Lagarto Punteado', 'Diploglossus Millepunctatus', 'Este lagarto, nativo de regiones tropicales, posee una piel brillantemente moteada que utiliza como camuflaje entre la hojarasca.', 'https://static.wikia.nocookie.net/colombia/images/6/69/Lagarto_punteado.jpg/revision/latest?cb=20130120201316&path-prefix=es', 'Verde oscuro', '25-40 cm', 3, 2, 4),
+	(4, 'Tucán Pechiblanco', 'Ramphastidae Tucanus', 'Conocido por su llamativo pico colorido y grande, el Tucán Pechiblanco es un ícono de los bosques tropicales de América Latina.', 'https://i0.wp.com/birdscolombia.com/wp-content/uploads/2020/07/Ramphastos-tucanus-1.png?resize=590%2C590&ssl=1', 'Negro con blanco', '50-65 cm', 4, 2, 5),
+	(5, 'Polilla Esfinge Tersa', 'Xylophanes Tersa', 'La Polilla Esfinge Tersa es conocida por su habilidad de vuelo rápida y precisa, a menudo confundida con un colibrí debido a su manera de alimentarse mientras vuela.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC6azYkRJ0zPx_wxqeA0jmru7yoCaHrcsAQZ3crB7FBA&s', 'Verde y marrón', '7-12 cm', 2, 2, 6),
+	(6, 'Tití Ornamentado', 'Callicebus Ornatus', 'Este pequeño primate se destaca por su pelaje suave y los dibujos contrastantes en su cuerpo, habitando principalmente en los bosques húmedos del Amazonas.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Callicebus_ornatus_mg.jpg/1200px-Callicebus_ornatus_mg.jpg', 'Gris y marrón', '30-45 cm', 5, 2, 4),
+	(7, 'Ave del Paraíso', 'Heliconia Latispatha', 'La Ave del Paraíso no es un ave sino una planta tropical conocida por sus espectaculares flores que se asemejan a un plumaje colorido.', 'https://t1.uc.ltmcdn.com/es/posts/0/2/0/como_cuidar_la_planta_ave_del_paraiso_51020_600_square.jpg', 'Rojo y naranja', '1-1.5 m', 6, 1, 1),
+	(8, 'Orquídea flor de Mayo', 'Cattleya trianae', 'Esta orquídea, emblema de belleza y delicadeza, es famosa por sus grandes flores vibrantes y es considerada la flor nacional de Colombia.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_rnbO0El0jxwzUBANbd4IZbplm4LD_TejF1kPH2laBA&s', 'Violeta y blanco', '15-40 cm', 2, 1, 1),
+	(9, 'Arbusto de la mermelada', 'Streptosolen jamesonii', 'El Arbusto de la mermelada atrae numerosos colibríes gracias a sus flores tubulares de colores cálidos que florecen casi todo el año.', 'https://inaturalist-open-data.s3.amazonaws.com/photos/40085519/large.jpg', 'Naranja y amarillo', '50-150 cm', 2, 1, 1),
+	(10, 'Palma de Cera del Quindío', 'Ceroxylon Quindiuense', 'Esta palma es conocida como el árbol nacional de Colombia, alcanzando alturas impresionantes y es vital para la conservación del loro orejiamarillo.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5tABZecpnTZruqUIVXOK9KxsvVlNeX585gEXsg_hhSw&s', 'Verde', '15-45 m', 2, 1, 1),
+	(11, 'Frailejones', 'Espeletia Pycnophylla', 'Los Frailejones son plantas emblemáticas de los páramos andinos, conocidos por su resistencia al frío y su capacidad para retener agua en sus rosetas densas.', 'https://www.elpais.com.co/resizer/a6iLmyg_OcsoBqcSN4scGImbnyY=/1280x1280/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/2BBMTF2C6FAKRAYKOY6ZEKGNUU.jpg', 'Verde y amarillo', '1-2 m', 7, 1, 1),
+	(12, 'Arbol de Cacao', 'Theobroma cacao', 'El Árbol de Cacao es esencial para la producción de chocolate, cultivado en las regiones tropicales húmedas con una rica historia en la cultura precolombina.', 'https://thumbs.dreamstime.com/b/teobroma-de-cacao-en-un-%C3%A1rbol-rojo-su-crudo-frijol-bacalao-el-205418065.jpg', 'Marrón', '4-8 m', 5, 1, 1);
+
 
 -- Lista de desafíos que deben ser superados a través del juego
 INSERT INTO desafios(fuente_id) VALUES
