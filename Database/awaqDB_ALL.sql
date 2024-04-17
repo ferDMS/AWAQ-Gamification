@@ -24,6 +24,9 @@ create table if not exists usuarios (
 	correo varchar(30) not null,
 	pass_word varchar(20) not null,
 	lastLogin datetime default null,
+	-- Es escencial que isActive sea por default 1
+	-- Pues en los procedures de insert, etc., no es explícito
+	isActive tinyint(1) DEFAULT 1,
 	primary key(user_id)
 );
 -- Información de los administradores / moderadores de AWAQ
@@ -393,14 +396,14 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS `getUsers`//
 CREATE PROCEDURE `getUsers` ()
 BEGIN
-	SELECT * FROM usuarios;
+	SELECT * FROM usuarios WHERE isActive = 1;
 END//
 
 -- Seleccionar a un único usuario según su ID
 DROP PROCEDURE IF EXISTS `getUser`//
 CREATE PROCEDURE `getUser` (IN user_id_in INT)
 BEGIN
-	SELECT * FROM usuarios WHERE user_id = user_id_in LIMIT 1;
+	SELECT * FROM usuarios WHERE user_id = user_id_in AND isActive = 1 LIMIT 1;
 END//
 
 -- Actualizar la información personal de un único usuario
@@ -449,13 +452,18 @@ BEGIN
     VALUES (nombre_in, apellido_in, genero_in, pais_in, ciudad_in, fechaNacimiento_in, correo_in, pass_word_in);
 END //
 
--- Borrar toda la información de un único usuario
+-- Borrar de manera lógica la información de un único usuario
 DROP PROCEDURE IF EXISTS `deleteUser`//
 CREATE PROCEDURE `deleteUser`(IN user_id_in INT)
 BEGIN
-	DELETE FROM progreso WHERE user_id = user_id_in;
-	DELETE FROM sesiones WHERE user_id = user_id_in;
-	DELETE FROM usuarios WHERE user_id = user_id_in;
+	UPDATE usuarios SET isActive = 0 WHERE user_id = user_id_in;
+END//
+
+-- Reactivar de manera lógica a un usuario que previamente fue borrado (desactivado)
+DROP PROCEDURE IF EXISTS `undoDeleteUser`//
+CREATE PROCEDURE `deleteUser`(IN user_id_in INT)
+BEGIN
+	UPDATE usuarios SET isActive = 1 WHERE user_id = user_id_in;
 END//
 
 -- Modificar contraseña antigua a nueva contraseña provista en el procedure
@@ -497,10 +505,11 @@ BEGIN
 	SELECT admin_id FROM admin WHERE correo = correo_in AND CAST(pass_word AS BINARY) = CAST(pass_word_in AS BINARY) LIMIT 1;
 END//
 -- Verificar que un usuario existe a partir de su correo
+-- El usuario también debe estar activo (sin borrado lógico)
 DROP PROCEDURE IF EXISTS `checkUserExistsByEmail`//
 CREATE PROCEDURE `checkUserExistsByEmail` (IN email_in VARCHAR(30))
 BEGIN
-    SELECT EXISTS(SELECT 1 FROM usuarios WHERE correo = email_in);
+    SELECT EXISTS(SELECT 1 FROM usuarios WHERE correo = email_in AND isActive = 1 LIMIT 1);
 END//
 -- Verificar que un admin existe a partir de su correo
 DROP PROCEDURE IF EXISTS `checkAdminExistsByEmail`//
