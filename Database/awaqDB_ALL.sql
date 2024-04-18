@@ -669,6 +669,14 @@ BEGIN
 		user_id = user_id_in
 		AND p.isSuccessful = 1;
 END//
+
+-- Obtener segundos desde la última sesión de un usuario específico
+DROP PROCEDURE IF EXISTS `GetTimeAwayByUserID`//
+CREATE PROCEDURE `GetTimeAwayByUserID`(IN user_id_in INT)
+BEGIN
+	-- Returns an integer of the seconds AFK
+	-- TODO	
+END//
 -- --------------------------------------------------------
 
 
@@ -680,8 +688,26 @@ END//
 DROP PROCEDURE IF EXISTS `PostXpEvent`//
 CREATE PROCEDURE `PostXpEvent`(IN user_id_in INT, IN fuente_id_in INT, IN fecha_in DATETIME, IN isSuccessful_in TINYINT)
 BEGIN
-        INSERT INTO progreso(user_id, fuente_id, fecha, isSuccessful)
-        VALUES (user_id_in, fuente_id_in, fecha_in, isSuccessful_in);
+    INSERT INTO progreso(user_id, fuente_id, fecha, isSuccessful)
+    VALUES (user_id_in, fuente_id_in, fecha_in, isSuccessful_in);
+END//
+
+-- Crear una nueva sesión de un usuario específico, empezando con la hora actual de creación
+-- Can be called by something like POST OR PUT
+DROP PROCEDURE IF EXISTS `InsertNewSession`//
+CREATE PROCEDURE `InsertNewSession`(IN user_id_in INT)
+BEGIN
+	-- Returns the new session's ID
+	-- TODO
+END//
+
+-- Actualizar la última sesión de un usuario específico como activa a la hora actual
+-- Can be called by something like POST OR PUT
+DROP PROCEDURE IF EXISTS `UpdateLastSession`//
+CREATE PROCEDURE `UpdateLastSession`(IN user_id_in INT)
+BEGIN
+	-- Doesn't return anything
+	-- TODO
 END//
 -- --------------------------------------------------------
 
