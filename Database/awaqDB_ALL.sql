@@ -554,11 +554,13 @@ BEGIN
         e.especie_id, 
         e.nombre_especie, 
         e.nombre_cientifico, 
-        r.nombre_region, 
         te.tipo AS tipo_especie, 
+        h.herramienta_id,
+        h.xp_desbloqueo AS xp_desbloqueo_h,
         h.nombre_herramienta, 
         h.descripcion,
-        fxp.xp_desbloqueo, 
+        fxp.fuente_id,
+        fxp.xp_desbloqueo AS xp_desbloqueo_e, 
         fxp.xp_exito
     FROM especies e
     INNER JOIN regiones r ON e.region_id = r.region_id
@@ -573,6 +575,7 @@ CREATE PROCEDURE `GetAllDesafios`()
 BEGIN
     SELECT 
         d.desafio_id, 
+        fxp.fuente_id,
         fxp.xp_desbloqueo, 
         fxp.xp_exito, 
         fxp.xp_fallar,
