@@ -150,6 +150,7 @@ CREATE TABLE IF NOT EXISTS progreso(
 	user_id INT NOT NULL,
 	fuente_id INT NOT NULL,
 	fecha datetime NOT NULL,
+	isSuccessful TINYINT(1) DEFAULT 1,
 	PRIMARY KEY (progreso_id),
 	KEY (fecha),
 	CONSTRAINT p_user_id FOREIGN KEY (user_id) REFERENCES usuarios(user_id),
@@ -362,10 +363,13 @@ INSERT INTO progreso(user_id, fuente_id, fecha) VALUES
     (1, 2, '2024-04-07 16:50:26'),
     (2, 1, '2024-04-07 20:15:34'),
     (1, 3, '2024-04-08 08:40:47'),
-    (2, 4, '2024-04-08 12:55:55'),
-    (1, 13, '2024-04-01 06:50:26'),
-	(2, 13, '2024-04-02 18:50:26'),
-	(1, 14, '2024-04-01 11:00:23');
+    (2, 4, '2024-04-08 12:55:55');
+
+-- Salvar el progreso del usuario en materia de desafíos
+INSERT INTO progreso(user_id, fuente_id, fecha, isSuccessful) VALUES
+    (1, 13, '2024-04-01 06:50:26', 0),
+	(2, 13, '2024-04-02 18:50:26', 1),
+	(1, 14, '2024-04-01 11:00:23', 1);
 -- --------------------------------------------------------
 
 -- ------------------------------------------------------------------------------------------
