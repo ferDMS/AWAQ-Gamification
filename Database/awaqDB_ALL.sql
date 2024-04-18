@@ -654,11 +654,17 @@ BEGIN
 END//
 
 -- Regresa los IDs de los desafíos que el usuario a completado exitosamente
--- TODO
 DROP PROCEDURE IF EXISTS `GetDesafiosByUserID`//
 CREATE PROCEDURE `GetDesafiosByUserID`(IN user_id_in INT)
 BEGIN
-
+	SELECT
+		d.desafio_id
+	FROM
+		progreso p
+		INNER JOIN desafios d ON p.fuente_id = d.fuente_id 
+	WHERE
+		user_id = user_id_in
+		AND p.isSuccessful = 1;
 END//
 -- --------------------------------------------------------
 
