@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS fuentes_xp(
 	-- Atributos generales de todas las fuentes de xp
 	xp_desbloqueo INT NOT NULL,
 	xp_exito INT NOT NULL,
-	
+	xp_fallar INT DEFAULT 0,	
 	
 	PRIMARY KEY (fuente_id),
 	CONSTRAINT fxp_fuente_tipo_id FOREIGN KEY (fuente_tipo_id) REFERENCES tipos_de_fuente(fuente_tipo_id)
@@ -113,9 +113,6 @@ create table if not exists especies(
 CREATE TABLE IF NOT EXISTS desafios(
 	desafio_id int NOT NULL AUTO_INCREMENT,
 	fuente_id int NOT NULL,
-	
-	-- Atributo específico de fuente de xp tipo desafío
-	xp_fallar int,
 	
 	PRIMARY KEY (desafio_id),
 	CONSTRAINT d_fuente_id FOREIGN KEY (fuente_id) REFERENCES fuentes_xp(fuente_id)
@@ -214,24 +211,24 @@ INSERT INTO regiones(nombre_region) VALUES
 INSERT INTO tipos_de_fuente(tipo) VALUES ('Desafío'), ('Captura');
 
 -- Tabla de todas las fuentes de progreso en el juego (xp), que incluye desafíos y capturas
-INSERT INTO fuentes_xp (fuente_tipo_id, xp_desbloqueo, xp_exito) VALUES
-	(1, 0, 200),
-	(1, 2500, 375),
-	(1, 7500, 475),
-	(1, 20000, 500),
-	(1, 30000, 250),
-	(1, 50000, 675),
-	(1, 0, 500),
-	(1, 2500, 600),
-	(1, 7500, 750),
-	(1, 20000, 1000),
-	(1, 30000, 1500),
-	(1, 50000, 2000),
-	(2, 0, 0),
-	(2, 6000, 1500),
-	(2, 17000, 3000),
-	(2, 42000, 8000),
-	(2, 85000, 15000);
+INSERT INTO fuentes_xp (fuente_tipo_id, xp_desbloqueo, xp_exito, xp_fallar) VALUES
+	(1, 0, 200, 0),
+	(1, 2500, 375, 0),
+	(1, 7500, 475, 0),
+	(1, 20000, 500, 0),
+	(1, 30000, 250, 0),
+	(1, 50000, 675, 0),
+	(1, 0, 500, 0),
+	(1, 2500, 600, 0),
+	(1, 7500, 750, 0),
+	(1, 20000, 1000, 0),
+	(1, 30000, 1500, 0),
+	(1, 50000, 2000, 0),
+	(2, 0, 0, 0),
+	(2, 6000, 1500, 1500),
+	(2, 17000, 3000, 2000),
+	(2, 42000, 8000, 7000),
+	(2, 85000, 15000, 10000);
 
 -- Tipos de especies existentes dentro del juego (flora y fauna)
 INSERT INTO tipos_de_especies(tipo) VALUES ('Flora'), ('Fauna');
@@ -261,12 +258,12 @@ VALUES
 	(12, 'Arbol de Cacao', 'Theobroma cacao', 5, 1, 1);
 
 -- Lista de desafíos que deben ser superados a través del juego
-INSERT INTO desafios(fuente_id, xp_fallar) VALUES
-	(13, 0),
-	(14, 1500),
-	(15, 2000),
-	(16, 7000),
-	(17, 10000);
+INSERT INTO desafios(fuente_id) VALUES
+	(13),
+	(14),
+	(15),
+	(16),
+	(17);
 
 -- Los desafíos desbloquean herramientas
 -- Debemos detallar cuales desafíos desbloquean cuales herrramientas
