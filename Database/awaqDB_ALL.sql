@@ -527,3 +527,159 @@ COMMIT;
 -- ------------------------------------------------------------------------------------------
 -- ------------------------------------------------------------------------------------------
 -- AWAQ_API_Procedures.sql
+
+
+
+
+
+-- AWAQ_Game_API_Procedures.sql
+-- ------------------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------------
+
+USE awaqDB;
+
+START TRANSACTION;
+
+DELIMITER //
+
+-- --------------------------------------------------------
+-- Procedures para llamadas tipo GET / Select
+-- --------------------------------------------------------
+-- Regresa todas las especies con sus datos correspondientes
+-- TODO: Obtener valores agregados por Rocco también
+DROP PROCEDURE IF EXISTS `GetAllEspecies`//
+CREATE PROCEDURE `GetAllEspecies`()
+BEGIN
+    SELECT 
+        e.especie_id, 
+        e.nombre_especie, 
+        e.nombre_cientifico, 
+        r.nombre_region, 
+        te.tipo AS tipo_especie, 
+        h.nombre_herramienta, 
+        h.descripcion,
+        fxp.xp_desbloqueo, 
+        fxp.xp_exito
+    FROM especies e
+    INNER JOIN regiones r ON e.region_id = r.region_id
+    INNER JOIN tipos_de_especies te ON e.especie_tipo_id = te.especie_tipo_id
+    INNER JOIN herramientas h ON e.herramienta_id = h.herramienta_id
+    INNER JOIN fuentes_xp fxp ON e.fuente_id = fxp.fuente_id;
+END//
+
+-- Regresa todos los desafios con sus datos correspondientes
+DROP PROCEDURE IF EXISTS `GetAllDesafios`//
+CREATE PROCEDURE `GetAllDesafios`()
+BEGIN
+    SELECT 
+        d.desafio_id, 
+        fxp.xp_desbloqueo, 
+        fxp.xp_exito, 
+        fxp.xp_fallar,
+        GROUP_CONCAT(dh.herramienta_id) AS herramienta_ids
+    FROM desafios d
+    INNER JOIN fuentes_xp fxp ON d.fuente_id = fxp.fuente_id
+    LEFT JOIN desafios_herramientas dh ON d.desafio_id = dh.desafio_id
+    GROUP BY d.desafio_id;
+END //
+
+-- Regresa todos los datos de una herramienta en especifico
+DROP PROCEDURE IF EXISTS `GetHerramientasInfo`//
+CREATE PROCEDURE `GetHerramientasInfo`(IN HerramientaID INT)
+BEGIN
+    SELECT 
+        herramienta_id,
+        nombre_herramienta,
+        descripcion,
+        xp_desbloqueo
+    FROM herramientas
+    WHERE herramienta_id = HerramientaID;
+END//
+
+-- Regresa una Fuente de xp con sus datos correspondientes
+-- Los datos incluyen si es flora o fauna y los puntos que da
+DROP PROCEDURE IF EXISTS `GetFuente`//
+CREATE PROCEDURE `GetFuente`(IN FuenteID INT)
+BEGIN
+    SELECT 
+        fx.fuente_id,
+        fx.xp_desbloqueo,
+        fx.xp_exito,
+        te.tipo AS especie_tipo,  -- Assuming this still indicates whether it's flora or fauna
+        e.especie_id,  -- This will be NULL if no especie is associated
+        d.desafio_id   -- This will be NULL if no desafio is associated
+    FROM fuentes_xp fx
+    LEFT JOIN especies e ON fx.fuente_id = e.fuente_id  -- Linking especies if applicable
+    LEFT JOIN desafios d ON fx.fuente_id = d.fuente_id  -- Linking desafios if applicable
+    LEFT JOIN tipos_de_especies te ON e.especie_tipo_id = te.especie_tipo_id
+    WHERE fx.fuente_id = FuenteID;
+END//
+
+-- Regresa XP Total de un usuario
+DROP PROCEDURE IF EXISTS `GetTotalXP`//
+CREATE PROCEDURE `GetTotalXP`(IN user_id_in INT)
+BEGIN
+	SELECT 
+		p.user_id,
+		SUM(CASE WHEN p.isSuccessful = 1 THEN fxp.xp_exito ELSE -1 * fxp.xp_fallar END) AS total_xp
+	FROM progreso p
+	INNER JOIN fuentes_xp fxp ON p.fuente_id = fxp.fuente_id
+	WHERE p.user_id = user_id_in
+	GROUP BY p.user_id
+	LIMIT 1;
+END//
+
+-- Regresa el nombre, descripcion y numero de capturas de flora y fauna por usuario
+DROP PROCEDURE IF EXISTS `GetCapturasByUserID`//
+CREATE PROCEDURE `GetCapturasByUserID`(IN user_id_in INT)
+BEGIN
+    SELECT 
+        e.especie_id,
+        e.nombre_especie,
+        e.nombre_cientifico,
+        -- CAMBIAR ESTO DESPUÉS, PORQUE ROCCO AÑADIÓ YA UNA DESCRIPCIÓN A LA BASE DE DATOS
+        -- PERO POR AHORA ESTÁ BIEN, TAMBIÉN AÑADIÓ TAMAÑO, COLOR, ETC., PARA EL DESAFÍO
+        CONCAT( 
+            e.nombre_especie, ' también conocido como ', e.nombre_cientifico,
+            ' se puede encontrar en ', r.nombre_region, 
+            '  y su herramienta de conteo es ', h.nombre_herramienta
+        ) AS especie_descripcion,
+        COUNT(*) AS capture_count
+    FROM progreso p
+    INNER JOIN especies e ON p.fuente_id = e.fuente_id
+    INNER JOIN regiones r ON e.region_id = r.region_id  -- Assumes each especie is linked to a region
+    INNER JOIN herramientas h ON e.herramienta_id = h.herramienta_id  -- Assumes especies link to herramientas
+    WHERE p.user_id = user_id_in
+    GROUP BY e.especie_id, e.nombre_especie, e.nombre_cientifico, r.nombre_region, h.nombre_herramienta;
+END//
+
+-- Regresa los IDs de los desafíos que el usuario a completado exitosamente
+-- TODO
+DROP PROCEDURE IF EXISTS `GetDesafiosByUserID`//
+CREATE PROCEDURE `GetDesafiosByUserID`(IN user_id_in INT)
+BEGIN
+
+END//
+-- --------------------------------------------------------
+
+
+-- --------------------------------------------------------
+-- Procedures para llamadas tipo POST / Insert / Update
+-- --------------------------------------------------------
+-- Añade un nuevo registro positivo (suma XP) ó negativo (resta XP) 
+-- de una fuente de XP, aplicado a cierto usuario específico.
+DROP PROCEDURE IF EXISTS `PostXpEvent`//
+CREATE PROCEDURE `PostXpEvent`(IN user_id_in INT, IN fuente_id_in INT, IN fecha_in DATETIME, IN isSuccessful_in TINYINT)
+BEGIN
+        INSERT INTO progreso(user_id, fuente_id, fecha, isSuccessful)
+        VALUES (user_id_in, fuente_id_in, fecha_in, isSuccessful_in);
+END//
+-- --------------------------------------------------------
+
+DELIMITER ;
+
+COMMIT;
+
+-- ------------------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------------
+-- AWAQ_API_Procedures.sql
