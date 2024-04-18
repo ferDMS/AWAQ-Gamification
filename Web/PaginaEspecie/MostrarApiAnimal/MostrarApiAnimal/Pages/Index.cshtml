@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div style="background-color:#E1DCCA">
+    <h1>Lista de Especies</h1>
+    @if (Model.listaSpecies != null && Model.listaSpecies.Any())
+    {
+        @foreach (var especie in Model.listaSpecies)
+        {
+            <div class="specie-contenedor">
+                <img src=@especie.url_img/>
+                <div class="contenedor-info">
+                    <h3>@especie.nombre</h3>
+                    <p>@especie.descripcion</p>
+                    <p><b>Tamaño: </b>@especie.tamagno</p>
+                    <p><b>Color: </b>@especie.color</p>
+                    <p><b>Región: </b>@especie.region</p>
+                    <p><b>Método de Conteo: </b>@especie.herramienta</p>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No se encontraron especies.</p>
+    }
+</div>
