@@ -558,17 +558,29 @@ DROP PROCEDURE IF EXISTS `GetAllEspecies`//
 CREATE PROCEDURE `GetAllEspecies`()
 BEGIN
     SELECT 
+    	-- Propiedades de especie
         e.especie_id, 
         e.nombre_especie, 
         e.nombre_cientifico, 
+        e.descripcion,
+        e.url_img,
+        e.color,
+        e.tamagno,
+        -- Propiedades de región
+        r.region_id,
+        r.nombre_region,
+        -- Propiedades de tipo de especie
         te.tipo AS tipo_especie, 
+        -- Propiedades de herramientas
         h.herramienta_id,
         h.xp_desbloqueo AS xp_desbloqueo_h,
         h.nombre_herramienta, 
         h.descripcion,
+        -- Propiedades de fuente de xp
         fxp.fuente_id,
         fxp.xp_desbloqueo AS xp_desbloqueo_e, 
-        fxp.xp_exito
+        fxp.xp_exito,
+        fxp.xp_fallar
     FROM especies e
     INNER JOIN regiones r ON e.region_id = r.region_id
     INNER JOIN tipos_de_especies te ON e.especie_tipo_id = te.especie_tipo_id
