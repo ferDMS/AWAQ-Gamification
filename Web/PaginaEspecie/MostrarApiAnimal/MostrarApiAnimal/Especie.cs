@@ -1,7 +1,4 @@
-﻿using System;
-using APIQuieroSerBiomonitor;
-
-namespace APIQuieroSerBiomonitor
+﻿namespace MostrarApiAnimal
 {
     public class Especie : Fuente
     {

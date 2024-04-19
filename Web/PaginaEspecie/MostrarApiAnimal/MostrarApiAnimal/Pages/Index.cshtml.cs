@@ -7,18 +7,18 @@ namespace MostrarApiAnimal.Pages
 {
     public class IndexModel : PageModel
     { 
-        public List<Specie> listaSpecies { get; set; }
+        public List<Especie> listaEspecies { get; set; }
 
         public async Task OnGetAsync()
         {
             using (var httpClient = new HttpClient())
             {
-                string url = "https://localhost:7100/species/Species";
+                string url = "https://localhost:7044/QSBWeb/especies";
                 var response = await httpClient.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
-                    listaSpecies = JsonConvert.DeserializeObject<List<Specie>>(jsonString);
+                    listaEspecies = JsonConvert.DeserializeObject<List<Especie>>(jsonString);
                 }
             }
         }

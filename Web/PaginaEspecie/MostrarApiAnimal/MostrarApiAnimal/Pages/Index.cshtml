@@ -5,24 +5,24 @@
 }
 <div style="background-color:#E1DCCA">
     <h1 class="text-center">Lista de Especies</h1>
-    @if (Model.listaSpecies != null && Model.listaSpecies.Any())
+    @if (Model.listaEspecies != null && Model.listaEspecies.Any())
     {
         int i = 1;
 
         <div class="row justify-content-center">
-            @foreach (var especie in Model.listaSpecies)
+            @foreach (var especie in Model.listaEspecies)
             {
                 <div class="row col-10 py-4 my-4 specie-contenedor rounded-3">
                     <div class="row col-12 col-md-6 float-left my-auto mx-0">
-                        <img src="@especie.url_img" class="rounded" />
+                        <img src="@especie.Url_img" class="rounded" />
                     </div>
                     <div class="row col-12 col-md-6 float-right mx-0 mt-4">
-                        <h2 class="text-center text-md-start"><b>@(i). @especie.nombre</b></h2>
-                        <p>@especie.descripcion</p>
-                        <p><b>Tamaño: </b>@especie.tamagno</p>
-                        <p><b>Color: </b>@especie.color</p>
-                        <p><b>Región: </b>@especie.region</p>
-                        <p><b>Método de Conteo: </b>@especie.herramienta</p>
+                        <h2 class="text-center text-md-start"><b>@(i). @especie.NombreEspecie</b></h2>
+                        <p>@especie.Descripcion</p>
+                        <p><b>Tamaño: </b>@especie.Tamagno</p>
+                        <p><b>Color: </b>@especie.Color</p>
+                        <p><b>Región: </b>@especie.Region.NombreRegion</p>
+                        <p><b>Método de Conteo: </b>@especie.Herramienta.NombreHerramienta</p>
                     </div>
                 </div>
                 i++;
