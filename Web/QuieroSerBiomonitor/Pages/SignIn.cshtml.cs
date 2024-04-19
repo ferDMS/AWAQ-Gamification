@@ -22,6 +22,9 @@ public class SignInModel : PageModel
 
     public string Message { get; set; }
 
+    [BindProperty]
+    public int UserId { get; set; }
+
     public async Task<IActionResult> OnPostAsync()
     {
         HttpClient client = _httpClientFactory.CreateClient("BypassSSLClient");
@@ -35,7 +38,7 @@ public class SignInModel : PageModel
 
         try
         {
-            HttpResponseMessage response = await client.PostAsync("https://localhost:7166/QSB/login", content);
+            HttpResponseMessage response = await client.PostAsync("https://172.20.10.8:7044/QSB/login", content);
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
@@ -43,10 +46,13 @@ public class SignInModel : PageModel
 
                 if (loginResult.UserId > 0)
                 {
+                    UserId = loginResult.UserId;
                     HttpContext.Session.SetString("UserEmail", Email);
                     HttpContext.Session.SetInt32("UserId", loginResult.UserId);
                     HttpContext.Session.SetString("UserRole", loginResult.Role);
                     return RedirectToPage(loginResult.Role == "Admin" ? "DashboardAdmin" : "DashboardUser");
+
+                    
                 }
             }
             else
