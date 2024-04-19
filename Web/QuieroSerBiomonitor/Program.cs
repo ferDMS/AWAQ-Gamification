@@ -6,7 +6,7 @@ builder.Services.AddRazorPages();
 // Configure HttpClient with SSL bypass
 builder.Services.AddHttpClient("BypassSSLClient", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7166/"); // Set the base URL here
+    client.BaseAddress = new Uri("https://172.20.10.8:7044/"); // Set the base URL here
 })
 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
 {
