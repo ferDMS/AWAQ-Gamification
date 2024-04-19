@@ -12,7 +12,6 @@ namespace APIQuieroSerBiomonitor.Controllers
         string connectionString = System.IO.File.ReadAllText("connectionString.secret");
 
         [HttpGet("users")]
-
         public IEnumerable<User> getUsers()
         {
             List<User> users = new List<User>();
@@ -48,7 +47,7 @@ namespace APIQuieroSerBiomonitor.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult LoginLogin([FromBody] LoginRequest loginRequest)
+        public ActionResult Login([FromBody] LoginRequest loginRequest)
         {
             string email = loginRequest.Email;
             string password = loginRequest.Password;
@@ -75,6 +74,22 @@ namespace APIQuieroSerBiomonitor.Controllers
                 return NotFound(new { Error = "Usuario no fue encontrado." });
             }
         }
+
+        [HttpPut("users/deactivate/{id}")]
+        public void DeleteUser(int id)
+        {
+            using (MySqlConnection conexion = new MySqlConnection(connectionString))
+            {
+                conexion.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Connection = conexion;
+                cmd.CommandText = "DeleteUser";
+                cmd.Parameters.AddWithValue("@user_id_in", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
 
         public class LoginRequest
         {
@@ -112,30 +127,5 @@ namespace APIQuieroSerBiomonitor.Controllers
                 }
             }
         }
-
-        //[HttpPut("user/{userId}/change-password")]
-        //public IActionResult ChangeUserPassword(int userId, string newPassword)
-        //{
-        //    using (MySqlConnection connection = new MySqlConnection(connectionString))
-        //    {
-        //        connection.Open();
-        //        MySqlCommand cmd = new MySqlCommand("updateUserPassword", connection)
-        //        {
-        //            CommandType = CommandType.StoredProcedure
-        //        };
-        //        cmd.Parameters.AddWithValue("user_id_in", userId);
-        //        cmd.Parameters.AddWithValue("new_pass_word", newPassword);
-
-        //        int affectedRows = cmd.ExecuteNonQuery();
-        //        if (affectedRows > 0)
-        //        {
-        //            return Ok();
-        //        }
-        //        else
-        //        {
-        //            return NotFound();
-        //        }
-        //    }
-        //}
     }
 }

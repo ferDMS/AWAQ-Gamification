@@ -1,15 +1,13 @@
 ﻿using System;
-using APIQuieroSerBiomonitor;
-
 namespace APIQuieroSerBiomonitor
 {
-    public class Especie : Fuente
-    {
+	public class Captura
+	{
         public int EspecieId { get; set; }
         public string NombreEspecie { get; set; }
         public string NombreCientifico { get; set; }
-        public TipoEspecie TipoEspecie { get; set; }
-        public Herramienta Herramienta { get; set; }
+        public string EspecieDescripcion { get; set; }
+        public int CaptureCount { get; set; }
     }
 }
 
