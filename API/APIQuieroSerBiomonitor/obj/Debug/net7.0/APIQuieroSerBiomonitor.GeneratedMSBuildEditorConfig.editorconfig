@@ -1,0 +1,17 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = APIQuieroSerBiomonitor
+build_property.RootNamespace = APIQuieroSerBiomonitor
+build_property.ProjectDir = /Users/sofiasandoval/Documents/GitHub/AWAQ-Gamification/API/APIQuieroSerBiomonitor/
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /Users/sofiasandoval/Documents/GitHub/AWAQ-Gamification/API/APIQuieroSerBiomonitor
+build_property._RazorSourceGeneratorDebug = 
