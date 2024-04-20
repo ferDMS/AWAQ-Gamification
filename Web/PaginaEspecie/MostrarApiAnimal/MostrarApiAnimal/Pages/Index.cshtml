@@ -5,17 +5,22 @@
 }
 <div style="background-color:#E1DCCA">
     <h1 class="text-center">Lista de Especies</h1>
+    <!-- Show a list of species only if we got the API to return at list one -->
     @if (Model.listaEspecies != null && Model.listaEspecies.Any())
     {
+        // Counter to display with the title of each species
         int i = 1;
-
         <div class="row justify-content-center">
+            @* Loop for every specie retrieved from the API *@
             @foreach (var especie in Model.listaEspecies)
             {
+                // Container repeated multiple times for each species entry
                 <div class="row col-10 py-4 my-4 specie-contenedor rounded-3">
+                    @* Left side "row" definition for the species' image *@
                     <div class="row col-12 col-md-6 float-left my-auto mx-0">
                         <img src="@especie.Url_img" class="rounded" />
                     </div>
+                    @* Right side "row" definition for the species' characteristics *@
                     <div class="row col-12 col-md-6 float-right mx-0 mt-4">
                         <h2 class="text-center text-md-start"><b>@(i). @especie.NombreEspecie</b></h2>
                         <p>@especie.Descripcion</p>
@@ -25,10 +30,12 @@
                         <p><b>Método de Conteo: </b>@especie.Herramienta.NombreHerramienta</p>
                     </div>
                 </div>
+                // Increase counter
                 i++;
             }
         </div>
     }
+    <!-- If the API doesn't return anything or something empty, show this message -->
     else
     {
         <p>No se encontraron especies.</p>
