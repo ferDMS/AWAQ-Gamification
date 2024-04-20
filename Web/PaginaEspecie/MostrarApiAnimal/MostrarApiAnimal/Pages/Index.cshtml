@@ -5,7 +5,7 @@
 }
 <div style="background-color:#E1DCCA">
     <h1 class="text-center">Lista de Especies</h1>
-    <!-- Show a list of species only if we got the API to return at list one -->
+    @* Show a list of species only if we got the API to return at list one *@
     @if (Model.listaEspecies != null && Model.listaEspecies.Any())
     {
         // Counter to display with the title of each species
@@ -35,7 +35,7 @@
             }
         </div>
     }
-    <!-- If the API doesn't return anything or something empty, show this message -->
+    @* If the API doesn't return anything or something empty, show this message *@
     else
     {
         <p>No se encontraron especies.</p>
