@@ -44,7 +44,7 @@
 }
 
 body {
-    overflow-y: scroll;
+/*    overflow-y: scroll;*/
     margin-bottom: 60px;
     display: flex;
     flex-direction: column;
@@ -116,10 +116,10 @@ header {
 }
 
 html, body {
-    height: 100vh; 
+/*    height: 100vh; */
     margin: 0; 
     padding: 0; 
-    overflow-x: hidden; 
+/*    overflow-x: hidden; */
 }
 
 .info-col {
@@ -132,20 +132,22 @@ html, body {
 }
 
 .info-title {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
     font-size: 300%;
     color: white;
     font-weight: 900;
     text-align: left;
-    margin-bottom: 10px;
+    margin: 0;
+    padding: 0;
 }
 
 .info-title-format {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     background-color: #787C53;
-    align-items:center;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .landing {
