@@ -145,6 +145,7 @@ html, body {
 
 .info-title-format {
     background-color: #787C53;
+    align-items:center;
 }
 
 .landing {
@@ -241,4 +242,18 @@ main {
      max-width: 100%;
      height: auto;
      width: auto\9;
+}
+
+.center-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textoNombre {
+    color:#2B3019;
+    font-weight:bolder;
+}
+.textoJustify{
+    text-align:justify;
 }

@@ -32,6 +32,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="https://www.somosawaq.org" target="_blank">AWAQ Estaciones Biológicas</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-page="/Creditos">Sobre los creadores</a>
+                    </li>
                     <!-- Aparece boton de dashboard correspondiente si es admin o usuario loggeado -->
                     @if (Context.Session.GetString("UserRole") == "Admin")
                     {
