@@ -1,4 +1,4 @@
-﻿namespace MostrarApiAnimal
+﻿namespace QuieroSerBiomonitor
 {
     public enum TipoEspecie
     {
