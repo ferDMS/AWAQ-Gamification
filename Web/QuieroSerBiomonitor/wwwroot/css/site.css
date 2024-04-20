@@ -140,6 +140,13 @@ html, body {
     padding: 0;
 }
 
+.info-title-img {
+    max-height: 100px;
+    max-width: 250px;
+    height: 100%;
+    float: right;
+}
+
 .info-title-format {
     padding-top: 40px;
     padding-bottom: 40px;
