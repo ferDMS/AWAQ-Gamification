@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 
 
-namespace MostrarApiAnimal.Pages
+namespace QuieroSerBiomonitor.Pages
 {
-    public class IndexModel : PageModel
+    public class ListaEspeciesModel : PageModel
     { 
         // List of species that will be filled from the API call
         public List<Especie>? listaEspecies { get; set; }
