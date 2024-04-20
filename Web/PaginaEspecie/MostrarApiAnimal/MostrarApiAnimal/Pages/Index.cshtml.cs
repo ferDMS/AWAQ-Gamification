@@ -8,7 +8,7 @@ namespace MostrarApiAnimal.Pages
     public class IndexModel : PageModel
     { 
         // List of species that will be filled from the API call
-        public List<Especie> listaEspecies { get; set; }
+        public List<Especie>? listaEspecies { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -33,7 +33,7 @@ namespace MostrarApiAnimal.Pages
                 catch (HttpRequestException ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");
-                    listaEspecies = new List<Especie>();
+                    listaEspecies = null;
                 }
             }
         }
