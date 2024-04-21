@@ -5,61 +5,54 @@ using UnityEngine;
 
 public class AnimalClickHandler : MonoBehaviour
 {
+    /*
     // Variables para guardar los estados
     private bool estadoHerramientaCaja;
     private bool estadoHerramientaRed;
     private bool estadoHerramientaLupa;
     private bool estadoHerramientaLinterna;
+    */
+    private bool estadoCaja;
+    private bool estadoRed;
+    private bool estadoLupa;
+    private bool estadoLinterna;
 
     public GameObject panelRegistro;
     public RegistroController controller;
 
-    public GameObject desafioRegistro;
     public DesafioController desafioController;
 
-    public Experiencia exp;
+    public GameObject Panel;
+    //public List<string> animalesRegistrados = new List<string>();
 
-    string[] animalesRegistrados;
+    //string[] animalesRegistrados;
 
     private void Start()
     {
-        StartCoroutine(DelayedStart());
+        //animalesRegistrados = new List<string>();
+        //StartCoroutine(DelayedStart());
     }
 
-    IEnumerator DelayedStart()
+    private void Update()
     {
-        yield return new WaitForSeconds(0.5f);
-        GameControl.OnToolStateChanged += UpdateToolState;
-        UpdateToolState("Herramienta_Caja", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Caja").state);
-        UpdateToolState("Herramienta_Red", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Red").state);
-        UpdateToolState("Herramienta_Lupa", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Lupa").state);
-        UpdateToolState("Herramienta_Linterna", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Linterna").state);
+        // Acceder al estado de la herramienta "Herramienta_Caja"
+        estadoCaja = GameControlVariables.GetToolState("Herramienta_Caja");
+        estadoRed = GameControlVariables.GetToolState("Herramienta_Red");
+        estadoLupa = GameControlVariables.GetToolState("Herramienta_Lupa");
+        estadoLinterna = GameControlVariables.GetToolState("Herramienta_Linterna");
 
-    }
-
-    private void UpdateToolState(string toolName, bool newState)
-    {
-        switch (toolName)
+        if (GameControlVariables.PuntutacionTotal >= 17000 && GameControlVariables.Desafio2Finished)
         {
-            case "Herramienta_Caja":
-                estadoHerramientaCaja = newState;
-                break;
-            case "Herramienta_Red":
-                estadoHerramientaRed = newState;
-                break;
-            case "Herramienta_Lupa":
-                estadoHerramientaLupa = newState;
-                break;
-            case "Herramienta_Linterna":
-                estadoHerramientaLinterna = newState;
-                break;
+            Panel.SetActive(true);
+        } else if (GameControlVariables.PuntutacionTotal <= 17000 && !GameControlVariables.Desafio2Finished)
+        {
+            Panel.SetActive(false);
         }
     }
 
-
     private void ActivarPanel(string tag)
     {
-        if (!panelRegistro.activeSelf)
+        if(!panelRegistro.activeSelf)
         {
             panelRegistro.tag = tag;
             controller.ResetPanel();
@@ -69,53 +62,107 @@ public class AnimalClickHandler : MonoBehaviour
         }
     }
 
+
+
     //On Collision
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if(exp.progreso >= 25 && !GameControl.instance.Desafio1Finished)
+        
+        if(GameControlVariables.PuntutacionTotal >= 6000 && !GameControlVariables.Desafio1Finished)
         {
             desafioController.StartDesafio(3);
-        }else if(exp.progreso >= 50 && !GameControl.instance.Desafio2Finished)
+            GameControlVariables.Desafio1Finished = true;
+
+        }
+        else if (GameControlVariables.PuntutacionTotal >= 17000 && !GameControlVariables.Desafio2Finished)
+        {
+            desafioController.StartDesafio(5);
+            GameControlVariables.Desafio1Finished = true;
+
+        }
+        else if (GameControlVariables.PuntutacionTotal >= 42000 && !GameControlVariables.Desafio3Finished)
+        {
+            desafioController.StartDesafio(7);
+            GameControlVariables.Desafio1Finished = true;
+
+        }
+        else if (GameControlVariables.PuntutacionTotal >= 85000 && !GameControlVariables.DesafioFinal)
         {
             desafioController.StartDesafio(10);
-        }
-        else if (exp.progreso >= 85 && !GameControl.instance.Desafio3Finished)
-        {
-            desafioController.StartDesafio(15);
+            GameControlVariables.Desafio1Finished = true;
+
         }
         else
         {
-            RunRegistro(collision);
+            if (estadoCaja == true && collision.gameObject.tag == "Mono" && !GameControlVariables.animalesRegistrados.Contains("Mono"))
+            {
+                GameControlVariables.Registrar("Mono");
+                ActivarPanel(collision.gameObject.tag);
+            }
+            if (estadoCaja == true && collision.gameObject.tag == "Oso" && !GameControlVariables.animalesRegistrados.Contains("Oso"))
+            {
+                GameControlVariables.Registrar("Oso");
+                ActivarPanel(collision.gameObject.tag);
+
+            }
+            if (estadoRed == true && collision.gameObject.tag == "Buitre" && !GameControlVariables.animalesRegistrados.Contains("Buitre"))
+            {
+                GameControlVariables.Registrar("Buitre");
+                ActivarPanel(collision.gameObject.tag);
+
+            }
+            if (estadoCaja == true && collision.gameObject.tag == "Lagarto" && !GameControlVariables.animalesRegistrados.Contains("Lagarto"))
+            {
+                GameControlVariables.Registrar("Lagarto");
+                ActivarPanel(collision.gameObject.tag);
+
+            }
+            if (estadoRed == true && collision.gameObject.tag == "Tucan" && !GameControlVariables.animalesRegistrados.Contains("Tucan"))
+            {
+                GameControlVariables.Registrar("Tucan");
+                ActivarPanel(collision.gameObject.tag);
+
+            }
+            if (estadoLupa == true && collision.gameObject.tag == "Ave_del_Paraiso" && !GameControlVariables.animalesRegistrados.Contains("Ave_del_Paraiso"))
+            {
+                GameControlVariables.Registrar("Ave_del_Paraiso");
+                ActivarPanel(collision.gameObject.tag);
+
+            }
+            if (estadoLupa == true && collision.gameObject.tag == "Orquidea" && !GameControlVariables.animalesRegistrados.Contains("Orquidea"))
+            {
+                GameControlVariables.Registrar("Oequidea");
+                ActivarPanel(collision.gameObject.tag);
+
+            }
+            if (estadoLupa == true && collision.gameObject.tag == "Palma" && !GameControlVariables.animalesRegistrados.Contains("Palma"))
+            {
+                GameControlVariables.Registrar("Palma");
+                ActivarPanel(collision.gameObject.tag);
+
+            }
+            if (estadoLupa == true && collision.gameObject.tag == "PALMAchica" && !GameControlVariables.animalesRegistrados.Contains("PALMAchica"))
+            {
+                GameControlVariables.Registrar("PALMAchica");
+                ActivarPanel(collision.gameObject.tag);
+
+            }
+            if (estadoLupa == true && collision.gameObject.tag == "arbolCacao" && !GameControlVariables.animalesRegistrados.Contains("arbolCacao"))
+            {
+                GameControlVariables.Registrar("arbolCacao");
+                ActivarPanel(collision.gameObject.tag);
+
+            }
+            if (estadoLupa == true && collision.gameObject.tag == "Arbusto" && !GameControlVariables.animalesRegistrados.Contains("Arbusto"))
+            {
+                GameControlVariables.Registrar("Arbusto");
+                ActivarPanel(collision.gameObject.tag);
+
+            }
         }
+
+        
+
     }
 
-    public void RunRegistro(Collision2D collision)
-    {
-        animalesRegistrados = GameControl.instance.GetRegistrados();
-        if (estadoHerramientaCaja && collision.gameObject.tag == "Mono" && !animalesRegistrados.Contains("Mono"))
-        {
-            GameControl.instance.Registrar("Mono");
-            ActivarPanel(collision.gameObject.tag);
-        }
-        if (estadoHerramientaCaja && collision.gameObject.tag == "Oso" && !animalesRegistrados.Contains("Oso"))
-        {
-            GameControl.instance.Registrar("Oso");
-            ActivarPanel(collision.gameObject.tag);
-        }
-        if (estadoHerramientaRed && collision.gameObject.tag == "Buitre" && !animalesRegistrados.Contains("Buitre"))
-        {
-            GameControl.instance.Registrar("Buitre");
-            ActivarPanel(collision.gameObject.tag);
-        }
-        if (estadoHerramientaCaja && collision.gameObject.tag == "Lagarto" && !animalesRegistrados.Contains("Lagarto"))
-        {
-            GameControl.instance.Registrar("Lagarto");
-            ActivarPanel(collision.gameObject.tag);
-        }
-        if (estadoHerramientaRed && collision.gameObject.tag == "Tucan" && !animalesRegistrados.Contains("Tucan"))
-        {
-            GameControl.instance.Registrar("Tucan");
-            ActivarPanel(collision.gameObject.tag);
-        }
-    }
 }

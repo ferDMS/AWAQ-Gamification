@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Experiencia : MonoBehaviour
@@ -18,12 +19,12 @@ public class Experiencia : MonoBehaviour
     void Update()
     {
         // Solo actualiza si PuntutacionTotal ha cambiado
-        if (lastPuntuacionTotal != GameControl.instance.PuntutacionTotal)
+        if (lastPuntuacionTotal != GameControlVariables.PuntutacionTotal)
         {
-            experienciaString.text = GameControl.instance.PuntutacionTotal.ToString() + " XP";
-            progreso = (GameControl.instance.PuntutacionTotal * 100) / GameControl.instance.PuntuacionMaxima; // Corregido para evitar errores de cálculo
+            experienciaString.text = GameControlVariables.PuntutacionTotal.ToString() + " XP";
+            progreso = (GameControlVariables.PuntutacionTotal * 100) / GameControlVariables.PuntuacionMaxima; // Corregido para evitar errores de cálculo
             progresoString.text = progreso.ToString() + "%";
-            lastPuntuacionTotal = GameControl.instance.PuntutacionTotal; // Actualiza el último valor registrado
+            lastPuntuacionTotal = GameControlVariables.PuntutacionTotal; // Actualiza el último valor registrado
         }
     }
 }
