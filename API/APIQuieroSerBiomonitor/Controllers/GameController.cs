@@ -13,7 +13,7 @@ namespace APIQuieroSerBiomonitor.Controllers
     [Route("QSBGame")]
     public class GameController : Controller
     {
-        string connectionString = "Server=mysql-351e1a24-tec-965e.a.aivencloud.com;Port=26933;Database=awaqDB;Uid=avnadmin;Password=AVNS_UOl5EfEjlKFL5V5IVyl;SslMode=Required;CertificateFile=ca.cer;";
+        string connectionString = System.IO.File.ReadAllText("connectionString.secret");
 
         [HttpGet("especies")]
         public IEnumerable<Especie> GetAllEspecies()
