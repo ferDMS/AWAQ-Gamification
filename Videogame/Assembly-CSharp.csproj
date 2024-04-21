@@ -64,14 +64,20 @@
     <Compile Include="Assets\Scripts\Tutorial\Tutorial.cs" />
     <Compile Include="Assets\Scripts\AnimalClickHandler.cs" />
     <Compile Include="Assets\Scripts\RegistroController.cs" />
+    <Compile Include="Assets\Scripts\SpawnerFlora.cs" />
     <Compile Include="Assets\Scripts\GameControl.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
+    <Compile Include="Assets\Scripts\ToolbarController.cs" />
     <Compile Include="Assets\Scripts\TouchManager.cs" />
     <Compile Include="Assets\Scripts\ChangeScene.cs" />
     <Compile Include="Assets\Scripts\RegistroDropdownControl.cs" />
     <Compile Include="Assets\Scripts\Tutorial\PanelDeRegistro.cs" />
+    <Compile Include="Assets\Scripts\DontDestroy.cs" />
     <Compile Include="Assets\Scripts\ClickAnimal.cs" />
+    <Compile Include="Assets\Scripts\MoveCamara.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\DesafioController.cs" />
+    <Compile Include="Assets\Scripts\MostrarConteoRegistros.cs" />
     <Compile Include="Assets\Scripts\DetectorDeClick.cs" />
     <Compile Include="Assets\Scripts\Experiencia.cs" />
   </ItemGroup>

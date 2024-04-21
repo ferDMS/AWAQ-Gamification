@@ -17,7 +17,7 @@ public class PanelDeRegistro : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoHerramientaCaja && this.gameObject.CompareTag("Mono"))
-            {
+        {
             if (!panelRegistro.activeSelf)
             {
                 panelRegistro.tag = this.gameObject.tag;
@@ -32,18 +32,10 @@ public class PanelDeRegistro : MonoBehaviour
 
     private void Start()
     {
-        GameControl.OnToolStateChanged += UpdateToolState;
-        UpdateToolState("Herramienta_Caja", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Caja").state);
-
+        
     }
-
-    private void UpdateToolState(string toolName, bool newState)
+    private void Update()
     {
-        switch (toolName)
-        {
-            case "Herramienta_Caja":
-                estadoHerramientaCaja = newState;
-                break;
-        }
+        estadoHerramientaCaja = GameControlVariables.GetToolState("Herramienta_Caja");
     }
 }

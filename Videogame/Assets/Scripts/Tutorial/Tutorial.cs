@@ -1,9 +1,8 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using UnityEditorInternal;
 using UnityEngine.InputSystem.XR;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
@@ -105,15 +104,15 @@ public class Tutorial : MonoBehaviour
         switch (currentCount)
         {
             case 1:
-                Instrucciones.text = "Como puedes notar nos encontramos en lo profundo de la selva, llena de diferentes tipos de flora y fauna,";
+                Instrucciones.text = "Como puedes notar, nos encontramos en lo profundo de la selva, llena de diferentes tipos de flora y fauna.";
                 break;
             case 2:
-                Instrucciones.text = "Tu tarea principal como biomonitar ser· hacer un registro de todos los seres vivos que te encuentres.";
+                Instrucciones.text = "Tu tarea principal como biomonit@r ser√° hacer un registro de toda la flora y fauna que te encuentres en el √°rea.";
                 StartCoroutine(AnimalsMove());
                 break;
-            // AÒade m·s casos seg˙n sea necesario.
+            // A√±ade m√°s casos seg√∫n sea necesario.
             case 3:
-                Instrucciones.text = "Pero, øComo podre hacer esta complicada tarea?";
+                Instrucciones.text = "Pero, ¬øComo podre hacer esta complicada tarea?";
                 animationTucan.enabled = true;
                 animationOso.enabled = true;
                 animationBuitre.enabled = true;
@@ -122,22 +121,22 @@ public class Tutorial : MonoBehaviour
                 StartCoroutine(continuarMoviemiento());
                 break;
             case 4:
-                Instrucciones.text = "Ntp, como puedes ver en tu pantalla, en la parte inferior cuentas con una barra con diferentes herramientas para poder capturar a los diferentes animales que te encuentres.";
+                Instrucciones.text = "No te preocupes, compa√±ero, como puedes observar en tu pantalla, en la parte inferior cuentas con una barra de inventario con diferentes herramientas para registrar la  flora y fauna.";
                 animacionCaja.SetTrigger("CajaSelected");
                 animacionRed.SetTrigger("RedSelected");
                 break;
             case 5:
-                Instrucciones.text = "Cada hermienta sirve para diferentes cosas, por ejemplo la caja funciona para la mayoria de los animales terrestres";
+                Instrucciones.text = "Cada herramienta sirve para diferente flora y fauna, por ejemplo: la caja funciona para la mayor√≠a de los mam√≠feros y reptiles.";
                 animacionRed.SetTrigger("RedDeselected"); 
                 break;
             case 6:
-                Instrucciones.text = "Y la red para la mayoria de los animales voladores.";
+                Instrucciones.text = "Y la red para la mayor√≠a de las aves y animales que se trasladan volando.";
                 animacionCaja.SetTrigger("CajaDeselected");
                 animacionRed.SetTrigger("RedSelected");
                 Mono2.SetActive(true);
                 break;
             case 7:
-                Instrucciones.text = "Oh mira parece que se un mono se nos acerco, usa la caja para poder capturarlo";
+                Instrucciones.text = "Oh mira, parece que se est√° acercando un animal; usa la caja para poder registrarlo.";
                 animacionRed.SetTrigger("RedDeselected");
                 ToucCollider.SetActive(true);
                 Button.SetActive(false);
@@ -145,26 +144,26 @@ public class Tutorial : MonoBehaviour
                 StartCoroutine(movimientoMono2());
                 break;
             case 8:
-                Instrucciones.text = "Cada vez que encuentres un animal nuevo te aparecera esta ventana de registro.";
+                Instrucciones.text = "Cada vez que encuentres un animal nuevo, te aparecer√° esta ventana de registro.";
                 break;
             case 9:
                 Instrucciones.text = "Tiene que llenar todos los datos de manera correcta para poder continuar.";
                 break;
             case 10:
-                Instrucciones.text = "Ahorita yo te voy a llenar los datos";
+                Instrucciones.text = "Por esta ocasi√≥n te voy a ayudar a llenar los datos.";
                 break;
             case 11:
-                Instrucciones.text = "Info del mono";
+                Instrucciones.text = "Como puedes observar, es un mam√≠fero que se denomina 'Titi Ornamentado', llega a medir entre 50-60‚ÄØcm aproximadamente y tiene un caracter√≠stico color rojo. La mejor manera para registrar a nuestro amigito es utilizando una c√°mara.";
                 break;
             case 12:
                 QuitarInstrucciones();
                 miCanvas.sortingOrder = 20;
                 break;
             case 13:
-                Instrucciones.text = "Una vez que registres un animal no va ser necesario volver a hacer el registro hasta que te encuentres con algun reto en el futuro.";
+                Instrucciones.text = "Una vez que registres un animal, no va a ser necesario volver a hacer el registro hasta que te encuentres con alg√∫n reto en el futuro.";
                 break;
             case 14:
-                Instrucciones.text = "Ya terminamos aqui por hoy, volvamos a los headquarters.";
+                Instrucciones.text = "Ya terminamos aqui, vayamos al menu principal.";
                 break;
             case 15:
                 toolBar.SetActive(false);
@@ -173,21 +172,21 @@ public class Tutorial : MonoBehaviour
                 Instrucciones.text = "Este es el menu del juego donde podras encontrar informacion de las herramientas, flora y fauna del juego";
                 break;
             case 16:
-                Instrucciones.text = "En la 'InformaciÛn' te puedes encontrar con la informaciÛn de las herramientas y cuando se desbloquean";
+                Instrucciones.text = "En la secci√≥n de 'Informaci√≥n' te puedes encontrar con las caracteristicas de las herramientas y cuando se desbloquean";
                 break;
             case 17:
-                Instrucciones.text = "En el apartado de Bodega puedes buscar informaciÛn sobre la flora y fauna, como tambiÈn la cantidad de veces que les haz echo registro";
+                Instrucciones.text = "En el apartado de Bodega puedes buscar informaci√≥n sobre la flora y fauna, como tambi√©n la cantidad de veces que les haz echo registro";
                 break;
             case 18:
-                Instrucciones.text = "Bueno, esto es todo por mi parte, si quieres aventurarte a pica al boton de \"Exterior\" para encontrarte con m·s animales increibles.";
+                Instrucciones.text = "Bueno, esto es todo por mi parte, si quieres aventurarte presiona en la secci√≥n de \"Exterior\" para encontrarte con m√°s animales increibles.";
                 break;
             case 19:
-                Destroy(_gameControl);
+                //Destroy(_gameControl);
                 MenuScene();
                 break;
             default:
                 // Opcionalmente maneja valores de contador inesperados.
-                Debug.Log("El contador est· en un valor no manejado: " + currentCount);
+                Debug.Log("El contador est√° en un valor no manejado: " + currentCount);
                 break;
         }
     }
@@ -280,20 +279,20 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator continuarMoviemiento()
     {
-        while (!detenerMovimiento)  // Este bucle infinito continuar· hasta que explÌcitamente detengas la corutina
+        while (!detenerMovimiento)  // Este bucle infinito continuar√° hasta que expl√≠citamente detengas la corutina
         {
             Tucan.transform.position += Vector3.left * Time.deltaTime * 10;
             Mono.transform.position += Vector3.right * Time.deltaTime * 10;
             Buitre.transform.position += Vector3.left * Time.deltaTime * 10;
             Oso.transform.position += Vector3.left * Time.deltaTime * 10;
             Lagarto.transform.position += Vector3.left * Time.deltaTime * 10;
-            yield return null;  // Esto causar· que la corutina espere hasta el prÛximo frame antes de continuar
+            yield return null;  // Esto causar√° que la corutina espere hasta el pr√≥ximo frame antes de continuar
         }
     }
 
     IEnumerator movimientoMono2()
     {
-        float duration = 1f; // DuraciÛn del movimiento en segundos
+        float duration = 1f; // Duraci√≥n del movimiento en segundos
         float elapsed = 0f;
 
         FaunaBehaver faunaBehaver = Mono2.GetComponent<FaunaBehaver>();
@@ -301,10 +300,10 @@ public class Tutorial : MonoBehaviour
         // Guardamos la velocidad original para restaurarla al final
         float velocidadOriginal = faunaBehaver.velocity;
 
-        // Cambiamos la velocidad a 10 durante la animaciÛn
+        // Cambiamos la velocidad a 10 durante la animaci√≥n
         faunaBehaver.velocity = 10;
 
-        // Esperamos durante la duraciÛn especificada
+        // Esperamos durante la duraci√≥n especificada
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;

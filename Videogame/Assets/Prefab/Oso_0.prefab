@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -14.97, y: 1.2099998, z: 9.947128}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.84444, y: 0.84444, z: 0.84444}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -127,7 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e34e1657c61b043a11573c47cd9587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameContoler: {fileID: 0}
   velocity: 10
   limitePositivo: 40
   limiteNegativo: -25

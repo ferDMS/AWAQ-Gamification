@@ -71,10 +71,7 @@ public class ChangeScene : MonoBehaviour
         panel_Flora.SetActive(true);
     }
 
-    public void FinalizarJuego()
-    {
-        UnityEditor.EditorApplication.isPlaying = false;
-    }
+    
     // Start is called before the first frame update
     void Start()
     {
