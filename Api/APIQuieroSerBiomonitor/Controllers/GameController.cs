@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using APIQuieroSerBiomonitor;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using static APIQuieroSerBiomonitor.Controllers.AuthController;
 
 namespace APIQuieroSerBiomonitor.Controllers
 {
@@ -161,6 +162,34 @@ namespace APIQuieroSerBiomonitor.Controllers
             }
         }
 
+
+        [HttpGet("biomonitorXP")]
+        public ActionResult<int> GetXPBiomonitor()
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                var command = new MySqlCommand("GetBiomonitorXP", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        var XP = reader.GetInt32("XPValue");
+                        return Ok(XP);
+                    }
+                    else
+                    {
+                        return NotFound("No XP value found for Biomonitor Achievement.");
+                    }
+ 
+                }
+            }
+        }
+
         [HttpGet("capturas/{id}")]
         public ActionResult<List<Captura>> GetCapturasByUserID(int id)
         {
@@ -194,8 +223,12 @@ namespace APIQuieroSerBiomonitor.Controllers
         }
 
         [HttpPost("PostXPEvent")]
-        public IActionResult PostXpEvent(int userId, int fuenteId, DateTime fecha, bool isSuccessful)
+        public IActionResult PostXpEvent([FromBody] XPEvent xpevent)
         {
+            int userId = xpevent.UserId;
+            int fuenteId = xpevent.FuenteId;
+            DateTime fecha = xpevent.Fecha;
+            bool isSuccessful = xpevent.IsSuccessful;
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
