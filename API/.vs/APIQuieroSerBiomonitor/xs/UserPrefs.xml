@@ -1,34 +1,33 @@
 ﻿<Properties StartupConfiguration="{3D03398C-6071-4CB8-BCE3-67ECD8ED548D}|https">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.APIQuieroSerBiomonitor PreferredExecutionTarget="/Applications/Arc.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="APIQuieroSerBiomonitor/Controllers/GameController.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="APIQuieroSerBiomonitor/Controllers/QSBController.cs">
     <Files>
-      <File FileName="APIQuieroSerBiomonitor/Controllers/QSBController.cs" />
-      <File FileName="APIQuieroSerBiomonitor/Controllers/GameController.cs" Line="227" Column="1" />
-      <File FileName="APIQuieroSerBiomonitor/Desafio.cs" Line="1" Column="1" />
-      <File FileName="APIQuieroSerBiomonitor/Fuente.cs" Line="1" Column="1" />
+      <File FileName="APIQuieroSerBiomonitor/Controllers/QSBController.cs" Line="117" Column="71" />
+      <File FileName="APIQuieroSerBiomonitor/Controllers/GameController.cs" Line="169" Column="14" />
+      <File FileName="APIQuieroSerBiomonitor/Desafio.cs" />
+      <File FileName="APIQuieroSerBiomonitor/Fuente.cs" />
       <File FileName="APIQuieroSerBiomonitor/Program.cs" />
       <File FileName="APIQuieroSerBiomonitor/Region.cs" />
       <File FileName="APIQuieroSerBiomonitor/Herramienta.cs" />
-      <File FileName="APIQuieroSerBiomonitor/Especie.cs" Line="1" Column="1" />
+      <File FileName="APIQuieroSerBiomonitor/Especie.cs" />
       <File FileName="APIQuieroSerBiomonitor/Captura.cs" />
       <File FileName="APIQuieroSerBiomonitor/appsettings.Development.json" />
-      <File FileName="APIQuieroSerBiomonitor/Properties/launchSettings.json" />
-      <File FileName="APIQuieroSerBiomonitor/TipoEspecie.cs" Line="1" Column="1" />
+      <File FileName="APIQuieroSerBiomonitor/Properties/launchSettings.json" Line="17" Column="32" />
+      <File FileName="APIQuieroSerBiomonitor/TipoEspecie.cs" />
       <File FileName="APIQuieroSerBiomonitor/User.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="APIQuieroSerBiomonitor" expanded="True">
-            <Node name="APIQuieroSerBiomonitor" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="GameController.cs" selected="True" />
+          <Node name="APIQuieroSerBiomonitor">
+            <Node name="APIQuieroSerBiomonitor">
+              <Node name="Controllers">
+                <Node name="QSBController.cs" selected="True" />
               </Node>
               <Node name="Properties" expanded="True" />
               <Node name="appsettings.json" expanded="True" />
@@ -38,4 +37,5 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.APIQuieroSerBiomonitor PreferredExecutionTarget="/Applications/Arc.app" />
 </Properties>

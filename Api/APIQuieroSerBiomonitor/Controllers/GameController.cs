@@ -13,7 +13,7 @@ namespace APIQuieroSerBiomonitor.Controllers
     [Route("QSBGame")]
     public class GameController : Controller
     {
-        string connectionString = System.IO.File.ReadAllText("connectionString.secret");
+        string connectionString = "Server=mysql-351e1a24-tec-965e.a.aivencloud.com;Port=26933;Database=awaqDB;Uid=avnadmin;Password=AVNS_UOl5EfEjlKFL5V5IVyl;SslMode=Required;CertificateFile=ca.cer;";
 
         [HttpGet("especies")]
         public IEnumerable<Especie> GetAllEspecies()
@@ -157,6 +157,34 @@ namespace APIQuieroSerBiomonitor.Controllers
                     {
                         return 0;
                     }
+                }
+            }
+        }
+
+
+        [HttpGet("biomonitorXP")]
+        public ActionResult<int> GetXPBiomonitor()
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                var command = new MySqlCommand("GetBiomonitorXP", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        var XP = reader.GetInt32("XPValue");
+                        return Ok(XP);
+                    }
+                    else
+                    {
+                        return NotFound("No XP value found for Biomonitor Achievement.");
+                    }
+ 
                 }
             }
         }
