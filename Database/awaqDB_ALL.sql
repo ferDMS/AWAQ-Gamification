@@ -8,6 +8,20 @@ DROP SCHEMA IF EXISTS awaqDB;
 create database if not exists awaqDB;
 use awaqDB;
 
+-- Función para obtener fecha y hora actual según timezone definido
+-- Se usa en la definición de la tabla `sesiones`
+DELIMITER //
+DROP FUNCTION IF EXISTS `TimezoneNow`//
+CREATE FUNCTION `TimezoneNow` ()
+RETURNS DATETIME
+BEGIN
+	DECLARE timezone VARCHAR(30);
+	SET timezone = 'America/Monterrey';
+	
+	RETURN CONVERT_TZ (NOW(),'SYSTEM', timezone);
+END//
+DELIMITER ;
+
 -- --------------------------------------------------------
 -- Tabla adicional para guardar información general del juego
 -- ---------------------------------------------------------
@@ -152,11 +166,31 @@ CREATE TABLE IF NOT EXISTS desafios_herramientas(
 CREATE TABLE IF NOT EXISTS sesiones(
 	sesion_id INT NOT NULL AUTO_INCREMENT,
 	user_id INT NOT NULL,
-	start_time datetime NOT NULL,
+	-- Inicializa el inicio de la sesión con la hora actual
+	start_time datetime DEFAULT NULL,
+	-- También la hora final con la misma hora, efectuando una sesión de '0 segundos'
 	end_time datetime DEFAULT NULL,
 	PRIMARY KEY (sesion_id),
 	CONSTRAINT s_user_id FOREIGN KEY (user_id) REFERENCES usuarios(user_id)
 );
+
+-- Trigger para actualizar el valor siempre que se inserte una sesión vacía
+-- Los datos que se insertan es la fecha y hora actual con el timezone definido
+DELIMITER //
+DROP TRIGGER IF EXISTS `NewSessionNow`//
+CREATE TRIGGER `NewSessionNow` BEFORE INSERT ON sesiones
+FOR EACH ROW
+BEGIN
+    IF NEW.start_time IS NULL THEN
+        SET NEW.start_time = TimezoneNow();
+    END IF;
+    IF NEW.end_time IS NULL THEN
+        SET NEW.end_time = TIMESTAMPADD(SECOND,1,TimezoneNow());
+    END IF;
+END//
+DELIMITER ;
+
+
 -- Tabla para salvar el progreso del usuario en materia de cada captura o desafíos
 -- Cada insert en esta tabla representa un nuevo registro o un nuevo desafío completado
 -- Tabla para guardar las sesiones de juego de los usuarios
@@ -570,7 +604,6 @@ DELIMITER //
 -- Procedures para llamadas tipo GET / Select
 -- --------------------------------------------------------
 -- Regresa todas las especies con sus datos correspondientes
--- TODO: Obtener valores agregados por Rocco también
 DROP PROCEDURE IF EXISTS `GetAllEspecies`//
 CREATE PROCEDURE `GetAllEspecies`()
 BEGIN
@@ -676,7 +709,7 @@ BEGIN
         e.especie_id,
         e.nombre_especie,
         e.nombre_cientifico,
-        -- CAMBIAR ESTO DESPUÉS, PORQUE ROCCO AÑADIÓ YA UNA DESCRIPCIÓN A LA BASE DE DATOS
+        -- TODO: CAMBIAR ESTO DESPUÉS, PORQUE ROCCO AÑADIÓ YA UNA DESCRIPCIÓN A LA BASE DE DATOS
         -- PERO POR AHORA ESTÁ BIEN, TAMBIÉN AÑADIÓ TAMAÑO, COLOR, ETC., PARA EL DESAFÍO
         CONCAT( 
             e.nombre_especie, ' también conocido como ', e.nombre_cientifico,
@@ -707,11 +740,27 @@ BEGIN
 END//
 
 -- Obtener segundos desde la última sesión de un usuario específico
+-- Toma el final de la anterior sesión para calcular el tiempo AFK
 DROP PROCEDURE IF EXISTS `GetTimeAwayByUserID`//
 CREATE PROCEDURE `GetTimeAwayByUserID`(IN user_id_in INT)
 BEGIN
-	-- Returns an integer of the seconds AFK
-	-- TODO	
+	-- Returns an integer of seconds AFK since last session
+	-- If more than 
+	SELECT
+		TIMESTAMPDIFF(
+			SECOND, 
+			s.end_time,
+			-- Change timezone if we want to use it in, for example, Colombia
+			TimezoneNow()
+		) AS `seconds_away`
+	FROM
+		sesiones s
+	WHERE
+		s.user_id = user_id_in AND 
+		s.end_time = (
+	        SELECT MAX(end_time) FROM sesiones WHERE user_id = user_id_in
+	    )
+	LIMIT 1;
 END//
 -- --------------------------------------------------------
 
@@ -733,17 +782,28 @@ END//
 DROP PROCEDURE IF EXISTS `InsertNewSession`//
 CREATE PROCEDURE `InsertNewSession`(IN user_id_in INT)
 BEGIN
-	-- Returns the new session's ID
-	-- TODO
+	-- No regresa nada
+	-- La sesión se inicializa con la hora actual automaticamente
+	INSERT INTO sesiones (user_id) VALUES (user_id_in);
 END//
 
 -- Actualizar la última sesión de un usuario específico como activa a la hora actual
 -- Can be called by something like POST OR PUT
-DROP PROCEDURE IF EXISTS `UpdateLastSession`//
-CREATE PROCEDURE `UpdateLastSession`(IN user_id_in INT)
+DROP PROCEDURE IF EXISTS `PingLastSession`//
+CREATE PROCEDURE `PingLastSession`(IN user_id_in INT)
 BEGIN
-	-- Doesn't return anything
-	-- TODO
+	-- No regresa nada
+	-- Actualiza el final de la sesión con la hora actual
+	DECLARE last_end_time DATETIME;
+	SELECT MAX(s.end_time) INTO last_end_time FROM sesiones s WHERE s.user_id = user_id_in;
+	
+	UPDATE 
+		sesiones
+	SET end_time = TimezoneNow() 
+	WHERE 
+		user_id = user_id_in AND
+		end_time = last_end_time
+	LIMIT 1;
 END//
 -- --------------------------------------------------------
 
@@ -753,4 +813,4 @@ COMMIT;
 
 -- ------------------------------------------------------------------------------------------
 -- ------------------------------------------------------------------------------------------
--- AWAQ_API_Procedures.sql
+-- AWAQ_Game_API_Procedures.sql
