@@ -248,6 +248,7 @@ namespace APIQuieroSerBiomonitor.Controllers
                 }
 
                 return Ok("XP event posted successfully");
+                
             }
             catch (Exception ex)
             {
