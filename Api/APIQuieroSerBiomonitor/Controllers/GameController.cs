@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using APIQuieroSerBiomonitor;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using static APIQuieroSerBiomonitor.Controllers.AuthController;
 
 namespace APIQuieroSerBiomonitor.Controllers
 {
@@ -222,8 +223,12 @@ namespace APIQuieroSerBiomonitor.Controllers
         }
 
         [HttpPost("PostXPEvent")]
-        public IActionResult PostXpEvent(int userId, int fuenteId, DateTime fecha, bool isSuccessful)
+        public IActionResult PostXpEvent([FromBody] XPEvent xpevent)
         {
+            int userId = xpevent.UserId;
+            int fuenteId = xpevent.FuenteId;
+            DateTime fecha = xpevent.Fecha;
+            bool isSuccessful = xpevent.IsSuccessful;
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
