@@ -762,6 +762,24 @@ BEGIN
 	    )
 	LIMIT 1;
 END//
+
+-- Obtener la XP máxima en la que un usuario se gradúa de biomonitor, según la entrada máxima en `desafios`
+DROP PROCEDURE IF EXISTS `GetBiomonitorXP`//
+CREATE PROCEDURE `GetBiomonitorXP`()
+BEGIN
+	SELECT
+	fxp.xp_desbloqueo + fxp.xp_exito AS `XPValue`
+	FROM 
+		fuentes_xp fxp
+	WHERE
+		fxp.xp_desbloqueo = (
+			SELECT MAX(fxp2.xp_desbloqueo)
+			FROM fuentes_xp fxp2
+			INNER JOIN tipos_de_fuente tdf ON fxp2.fuente_tipo_id = tdf.fuente_tipo_id  
+			WHERE tdf.tipo = 'Desafio'
+		)
+	LIMIT 1;
+END//
 -- --------------------------------------------------------
 
 
