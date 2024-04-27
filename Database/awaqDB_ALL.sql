@@ -26,11 +26,11 @@ DELIMITER ;
 -- Tabla adicional para guardar información general del juego
 -- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GameRules` (
-  "RuleID" int NOT NULL AUTO_INCREMENT,
-  "RuleName" varchar(255) NOT NULL,
-  "XPValue" int NOT NULL,
-  PRIMARY KEY ("RuleID"),
-  CONSTRAINT "XPValue_positive" CHECK (((`XPValue` >= 0) and (`XPValue` <= 100000)))
+  RuleID int NOT NULL AUTO_INCREMENT,
+  RuleName varchar(255) NOT NULL,
+  XPValue int NOT NULL,
+  PRIMARY KEY (RuleID),
+  CONSTRAINT XPValue_positive CHECK (((XPValue >= 0) and (XPValue <= 100000)))
 );
 
 -- --------------------------------------------------------
