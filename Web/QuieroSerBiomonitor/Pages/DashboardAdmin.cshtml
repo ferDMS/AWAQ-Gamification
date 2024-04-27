@@ -97,13 +97,13 @@
                             <td>@user.Pais</td>
                             <td>@user.Correo</td>
                             <td>@user.LastLogin</td>
-                            <td> 
-                            <a href="https://lookerstudio.google.com/embed/reporting/20a7baeb-d558-48e4-82ea-1b14e7e4f5ce/page/u4awD?params=%7B%22ds10.bioid%22:@user.UserId,%22ds21.bioid%22:@user.UserId,%22ds5.bioid%22:@user.UserId,%22ds12.bioid%22:@user.UserId,%22bioid1%22:@user.UserId%7D" target="_blank" class="btn btn-success" role="button">Ver Dashboard</a>
-
                             <td>
-                                <form asp-page-handler="DeleteUser" method="post">
+                            <a href="https://lookerstudio.google.com/embed/reporting/20a7baeb-d558-48e4-82ea-1b14e7e4f5ce/page/u4awD?params=%7B%22ds10.bioid%22:@user.UserId,%22ds21.bioid%22:@user.UserId,%22ds5.bioid%22:@user.UserId,%22ds12.bioid%22:@user.UserId,%22bioid1%22:@user.UserId%7D" target="_blank" class="btn btn-success" role="button">Ver Dashboard</a>
+                            </td>
+                            <td>
+                                <form asp-page-handler="delete" method="post">
                                     <input type="hidden" name="userId" value="@user.UserId" />
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar a este usuario?');">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
