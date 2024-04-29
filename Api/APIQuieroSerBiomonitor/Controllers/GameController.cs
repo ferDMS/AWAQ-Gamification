@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using APIQuieroSerBiomonitor;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using Mysqlx.Cursor;
 using static APIQuieroSerBiomonitor.Controllers.AuthController;
 
 namespace APIQuieroSerBiomonitor.Controllers
@@ -249,6 +250,87 @@ namespace APIQuieroSerBiomonitor.Controllers
 
                 return Ok("XP event posted successfully");
                 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpGet("sesion/{id}")]
+        public ActionResult<int>? GetTimeAwayByUserID(int id)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                var command = new MySqlCommand("GetTimeAwayByUserID", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@user_id_in", id);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        var XP = reader.GetInt32("seconds_away");
+                        return Ok(XP);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        [HttpPost("sesion/{id}")]
+        public ActionResult<int> InsertNewSession(int id)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    using (MySqlCommand command = new MySqlCommand("InsertNewSession", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@user_id_in", id);
+
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                return Ok("Inserted new session successfully");
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPut("sesion/{id}")]
+        public ActionResult<int> PingLastSession(int id)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    using (MySqlCommand command = new MySqlCommand("PingLastSession", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@user_id_in", id);
+
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                return Ok("Pinged last session successfully");
+
             }
             catch (Exception ex)
             {
