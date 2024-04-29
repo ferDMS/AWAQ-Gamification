@@ -252,11 +252,11 @@ INSERT INTO admin(nombre, apellido, correo, pass_word) VALUES
 -- Herramientas que se pueden usar dentro del juego
 INSERT INTO herramientas(nombre_herramienta, descripcion, xp_desbloqueo) VALUES
 	('Lupa', 'Descripción de uso de lupa', 0),
-	('Binoculares', 'Descripción de uso de binoculares', 0),
-	('Cámara trampa', 'Descripción de uso de cámara trampa', 7500),
-	('Caja trampa', 'Descripción de uso de caja trampa', 7500),
-	('Red', 'Descripción de uso de red de nieba', 20000),
-	('Linterna', 'Descripción de uso de linterna', 20000);
+	('Binoculares', 'Facilitan la observación de especies a distancia, permitiendo un monitoreo discreto y detallado de su comportamiento.', 0),
+	('Cámara trampa', 'Captura imágenes y videos de especies en su entorno natural sin perturbar su comportamiento, facilitando el estudio de su actividad y distribución.', 7500),
+	('Caja trampa', 'Utilizada para capturar temporalmente individuos de especies específicas, permitiendo su identificación y estudio antes de su liberación.', 7500),
+	('Anillo', 'Se utiliza para capturar aves de manera no invasiva, permitiendo su estudio y seguimiento mediante la colocación de un anillo identificador antes de liberarlas.', 20000),
+	('Linterna', 'Facilita la observación nocturna de especies, permitiendo el estudio de comportamientos y actividades que ocurren durante la noche en los ecosistemas.', 20000);
 
 -- Regiones de donde pueden provenir especies del juego
 INSERT INTO regiones(nombre_region) VALUES
