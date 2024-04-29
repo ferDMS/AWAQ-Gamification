@@ -205,6 +205,17 @@ CREATE TABLE IF NOT EXISTS progreso(
 	CONSTRAINT p_user_id FOREIGN KEY (user_id) REFERENCES usuarios(user_id),
 	CONSTRAINT p_fuente_id FOREIGN KEY (fuente_id) REFERENCES fuentes_xp(fuente_id)
 );
+
+-- Trigger para establecer la fecha de cada progreso a partir de la base de datos
+-- Los datos que se insertan es la fecha y hora actual con el timezone definido
+DELIMITER //
+DROP TRIGGER IF EXISTS `NewProgressNow`//
+CREATE TRIGGER `NewProgressNow` BEFORE INSERT ON progreso
+FOR EACH ROW
+BEGIN
+	SET NEW.fecha = TimezoneNow();
+END//
+DELIMITER ;
 -- --------------------------------------------------------
 
 -- ------------------------------------------------------------------------------------------
