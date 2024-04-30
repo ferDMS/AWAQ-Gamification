@@ -195,16 +195,85 @@ CREATE TABLE IF NOT EXISTS progreso(
 	CONSTRAINT p_fuente_id FOREIGN KEY (fuente_id) REFERENCES fuentes_xp(fuente_id)
 );
 
+DELIMITER //
+
+-- Crear una nueva sesión de un usuario específico, empezando con la hora actual de creación
+-- Can be called by something like POST OR PUT
+DROP PROCEDURE IF EXISTS `InsertNewSession`//
+CREATE PROCEDURE `InsertNewSession`(user_id_in INT)
+BEGIN
+	-- No regresa nada
+	-- La sesión se inicializa con la hora actual automaticamente
+	INSERT INTO sesiones (user_id) VALUES (user_id_in);
+END//
+
+-- Actualizar la última sesión de un usuario específico como activa a la hora actual
+-- Can be called by something like POST OR PUT
+DROP PROCEDURE IF EXISTS `PingLastSession`//
+CREATE PROCEDURE `PingLastSession`(user_id_in INT)
+BEGIN
+	-- No regresa nada
+	-- Actualiza el final de la sesión con la hora actual
+	DECLARE last_end_time DATETIME;
+	SELECT MAX(s.end_time) INTO last_end_time FROM sesiones s WHERE s.user_id = user_id_in;
+	
+	UPDATE 
+		sesiones
+	SET end_time = TimezoneNow() 
+	WHERE 
+		user_id = user_id_in AND
+		end_time = last_end_time
+	LIMIT 1;
+END//
+
+-- Obtener segundos desde la última sesión de un usuario específico
+-- Toma el final de la anterior sesión para calcular el tiempo AFK
+DROP FUNCTION IF EXISTS `GetTimeAwayByUserID`//
+CREATE FUNCTION `GetTimeAwayByUserID`(user_id_in INT)
+RETURNS INT
+BEGIN
+    DECLARE seconds_away INT;
+
+    -- Retrieve the end_time of the last session for the user
+    SELECT TIMESTAMPDIFF(
+        SECOND, 
+        s.end_time,
+        TimezoneNow()
+    ) INTO seconds_away
+    FROM sesiones s
+    WHERE s.user_id = user_id_in
+    ORDER BY s.end_time DESC
+    LIMIT 1;
+
+    -- If no session is found, return 0
+    IF seconds_away IS NULL THEN
+    	SET seconds_away = 0;
+        CALL InsertNewSession(user_id_in);
+    END IF;
+
+    RETURN seconds_away;
+END//
+DELIMITER ;
+
 -- Trigger para establecer la fecha de cada progreso a partir de la base de datos
 -- Los datos que se insertan es la fecha y hora actual con el timezone definido
 DELIMITER //
-DROP TRIGGER IF EXISTS `NewProgressNow`//
-CREATE TRIGGER `NewProgressNow` BEFORE INSERT ON progreso
+DROP TRIGGER IF EXISTS `InsertProgress`//
+CREATE TRIGGER `InsertProgress` BEFORE INSERT ON progreso
 FOR EACH ROW
 BEGIN
-	SET NEW.fecha = TimezoneNow();
+    DECLARE seconds_away INT;
+    SET seconds_away = GetTimeAwayByUserID(NEW.user_id);
+
+    IF seconds_away > 300 THEN
+        CALL InsertNewSession(NEW.user_id);
+    ELSE 
+        CALL PingLastSession(NEW.user_id);
+    END IF;
 END//
 DELIMITER ;
+
+
 -- --------------------------------------------------------
 
 -- ------------------------------------------------------------------------------------------
@@ -733,30 +802,6 @@ BEGIN
 		AND p.isSuccessful = 1;
 END//
 
--- Obtener segundos desde la última sesión de un usuario específico
--- Toma el final de la anterior sesión para calcular el tiempo AFK
-DROP PROCEDURE IF EXISTS `GetTimeAwayByUserID`//
-CREATE PROCEDURE `GetTimeAwayByUserID`(IN user_id_in INT)
-BEGIN
-	-- Returns an integer of seconds AFK since last session
-	-- If more than 
-	SELECT
-		TIMESTAMPDIFF(
-			SECOND, 
-			s.end_time,
-			-- Change timezone if we want to use it in, for example, Colombia
-			TimezoneNow()
-		) AS `seconds_away`
-	FROM
-		sesiones s
-	WHERE
-		s.user_id = user_id_in AND 
-		s.end_time = (
-	        SELECT MAX(end_time) FROM sesiones WHERE user_id = user_id_in
-	    )
-	LIMIT 1;
-END//
-
 -- Obtener la XP máxima en la que un usuario se gradúa de biomonitor, según la entrada máxima en `desafios`
 DROP PROCEDURE IF EXISTS `GetBiomonitorXP`//
 CREATE PROCEDURE `GetBiomonitorXP`()
@@ -787,35 +832,6 @@ CREATE PROCEDURE `PostXpEvent`(IN user_id_in INT, IN fuente_id_in INT, IN fecha_
 BEGIN
     INSERT INTO progreso(user_id, fuente_id, fecha, isSuccessful)
     VALUES (user_id_in, fuente_id_in, fecha_in, isSuccessful_in);
-END//
-
--- Crear una nueva sesión de un usuario específico, empezando con la hora actual de creación
--- Can be called by something like POST OR PUT
-DROP PROCEDURE IF EXISTS `InsertNewSession`//
-CREATE PROCEDURE `InsertNewSession`(IN user_id_in INT)
-BEGIN
-	-- No regresa nada
-	-- La sesión se inicializa con la hora actual automaticamente
-	INSERT INTO sesiones (user_id) VALUES (user_id_in);
-END//
-
--- Actualizar la última sesión de un usuario específico como activa a la hora actual
--- Can be called by something like POST OR PUT
-DROP PROCEDURE IF EXISTS `PingLastSession`//
-CREATE PROCEDURE `PingLastSession`(IN user_id_in INT)
-BEGIN
-	-- No regresa nada
-	-- Actualiza el final de la sesión con la hora actual
-	DECLARE last_end_time DATETIME;
-	SELECT MAX(s.end_time) INTO last_end_time FROM sesiones s WHERE s.user_id = user_id_in;
-	
-	UPDATE 
-		sesiones
-	SET end_time = TimezoneNow() 
-	WHERE 
-		user_id = user_id_in AND
-		end_time = last_end_time
-	LIMIT 1;
 END//
 -- --------------------------------------------------------
 
