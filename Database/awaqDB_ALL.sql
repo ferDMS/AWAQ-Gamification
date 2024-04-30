@@ -23,17 +23,6 @@ END//
 DELIMITER ;
 
 -- --------------------------------------------------------
--- Tabla adicional para guardar información general del juego
--- ---------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `GameRules` (
-  RuleID int NOT NULL AUTO_INCREMENT,
-  RuleName varchar(255) NOT NULL,
-  XPValue int NOT NULL,
-  PRIMARY KEY (RuleID),
-  CONSTRAINT XPValue_positive CHECK (((XPValue >= 0) and (XPValue <= 100000)))
-);
-
--- --------------------------------------------------------
 -- Tablas para guardar información de usuarios y admins
 -- Para autentificar en el log in y guardar información personal
 -- --------------------------------------------------------
@@ -338,12 +327,6 @@ INSERT INTO desafios_herramientas(desafio_id, herramienta_id) VALUES
 	(2, 4),
 	(3, 5),
 	(3, 6);
-
--- Insertar game rules
--- TODO / verificar después que onda con esto
-INSERT INTO awaqDB.GameRules
-(RuleName, XPValue)
-VALUES('Example rule', 0);
 -- --------------------------------------------------------
 
 -- ------------------------------------------------------------------------------------------
