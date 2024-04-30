@@ -270,6 +270,8 @@ BEGIN
     ELSE 
         CALL PingLastSession(NEW.user_id);
     END IF;
+   
+   SET NEW.fecha = TimezoneNow();
 END//
 DELIMITER ;
 
