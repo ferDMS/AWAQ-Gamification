@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4361106855567485852}
   - component: {fileID: 3714881845812995928}
   - component: {fileID: 4132069830069674302}
+  - component: {fileID: -3842947643878809314}
+  - component: {fileID: -3978444110995413940}
   m_Layer: 0
   m_Name: arbolCacao
   m_TagString: arbolCacao
@@ -158,3 +160,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 11, y: 10.8}
   m_EdgeRadius: 0
+--- !u!114 &-3842947643878809314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7251021856984979650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e34e1657c61b043a11573c47cd9587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiManager: {fileID: 0}
+  velocity: 0
+  limitePositivo: 999
+  limiteNegativo: -999
+--- !u!114 &-3978444110995413940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7251021856984979650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9066f402a64eba47974e8509810a3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

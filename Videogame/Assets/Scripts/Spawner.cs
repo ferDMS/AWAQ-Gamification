@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
     public List<GameObject> animalGameObjects;
+    public List<int> requiredScores; // Lista de puntuaciones requeridas para cada animal
+    public ApiManager apiManager;
     public float maxHeight;
     public float minHeight;
     public float timeToSpawnMax;
@@ -15,35 +18,36 @@ public class Spawner : MonoBehaviour
 
     IEnumerator SpawnerTiemr()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(timeToSpawnMin, timeToSpawnMax));
+        yield return new WaitForSeconds(Random.Range(timeToSpawnMin, timeToSpawnMax));
 
-        // Obtener el valor de experiencia total del GameControllerVariables
-        int experienciaTotal = GameControlVariables.PuntutacionTotal;
+        // Obtener la puntuación total
+        int totalScore = GameControlVariables.GetPuntuacionTotalInt();
 
-        // Verificar el valor de experiencia total para determinar qué animal spawnear
-        GameObject selectedAnimal = null;
+        // Lista de índices de animales que pueden ser spawnados
+        List<int> spawnableIndexes = new List<int>();
 
-        if (experienciaTotal >= 0)
+        // Determinar qué animales pueden ser spawnados
+        for (int i = 0; i < animalGameObjects.Count; i++)
         {
-            selectedAnimal = animalGameObjects[0]; // Por ejemplo, el primer objeto de la lista
+            if (totalScore >= requiredScores[i])
+            {
+                spawnableIndexes.Add(i);
+            }
         }
-        else if (experienciaTotal >= 7500)
-        {
-            selectedAnimal = animalGameObjects[1]; // Por ejemplo, el segundo objeto de la lista
-        }
-        else if (experienciaTotal >= 50000)
-        {
-            selectedAnimal = animalGameObjects[2];
-        }
-        // Agregar más condiciones según sea necesario para seleccionar los objetos de la lista basados en la experiencia
 
-        if (selectedAnimal != null)
+        if (spawnableIndexes.Count > 0)
         {
+            // Seleccionar aleatoriamente un índice de animal spawnable
+            int randomIndex = Random.Range(0, spawnableIndexes.Count);
+            int selectedAnimalIndex = spawnableIndexes[randomIndex];
+
             // Determinar la posición de spawn X
-            float spawnX = UnityEngine.Random.Range(0f, 1f) > 0.5f ? spawnPositionX : transform.position.x;
+            float spawnX = Random.Range(0f, 1f) > 0.5f ? spawnPositionX : transform.position.x;
 
             // Spawnear el animal seleccionado
-            GameObject spawnedAnimal = Instantiate(selectedAnimal, new Vector3(spawnX, transform.position.y + UnityEngine.Random.Range(minHeight, maxHeight), 0), Quaternion.identity);
+            GameObject spawnedAnimal = Instantiate(animalGameObjects[selectedAnimalIndex],
+                new Vector3(spawnX, transform.position.y + Random.Range(minHeight, maxHeight), 0),
+                Quaternion.identity);
 
             // Voltear el sprite si es necesario
             SpriteRenderer spriteRenderer = spawnedAnimal.GetComponent<SpriteRenderer>();

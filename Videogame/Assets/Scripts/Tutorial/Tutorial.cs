@@ -107,12 +107,12 @@ public class Tutorial : MonoBehaviour
                 Instrucciones.text = "Como puedes notar, nos encontramos en lo profundo de la selva, llena de diferentes tipos de flora y fauna.";
                 break;
             case 2:
-                Instrucciones.text = "Tu tarea principal como biomonit@r será hacer un registro de toda la flora y fauna que te encuentres en el área.";
+                Instrucciones.text = "Tu tarea principal como biomonitor será hacer un registro de toda la flora y fauna que encuentres en el área.";
                 StartCoroutine(AnimalsMove());
                 break;
             // Añade más casos según sea necesario.
             case 3:
-                Instrucciones.text = "Pero, ¿Como podre hacer esta complicada tarea?";
+                Instrucciones.text = "Pero, ¿cómo podré hacer esta complicada tarea?";
                 animationTucan.enabled = true;
                 animationOso.enabled = true;
                 animationBuitre.enabled = true;
@@ -121,22 +121,22 @@ public class Tutorial : MonoBehaviour
                 StartCoroutine(continuarMoviemiento());
                 break;
             case 4:
-                Instrucciones.text = "No te preocupes, compañero, como puedes observar en tu pantalla, en la parte inferior cuentas con una barra de inventario con diferentes herramientas para registrar la  flora y fauna.";
+                Instrucciones.text = "No te preocupes, compañero. Como puedes observar en tu pantalla, en la parte inferior cuentas con una barra de inventario con diferentes herramientas para registrar la flora y fauna.";
                 animacionCaja.SetTrigger("CajaSelected");
                 animacionRed.SetTrigger("RedSelected");
                 break;
             case 5:
-                Instrucciones.text = "Cada herramienta sirve para diferente flora y fauna, por ejemplo: la caja funciona para la mayoría de los mamíferos y reptiles.";
+                Instrucciones.text = "Cada herramienta sirve para diferentes tipos de flora y fauna. Por ejemplo, la caja funciona para la mayoría de los mamíferos y reptiles.";
                 animacionRed.SetTrigger("RedDeselected"); 
                 break;
             case 6:
-                Instrucciones.text = "Y la red para la mayoría de las aves y animales que se trasladan volando.";
+                Instrucciones.text = "Y la red es útil para la mayoría de las aves y animales que se desplazan volando.";
                 animacionCaja.SetTrigger("CajaDeselected");
                 animacionRed.SetTrigger("RedSelected");
                 Mono2.SetActive(true);
                 break;
             case 7:
-                Instrucciones.text = "Oh mira, parece que se está acercando un animal; usa la caja para poder registrarlo.";
+                Instrucciones.text = "Oh, mira, parece que se está acercando un animal; usa la caja para poder registrarlo.";
                 animacionRed.SetTrigger("RedDeselected");
                 ToucCollider.SetActive(true);
                 Button.SetActive(false);
@@ -147,38 +147,38 @@ public class Tutorial : MonoBehaviour
                 Instrucciones.text = "Cada vez que encuentres un animal nuevo, te aparecerá esta ventana de registro.";
                 break;
             case 9:
-                Instrucciones.text = "Tiene que llenar todos los datos de manera correcta para poder continuar.";
+                Instrucciones.text = "Tienes que llenar todos los datos de manera correcta para poder continuar.";
                 break;
             case 10:
-                Instrucciones.text = "Por esta ocasión te voy a ayudar a llenar los datos.";
+                Instrucciones.text = "Por esta ocasión, te voy a ayudar a llenar los datos.";
                 break;
             case 11:
-                Instrucciones.text = "Como puedes observar, es un mamífero que se denomina 'Titi Ornamentado', llega a medir entre 50-60 cm aproximadamente y tiene un característico color rojo. La mejor manera para registrar a nuestro amigito es utilizando una cámara.";
+                Instrucciones.text = "Como puedes observar, es un mamífero que se denomina 'Títi Ornamentado', mide entre 50 y 60 cm aproximadamente y tiene un característico color rojo. La mejor manera de registrar a nuestro amiguito es utilizando una cámara.";
                 break;
             case 12:
                 QuitarInstrucciones();
                 miCanvas.sortingOrder = 20;
                 break;
             case 13:
-                Instrucciones.text = "Una vez que registres un animal, no va a ser necesario volver a hacer el registro hasta que te encuentres con algún reto en el futuro.";
+                Instrucciones.text = "Una vez que registres un animal, no será necesario volver a hacer el registro hasta que te encuentres con algún reto en el futuro.";
                 break;
             case 14:
-                Instrucciones.text = "Ya terminamos aqui, vayamos al menu principal.";
+                Instrucciones.text = "Ya terminamos aquí, vamos al menú principal.";
                 break;
             case 15:
                 toolBar.SetActive(false);
                 UIExtras.SetActive(false);
                 menuPanel.SetActive(true);
-                Instrucciones.text = "Este es el menu del juego donde podras encontrar informacion de las herramientas, flora y fauna del juego";
+                Instrucciones.text = "Este es el menú del juego donde podrás encontrar información de las herramientas, flora y fauna del juego.";
                 break;
             case 16:
-                Instrucciones.text = "En la sección de 'Información' te puedes encontrar con las caracteristicas de las herramientas y cuando se desbloquean";
+                Instrucciones.text = "En la sección de 'Información', puedes encontrar las características de las herramientas y cuándo se desbloquean.";
                 break;
             case 17:
-                Instrucciones.text = "En el apartado de Bodega puedes buscar información sobre la flora y fauna, como también la cantidad de veces que les haz echo registro";
+                Instrucciones.text = "En el apartado de Bodega puedes buscar información sobre la flora y fauna, así como la cantidad de veces que has hecho registro.";
                 break;
             case 18:
-                Instrucciones.text = "Bueno, esto es todo por mi parte, si quieres aventurarte presiona en la sección de \"Exterior\" para encontrarte con más animales increibles.";
+                Instrucciones.text = "Bueno, esto es todo por mi parte. Si quieres aventurarte, presiona en la sección de 'Exterior' para encontrarte con más animales increíbles.";
                 break;
             case 19:
                 //Destroy(_gameControl);
@@ -295,7 +295,7 @@ public class Tutorial : MonoBehaviour
         float duration = 1f; // Duración del movimiento en segundos
         float elapsed = 0f;
 
-        FaunaBehaver faunaBehaver = Mono2.GetComponent<FaunaBehaver>();
+        TutorialFaunaBehaver faunaBehaver = Mono2.GetComponent<TutorialFaunaBehaver>();
 
         // Guardamos la velocidad original para restaurarla al final
         float velocidadOriginal = faunaBehaver.velocity;
@@ -311,7 +311,7 @@ public class Tutorial : MonoBehaviour
         }
 
         // Restauramos la velocidad original
-        faunaBehaver.velocity = velocidadOriginal;
+        faunaBehaver.velocity = 0;
     }
 
     public void Resume()

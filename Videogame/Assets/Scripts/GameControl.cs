@@ -20,8 +20,49 @@ public class BooleanVariable
     }
 }
 
+public class IniciarHerramientas
+{
+    //Lista de valores voleanos de los estados de las herramientas
+    private static readonly List<BooleanVariable> objectStatus = new();
+
+    public delegate void ToolStateChangedEventHandler(string toolName, bool newState);
+    public static event ToolStateChangedEventHandler OnToolStateChanged;
+
+    public static bool GetToolState(string toolName)
+    {
+        BooleanVariable tool = objectStatus.Find(variable => variable.name == toolName);
+        return tool != null && tool.state;
+    }
+
+    public static void UpdateToolState(string toolName, bool newState)
+    {
+        BooleanVariable tool = objectStatus.Find(variable => variable.name == toolName);
+        if (tool != null)
+        {
+            tool.state = newState;
+            OnToolStateChanged?.Invoke(toolName, newState);
+        }
+    }
+
+    public static void Initialize()
+    {
+        objectStatus.Add(new BooleanVariable(false, "Herramienta_Caja"));
+        objectStatus.Add(new BooleanVariable(false, "Herramienta_Red"));
+        objectStatus.Add(new BooleanVariable(false, "Herramienta_Lupa"));
+        objectStatus.Add(new BooleanVariable(false, "Herramienta_Linterna"));
+    }
+}
+
 public class GameControl : MonoBehaviour
 {
+    [SerializeField] public ApiManager apiManager;  // Drag your ApiManager component here in the Inspector
+
+    //Button
+    public GameObject button;
+
+    //Toolbar
+    public ToolbarController toolbarController;
+
     // Animadores para las herramientas, inicialmente no asignados.
     public Animator animatorObjetoCaja, animatorObjetoRed, animatorObjetoLupa, animatorObjetoLinterna;
 
@@ -36,11 +77,40 @@ public class GameControl : MonoBehaviour
 
     private void Awake()
     {
-        GameControlVariables.Initialize();
+        if (apiManager == null)
+        {
+            Debug.Log("ApiManager is not set on GameControl");
+            return;
+        }
+
+        //GameControlVariables.Initialize(apiManager);
+        StartFetchingSpeciesData();
+        
+        
+        IniciarHerramientas.Initialize();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    
+    private void StartFetchingSpeciesData()
+    {
+        StartCoroutine(apiManager.FetchAndPopulateSpeciesData(OnSpeciesDataFetched));
+    }
+
+    private void OnSpeciesDataFetched(bool success)
+    {
+        if (success)
+        {
+            Debug.Log("Datos de especies obtenidos y poblados correctamente.");
+            // Aquí podrías realizar cualquier acción adicional después de obtener y poblar los datos de especies
+        }
+        else
+        {
+            Debug.LogError("Error al obtener y poblar los datos de especies.");
+            // Manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario o intentando nuevamente la solicitud
+        }
+    }
+
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -84,49 +154,59 @@ public class GameControl : MonoBehaviour
     {
         AnimationOfHerramientas();
         //Debug.Log(PuntutacionTotal);
-        if (GameControlVariables.PuntutacionTotal >= GameControlVariables.PuntuacionMaxima && GameControlVariables.DesafioFinal == true)
+        if (GameControlVariables.PuntuacionTotal >= 100000 && GameControlVariables.DesafioFinal == true)
         {
             GameResultScene();
         }
+
+        if (GameControlVariables.PuntuacionTotal >= 20000 && GameControlVariables.Desafio2Finished == true)
+        {
+            toolbarController.EnableToolbarItems();
+        } 
+        if (GameControlVariables.PuntuacionTotal >= 50000 && GameControlVariables.Desafio3Finished == true)
+        {
+            button.SetActive(true);
+        }
+ 
     }
 
     //HACER CLICK A LAS HERRAMIENTAS
     public void UsarHerramientaCaja()
     {
-        GameControlVariables.UpdateToolState("Herramienta_Caja", true);
-        GameControlVariables.UpdateToolState("Herramienta_Red", false);
-        GameControlVariables.UpdateToolState("Herramienta_Lupa", false);
-        GameControlVariables.UpdateToolState("Herramienta_Linterna", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Caja", true);
+        IniciarHerramientas.UpdateToolState("Herramienta_Red", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Lupa", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Linterna", false);
     }
 
     public void UsarHerramientaRed()
     {
-        GameControlVariables.UpdateToolState("Herramienta_Caja", false);
-        GameControlVariables.UpdateToolState("Herramienta_Red", true);
-        GameControlVariables.UpdateToolState("Herramienta_Lupa", false);
-        GameControlVariables.UpdateToolState("Herramienta_Linterna", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Caja", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Red", true);
+        IniciarHerramientas.UpdateToolState("Herramienta_Lupa", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Linterna", false);
     }
 
     public void UsarHerramientaLupa()
     {
-        GameControlVariables.UpdateToolState("Herramienta_Caja", false);
-        GameControlVariables.UpdateToolState("Herramienta_Red", false);
-        GameControlVariables.UpdateToolState("Herramienta_Lupa", true);
-        GameControlVariables.UpdateToolState("Herramienta_Linterna", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Caja", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Red", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Lupa", true);
+        IniciarHerramientas.UpdateToolState("Herramienta_Linterna", false);
     }
 
     public void UsarHerramientaLinterna()
     {
-        GameControlVariables.UpdateToolState("Herramienta_Caja", false);
-        GameControlVariables.UpdateToolState("Herramienta_Red", false);
-        GameControlVariables.UpdateToolState("Herramienta_Lupa", false);
-        GameControlVariables.UpdateToolState("Herramienta_Linterna", true);
+        IniciarHerramientas.UpdateToolState("Herramienta_Caja", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Red", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Lupa", false);
+        IniciarHerramientas.UpdateToolState("Herramienta_Linterna", true);
     }
 
     public void AnimationOfHerramientas()
     {
         // Verifica si el estado de la herramienta caja es verdadero y si el Animator no es null
-        if (GameControlVariables.GetToolState("Herramienta_Caja") == true)
+        if (IniciarHerramientas.GetToolState("Herramienta_Caja") == true)
         {
             if (animatorObjetoCaja != null)
             {
@@ -162,7 +242,7 @@ public class GameControl : MonoBehaviour
                 Debug.LogWarning("Animator de Objeto Linterna es null.");
             }
         }
-        else if (GameControlVariables.GetToolState("Herramienta_Red") == true)
+        else if (IniciarHerramientas.GetToolState("Herramienta_Red") == true)
         {
             if (animatorObjetoRed != null)
             {
@@ -198,7 +278,7 @@ public class GameControl : MonoBehaviour
                 Debug.LogWarning("Animator de Objeto Red es null.");
             }
         }
-        else if (GameControlVariables.GetToolState("Herramienta_Lupa") == true)
+        else if (IniciarHerramientas.GetToolState("Herramienta_Lupa") == true)
         {
             if (animatorObjetoLupa != null)
             {
@@ -234,7 +314,7 @@ public class GameControl : MonoBehaviour
                 Debug.LogWarning("Animator de Objeto Red es null.");
             }
         }
-        else if (GameControlVariables.GetToolState("Herramienta_Linterna") == true)
+        else if (IniciarHerramientas.GetToolState("Herramienta_Linterna") == true)
         {
             if (animatorObjetoLinterna != null)
             {

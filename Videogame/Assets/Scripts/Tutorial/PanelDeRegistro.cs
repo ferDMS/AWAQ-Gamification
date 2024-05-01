@@ -36,6 +36,6 @@ public class PanelDeRegistro : MonoBehaviour
     }
     private void Update()
     {
-        estadoHerramientaCaja = GameControlVariables.GetToolState("Herramienta_Caja");
+        estadoHerramientaCaja = GameControlVariablesTutorial.GetToolState("Herramienta_Caja");
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class SpawnerFlora : MonoBehaviour
 {
     public List<GameObject> objectsToSpawn;
+    public List<int> requiredScores; // Lista de puntuaciones requeridas para cada objeto
+    public ApiManager apiManager;
     public float timeToSpawnMin;
     public float timeToSpawnMax;
     public float eyeLifetime = 2f;
@@ -23,43 +25,39 @@ public class SpawnerFlora : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(timeToSpawnMin, timeToSpawnMax));
 
             // Obtener el valor de experiencia total del GameControllerVariables
-            int experienciaTotal = GameControlVariables.PuntutacionTotal;
+            int totalScore = GameControlVariables.GetPuntuacionTotalInt();
 
-            // Seleccionar el índice del objeto a spawnear basado en la experiencia total
-            int selectedIndex = 0; // Por defecto, el primer objeto de la lista
-            if (experienciaTotal >= 0)
+            // Lista de índices de objetos que pueden ser spawnados
+            List<int> spawnableIndexes = new List<int>();
+
+            // Determinar qué objetos pueden ser spawnados
+            for (int i = 0; i < objectsToSpawn.Count; i++)
             {
-                selectedIndex = 0; // Por ejemplo, el segundo objeto de la lista
-            } else if (experienciaTotal >= 2500)
-            {
-                selectedIndex = 1;
-            } else if (experienciaTotal >= 7500)
-            {
-                selectedIndex = 2;
-            } else if (experienciaTotal >= 20000)
-            {
-                selectedIndex = 3;
-            } else if (experienciaTotal >= 35000)
-            {
-                selectedIndex = 4;
+                if (totalScore >= requiredScores[i])
+                {
+                    spawnableIndexes.Add(i);
+                }
             }
-            // Agregar más condiciones según sea necesario para seleccionar los objetos de la lista basados en la experiencia
 
-            // Asegurar que el índice seleccionado esté dentro del rango válido
-            selectedIndex = Mathf.Clamp(selectedIndex, 0, objectsToSpawn.Count - 1);
+            if (spawnableIndexes.Count > 0)
+            {
+                // Seleccionar aleatoriamente un índice de objeto spawnable
+                int randomIndex = Random.Range(0, spawnableIndexes.Count);
+                int selectedObjectIndex = spawnableIndexes[randomIndex];
 
-            // Seleccionar el prefab a spawnear basado en el índice seleccionado
-            GameObject prefabToSpawn = objectsToSpawn[selectedIndex];
+                // Seleccionar el prefab a spawnear basado en el índice seleccionado
+                GameObject prefabToSpawn = objectsToSpawn[selectedObjectIndex];
 
-            // Generar posiciones aleatorias dentro del rango
-            float randomY = Random.Range(minHeight, maxHeight); // Coordenada Y aleatoria dentro del rango
-            float randomX = Random.Range(minWidth, maxWidth); // Coordenada X aleatoria dentro del rango
+                // Generar posiciones aleatorias dentro del rango
+                float randomY = Random.Range(minHeight, maxHeight); // Coordenada Y aleatoria dentro del rango
+                float randomX = Random.Range(minWidth, maxWidth); // Coordenada X aleatoria dentro del rango
 
-            // Spawnear el objeto seleccionado en la posición aleatoria
-            GameObject newObject = Instantiate(prefabToSpawn, new Vector3(randomX, randomY, 0), Quaternion.identity);
+                // Spawnear el objeto seleccionado en la posición aleatoria
+                GameObject newObject = Instantiate(prefabToSpawn, new Vector3(randomX, randomY, 0), Quaternion.identity);
 
-            // Destruir el objeto después de un tiempo determinado
-            Destroy(newObject, eyeLifetime);
+                // Destruir el objeto después de un tiempo determinado
+                Destroy(newObject, eyeLifetime);
+            }
         }
     }
 
@@ -68,3 +66,4 @@ public class SpawnerFlora : MonoBehaviour
         StartCoroutine(SpawnerTimer());
     }
 }
+

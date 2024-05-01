@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class FaunaBehaver : MonoBehaviour
 {
+    public ApiManager apiManager;
     // Variables para guardar los estados
     private bool estadoCaja;
     private bool estadoRed;
@@ -21,42 +23,16 @@ public class FaunaBehaver : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>(); // Obtener el componente SpriteRenderer
-        /*
-        GameControl.OnToolStateChanged += UpdateToolState;
-        UpdateToolState("Herramienta_Caja", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Caja").state);
-        UpdateToolState("Herramienta_Red", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Red").state);
-        UpdateToolState("Herramienta_Lupa", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Lupa").state);
-        UpdateToolState("Herramienta_Linterna", GameControl.instance.objectStatus.Find(variable => variable.name == "Herramienta_Linterna").state);
-        */
+        apiManager = GameObject.Find("APIManager").GetComponent<ApiManager>();
     }
 
-    /*
-    private void UpdateToolState(string toolName, bool newState)
-    {
-        switch (toolName)
-        {
-            case "Herramienta_Caja":
-                estadoHerramientaCaja = newState;
-                break;
-            case "Herramienta_Red":
-                estadoHerramientaRed = newState;
-                break;
-            case "Herramienta_Lupa":
-                estadoHerramientaLupa = newState;
-                break;
-            case "Herramienta_Linterna":
-                estadoHerramientaLinterna = newState;
-                break;
-        }
-    }
-    */
     private void Update()
     {
         // Acceder al estado de la herramienta "Herramienta_Caja"
-        estadoCaja = GameControlVariables.GetToolState("Herramienta_Caja");
-        estadoRed = GameControlVariables.GetToolState("Herramienta_Red");
-        estadoLupa = GameControlVariables.GetToolState("Herramienta_Lupa");
-        estadoLinterna = GameControlVariables.GetToolState("Herramienta_Linterna");
+        estadoCaja = IniciarHerramientas.GetToolState("Herramienta_Caja");
+        estadoRed = IniciarHerramientas.GetToolState("Herramienta_Red");
+        estadoLupa = IniciarHerramientas.GetToolState("Herramienta_Lupa");
+        estadoLinterna = IniciarHerramientas.GetToolState("Herramienta_Linterna");
 
         // Cambiar la direcci�n de movimiento si flipX es true
         if (spriteRenderer != null && spriteRenderer.flipX)
@@ -75,84 +51,212 @@ public class FaunaBehaver : MonoBehaviour
         }
     }
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoRed && this.gameObject.CompareTag("Buitre"))
-        {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.Bruite;
-            GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["Buitre"] += 1;
+        { 
+           
+            Debug.Log(apiManager.GetEspecieXP("Cóndor Andino"));
+            GameControlVariables.AddXP((int)apiManager.GetEspecieXP("Cóndor Andino"));
 
+            StartCoroutine(apiManager.PostXpEvent(PlayerPrefs.GetInt("UserID"), apiManager.GetFuenteID("Cóndor Andino"), DateTime.Now, true, (isSuccess) => { // Define the callback
+                if (isSuccess)
+                {
+                    // Handle success, if needed
+                    Debug.Log("XP event posted successfully.");
+                }
+                else
+                {
+                    // Handle failure, if needed
+                    Debug.LogError("Failed to post XP event.");
+                }
+            }));
+            GameObject.Destroy(this.gameObject);
         }
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoRed && this.gameObject.CompareTag("Tucan"))
         {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.Tucan;
+            Debug.Log(apiManager.GetEspecieXP("Tucán Pechiblanco"));
+            GameControlVariables.AddXP((int)apiManager.GetEspecieXP("Tucán Pechiblanco"));
+
+
+            StartCoroutine(apiManager.PostXpEvent(PlayerPrefs.GetInt("UserID"), apiManager.GetFuenteID("Tucán Pechiblanco"), DateTime.Now, true, (isSuccess) => { // Define the callback
+                if (isSuccess)
+                {
+                    // Handle success, if needed
+                    Debug.Log("XP event posted successfully.");
+                }
+                else
+                {
+                    // Handle failure, if needed
+                    Debug.LogError("Failed to post XP event.");
+                }
+            }));
             GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["Tucan"] += 1;
 
         }
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoCaja && this.gameObject.CompareTag("Lagarto"))
         {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.Lagarto;
+
+            Debug.Log(apiManager.GetEspecieXP("Lagarto Punteado"));
+            GameControlVariables.AddXP((int)apiManager.GetEspecieXP("Lagarto Punteado"));
+
+            StartCoroutine(apiManager.PostXpEvent(PlayerPrefs.GetInt("UserID"), apiManager.GetFuenteID("Lagarto Punteado"), DateTime.Now, true, (isSuccess) => { // Define the callback
+                if (isSuccess)
+                {
+                    // Handle success, if needed
+                    Debug.Log("XP event posted successfully.");
+                }
+                else
+                {
+                    // Handle failure, if needed
+                    Debug.LogError("Failed to post XP event.");
+                }
+            }));
             GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["Lagarto"] += 1;
 
         }
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoCaja && this.gameObject.CompareTag("Oso"))
         {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.Oso;
-            GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["Oso"] += 1;
+            Debug.Log(apiManager.GetEspecieXP("Oso de Anteojos"));
+            GameControlVariables.AddXP((int)apiManager.GetEspecieXP("Oso de Anteojos"));
 
+            StartCoroutine(apiManager.PostXpEvent(PlayerPrefs.GetInt("UserID"), apiManager.GetFuenteID("Oso de Anteojos"), DateTime.Now, true, (isSuccess) => { // Define the callback
+                if (isSuccess)
+                {
+                    // Handle success, if needed
+                    Debug.Log("XP event posted successfully.");
+                }
+                else
+                {
+                    // Handle failure, if needed
+                    Debug.LogError("Failed to post XP event.");
+                }
+            }));
+            GameObject.Destroy(this.gameObject);
         }
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoCaja && this.gameObject.CompareTag("Mono"))
         {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.Mono;
-            GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["Mono"] += 1;
 
+            Debug.Log(apiManager.GetEspecieXP("Tití Ornamentado"));
+            GameControlVariables.AddXP((int)apiManager.GetEspecieXP("Tití Ornamentado"));
+
+
+            StartCoroutine(apiManager.PostXpEvent(PlayerPrefs.GetInt("UserID"), apiManager.GetFuenteID("Tití Ornamentado"), DateTime.Now, true, (isSuccess) => { // Define the callback
+                if (isSuccess)
+                {
+                    // Handle success, if needed
+                    Debug.Log("XP event posted successfully.");
+                }
+                else
+                {
+                    // Handle failure, if needed
+                    Debug.LogError("Failed to post XP event.");
+                }
+            }));
+            GameObject.Destroy(this.gameObject);
         }
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoLupa && this.gameObject.CompareTag("Ave_del_Paraiso"))
         {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.Ave_del_Paraiso;
-            GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["Ave_del_Paraiso"] += 1;
 
+
+            Debug.Log(apiManager.GetEspecieXP("Ave del Paraíso"));
+            GameControlVariables.AddXP((int)apiManager.GetEspecieXP("Ave del Paraíso"));
+
+
+            StartCoroutine(apiManager.PostXpEvent(PlayerPrefs.GetInt("UserID"), apiManager.GetFuenteID("Ave del Paraíso"), DateTime.Now, true, (isSuccess) => { // Define the callback
+                if (isSuccess)
+                {
+                    // Handle success, if needed
+                    Debug.Log("XP event posted successfully.");
+                }
+                else
+                {
+                    // Handle failure, if needed
+                    Debug.LogError("Failed to post XP event.");
+                }
+            }));
+            GameObject.Destroy(this.gameObject);
         }
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoLupa && this.gameObject.CompareTag("Orquidea"))
         {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.Orquidea;
-            GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["Orquidea"] += 1;
 
+            Debug.Log(apiManager.GetEspecieXP("Orquídea flor de Mayo"));
+            GameControlVariables.AddXP((int)apiManager.GetEspecieXP("Orquídea flor de Mayo"));
+
+            StartCoroutine(apiManager.PostXpEvent(PlayerPrefs.GetInt("UserID"), apiManager.GetFuenteID("Orquídea flor de Mayo"), DateTime.Now, true, (isSuccess) => { // Define the callback
+                if (isSuccess)
+                {
+                    // Handle success, if needed
+                    Debug.Log("XP event posted successfully.");
+                }
+                else
+                {
+                    // Handle failure, if needed
+                    Debug.LogError("Failed to post XP event.");
+                }
+            }));
+            GameObject.Destroy(this.gameObject);
         }
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoLupa && this.gameObject.CompareTag("Palma"))
         {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.Palma;
-            GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["Palma"] += 1;
+            Debug.Log(apiManager.GetEspecieXP("Palma de Cera del Quindío"));
+            GameControlVariables.AddXP((int)apiManager.GetEspecieXP("Palma de Cera del Quindío"));
 
+            StartCoroutine(apiManager.PostXpEvent(PlayerPrefs.GetInt("UserID"), apiManager.GetFuenteID("Palma de Cera del Quindío"), DateTime.Now, true, (isSuccess) => { // Define the callback
+                if (isSuccess)
+                {
+                    // Handle success, if needed
+                    Debug.Log("XP event posted successfully.");
+                }
+                else
+                {
+                    // Handle failure, if needed
+                    Debug.LogError("Failed to post XP event.");
+                }
+            }));
+            GameObject.Destroy(this.gameObject);
         }
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoLupa && this.gameObject.CompareTag("PALMAchica"))
         {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.PALMAchica;
-            GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["PALMAchica"] += 1;
+            Debug.Log(apiManager.GetEspecieXP("Frailejones"));
+            GameControlVariables.AddXP((int)apiManager.GetEspecieXP("Frailejones"));
 
+            StartCoroutine(apiManager.PostXpEvent(PlayerPrefs.GetInt("UserID"), apiManager.GetFuenteID("Frailejones"), DateTime.Now, true, (isSuccess) => { // Define the callback
+                if (isSuccess)
+                {
+                    // Handle success, if needed
+                    Debug.Log("XP event posted successfully.");
+                }
+                else
+                {
+                    // Handle failure, if needed
+                    Debug.LogError("Failed to post XP event.");
+                }
+            }));
+            GameObject.Destroy(this.gameObject);
         }
+
         if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoLupa && this.gameObject.CompareTag("arbolCacao"))
         {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.arbolCacao;
-            GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["arbolCacao"] += 1;
+            Debug.Log(apiManager.GetEspecieXP("Arbol de Cacao"));
+            GameControlVariables.AddXP((int)apiManager.GetEspecieXP("Arbol de Cacao"));
 
-        }
-        if (collision.gameObject.CompareTag("ObjectColliderForTouch") && estadoLupa && this.gameObject.CompareTag("Arbusto"))
-        {
-            GameControlVariables.PuntutacionTotal += GameControlVariables.Arbusto;
-            GameObject.Destroy(this.gameObject);
-            GameControlVariables.ConteoAnimales["Arbusto"] += 1;
 
+            StartCoroutine(apiManager.PostXpEvent(PlayerPrefs.GetInt("UserID"), apiManager.GetFuenteID("Arbol de Cacao"), DateTime.Now, true, (isSuccess) => { // Define the callback
+                if (isSuccess)
+                {
+                    // Handle success, if needed
+                    Debug.Log("XP event posted successfully.");
+                }
+                else
+                {
+                    // Handle failure, if needed
+                    Debug.LogError("Failed to post XP event.");
+                }
+            }));
+            GameObject.Destroy(this.gameObject);
         }
+    
     }
 }

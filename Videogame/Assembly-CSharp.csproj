@@ -66,18 +66,28 @@
     <Compile Include="Assets\Scripts\RegistroController.cs" />
     <Compile Include="Assets\Scripts\SpawnerFlora.cs" />
     <Compile Include="Assets\Scripts\GameControl.cs" />
+    <Compile Include="Assets\Scripts\APIScripts\EspeciesModel.cs" />
+    <Compile Include="Assets\Scripts\APIScripts\Herramienta.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
+    <Compile Include="Assets\Scripts\APIScripts\XPEvent.cs" />
     <Compile Include="Assets\Scripts\ToolbarController.cs" />
     <Compile Include="Assets\Scripts\TouchManager.cs" />
+    <Compile Include="Assets\Scripts\APIScripts\APIManager.cs" />
     <Compile Include="Assets\Scripts\ChangeScene.cs" />
     <Compile Include="Assets\Scripts\RegistroDropdownControl.cs" />
     <Compile Include="Assets\Scripts\Tutorial\PanelDeRegistro.cs" />
     <Compile Include="Assets\Scripts\DontDestroy.cs" />
-    <Compile Include="Assets\Scripts\ClickAnimal.cs" />
+    <Compile Include="Assets\Scripts\APIScripts\Captura.cs" />
     <Compile Include="Assets\Scripts\MoveCamara.cs" />
+    <Compile Include="Assets\Scripts\APIScripts\LoginManager.cs" />
+    <Compile Include="Assets\Scripts\InactivityDetector.cs" />
+    <Compile Include="Assets\Scripts\Tutorial\GameControlTutorial.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\DesafioController.cs" />
     <Compile Include="Assets\Scripts\MostrarConteoRegistros.cs" />
+    <Compile Include="Assets\Scripts\APIScripts\DesafioModel.cs" />
+    <Compile Include="Assets\Scripts\Tutorial\TutorialFaunaBehaver.cs" />
+    <Compile Include="Assets\Scripts\ForceAcceptAll.cs" />
     <Compile Include="Assets\Scripts\DetectorDeClick.cs" />
     <Compile Include="Assets\Scripts\Experiencia.cs" />
   </ItemGroup>
@@ -408,6 +418,10 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
