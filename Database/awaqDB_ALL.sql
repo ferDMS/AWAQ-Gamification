@@ -14,6 +14,7 @@ DELIMITER //
 DROP FUNCTION IF EXISTS `TimezoneNow`//
 CREATE FUNCTION `TimezoneNow` ()
 RETURNS DATETIME
+DETERMINISTIC
 BEGIN
 	DECLARE timezone VARCHAR(30);
 	SET timezone = 'America/Monterrey';
@@ -187,7 +188,7 @@ CREATE TABLE IF NOT EXISTS progreso(
 	progreso_id INT NOT NULL AUTO_INCREMENT,
 	user_id INT NOT NULL,
 	fuente_id INT NOT NULL,
-	fecha datetime NOT NULL,
+	fecha datetime,
 	isSuccessful TINYINT(1) DEFAULT 1,
 	PRIMARY KEY (progreso_id),
 	KEY (fecha),
@@ -231,6 +232,7 @@ END//
 DROP FUNCTION IF EXISTS `GetTimeAwayByUserID`//
 CREATE FUNCTION `GetTimeAwayByUserID`(user_id_in INT)
 RETURNS INT
+DETERMINISTIC
 BEGIN
     DECLARE seconds_away INT;
 
