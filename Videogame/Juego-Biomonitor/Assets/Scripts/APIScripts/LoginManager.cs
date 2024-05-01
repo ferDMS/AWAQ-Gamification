@@ -13,7 +13,7 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private InputField emailInputField;
     [SerializeField] private InputField passwordInputField;
     [SerializeField] private Text responseText; // componente UI para hacer display de la respuesta del login
-    private const string baseUrl = "https://10.22.238.66:7044/QSB/login";
+    private const string baseUrl = "https://localhost:7044/QSB/login";
 
 
     public void AttemptLogin()

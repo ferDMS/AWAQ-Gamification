@@ -10,7 +10,7 @@ using System.Text;
 
 public class ApiManager : MonoBehaviour
 {
-    private const string baseUrl = "https://10.22.238.66:7044/QSBGame/";
+    private const string baseUrl = "https://localhost:7044/QSBGame/";
     public bool IsDataReady = false;
 
     //private static ApiManager apiManager;
