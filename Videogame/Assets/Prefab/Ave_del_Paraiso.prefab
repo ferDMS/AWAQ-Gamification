@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5140707688425501995}
   - component: {fileID: 2504390010188077798}
   - component: {fileID: 8418549069033391002}
+  - component: {fileID: 8804628248775702564}
+  - component: {fileID: -5258409741459442761}
   m_Layer: 0
   m_Name: Ave_del_Paraiso
   m_TagString: Ave_del_Paraiso
@@ -148,3 +150,31 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 9.6
+--- !u!114 &8804628248775702564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544848913391666619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e34e1657c61b043a11573c47cd9587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiManager: {fileID: 0}
+  velocity: 0
+  limitePositivo: 999
+  limiteNegativo: -999
+--- !u!114 &-5258409741459442761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544848913391666619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9066f402a64eba47974e8509810a3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

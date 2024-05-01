@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8489974953863050006}
   - component: {fileID: 3696995947793651535}
   - component: {fileID: 4397459672941592023}
+  - component: {fileID: 1773502597414863158}
+  - component: {fileID: 6060398220904670388}
   m_Layer: 0
   m_Name: PALMAchica
   m_TagString: PALMAchica
@@ -102,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: fc9fab1790910432fa555a5510122dda, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 757f945992181604791ee505595d6027, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -149,7 +151,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 19.2, y: 10.8}
+    oldSize: {x: 10.6, y: 10.6}
     newSize: {x: 19.2, y: 10.8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -158,3 +160,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7, y: 10.8}
   m_EdgeRadius: 0
+--- !u!114 &1773502597414863158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875371081927821016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e34e1657c61b043a11573c47cd9587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiManager: {fileID: 0}
+  velocity: 0
+  limitePositivo: 999
+  limiteNegativo: -999
+--- !u!114 &6060398220904670388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875371081927821016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9066f402a64eba47974e8509810a3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDataReady: 0

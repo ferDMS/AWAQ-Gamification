@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1305125511112390383}
   - component: {fileID: 5199135978506724669}
   - component: {fileID: 2798436202769842397}
+  - component: {fileID: -8157735540049138535}
   m_Layer: 0
   m_Name: Arbusto
   m_TagString: Arbusto
@@ -84,7 +85,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &1305125511112390383
@@ -161,10 +162,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e34e1657c61b043a11573c47cd9587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  estadoHerramientaCaja: 0
-  estadoHerramientaRed: 0
-  estadoHerramientaLupa: 0
-  estadoHerramientaLinterna: 0
+  apiManager: {fileID: 0}
   velocity: 0
-  limitePositivo: 40
-  limiteNegativo: -25
+  limitePositivo: 999
+  limiteNegativo: -999
+--- !u!114 &-8157735540049138535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4767046823959137583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e34e1657c61b043a11573c47cd9587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiManager: {fileID: 0}
+  velocity: 0
+  limitePositivo: 0
+  limiteNegativo: 0

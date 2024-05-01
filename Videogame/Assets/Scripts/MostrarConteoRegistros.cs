@@ -4,48 +4,56 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MostrarConteoRegistros : MonoBehaviour
-{
-    //int ConteoBuitre = GameControlVariables.ConteoAnimales["Buitre"];
-    int ConteoOso = GameControlVariables.ConteoAnimales["Oso"];
-    int ConteoLagarto = GameControlVariables.ConteoAnimales["Lagarto"];
-    int ConteoTucan = GameControlVariables.ConteoAnimales["Tucan"];
-    int ConteoMono = GameControlVariables.ConteoAnimales["Mono"];
-    //int ConteoAve_del_Paraiso = GameControlVariables.ConteoAnimales["Ave_del_Paraio"];
-    int ConteoOrquidea = GameControlVariables.ConteoAnimales["Orquidra"];
-    int ConteoPalma = GameControlVariables.ConteoAnimales["Palma"];
-    //int ConteoPALMAchica = GameControlVariables.ConteoAnimales["PALMAchica"];
-    int ConteoArbolCacao = GameControlVariables.ConteoAnimales["arbolCacao"];
-    int ConteoArbusto = GameControlVariables.ConteoAnimales["Arbusto"];
+{   
+    public ApiManager apiManager;
+    //int ConteoBuitre = GameControlVariables.ConteoAnimales["Buitre"]; //ejemplo sin campiar lo de api manager
 
-    //public Text TextoConteoBuitre;
-    public Text TextoConteoOso;
-    public Text TextoConteoLagarto;
+
     public Text TextoConteoTucan;
+    public Text TextoConteoOso;
     public Text TextoConteoMono;
+    public Text TextoConteoLagarto;
+    public Text TextoConteoBuitre;
+
+
+
+    public Text TextoConteoAveParaiso;
     public Text TextoConteoOrquidea;
     public Text TextoConteoPalma;
-    //public Text TextoConteoPALMAchica;
     public Text TextoConteoArbolCacao;
-    public Text TextoConteoArbusto;
+    public Text TextoConteoFrailejones;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-
+        apiManager = GameObject.Find("APIManager").GetComponent<ApiManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //TextoConteoBuitre.text = "X" + ConteoBuitre.ToString();
-        TextoConteoOso.text = "X" + ConteoOso.ToString();
-        TextoConteoLagarto.text = "X" + ConteoLagarto.ToString();
-        TextoConteoTucan.text = "X" + ConteoTucan.ToString();
-        TextoConteoMono.text = "X" + ConteoMono.ToString();
-        TextoConteoPalma.text = "X" + ConteoPalma.ToString();
-       // TextoConteoPALMAchica.text = "X" + ConteoBuitre.ToString();
-        TextoConteoArbolCacao.text = "X" + ConteoArbolCacao.ToString();
-        TextoConteoArbusto.text = "X" + ConteoArbusto.ToString();
-        TextoConteoOrquidea.text = "X" + ConteoOrquidea.ToString();
+        if (apiManager.IsDataReady) // Check if data is ready
+        {
+            UpdateDisplay();
+        }
     }
+
+    void UpdateDisplay()
+    {
+        TextoConteoTucan.text = "X" + apiManager.GetAnimalCount("Tucán Pechiblanco").ToString();
+        TextoConteoOso.text = "X" + apiManager.GetAnimalCount("Oso de Anteojos").ToString();
+        TextoConteoMono.text = "X" + apiManager.GetAnimalCount("Tití Ornamentado").ToString();
+        TextoConteoLagarto.text = "X" + apiManager.GetAnimalCount("Lagarto Punteado").ToString();
+        TextoConteoBuitre.text = "X" + apiManager.GetAnimalCount("Cóndor Andino").ToString();
+        TextoConteoAveParaiso.text = "X" + apiManager.GetAnimalCount("Ave del Paraíso").ToString();
+        TextoConteoOrquidea.text = "X" + apiManager.GetAnimalCount("Orquídea flor de Mayo").ToString();
+        TextoConteoPalma.text = "X" + apiManager.GetAnimalCount("Palma de Cera del Quindío").ToString();
+        TextoConteoArbolCacao.text = "X" + apiManager.GetAnimalCount("Arbol de Cacao").ToString();
+        TextoConteoFrailejones.text = "X" + apiManager.GetAnimalCount("Frailejones").ToString();    
+    }
+
 }
+
+

@@ -22,7 +22,7 @@ public class RegistroController : MonoBehaviour
     public Sprite osoSprite;
     public Sprite buitreSprite;
     public Sprite lagartoSprite;
-
+    
     public Sprite aveParaisoSprite;
     public Sprite mayoSprite;
     public Sprite mermeladaSprite;
@@ -32,7 +32,7 @@ public class RegistroController : MonoBehaviour
 
 
 
-    String[] answers = new String[5];
+    String[] answers = new String[4];
 
     public void Start()
     {
@@ -45,116 +45,116 @@ public class RegistroController : MonoBehaviour
         switch (panelRegistro.tag)
         {
             case "Tucan":
-                answers = new string[5] { "Tucán Pechiblanco", "20-30 cm", "Ave", "Red de Niebla", "Negro" };
+                answers = new string[5] { "Tucán Pechiblanco", "20 - 30cm", "Ave", "Anillo de registro", "Negro" };
                 animalImagen.sprite = tucanSprite;
 
                 SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Oso Polar", "Titi Ornamentado", "Colibrí" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10-20 cm", "5-10 cm", "30-40 cm" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10- 20cm", "5 - 10cm", "30 - 40cm" });
                 SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Mamífero", "Reptil", "Insecto"});
                 SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Cámara", "Libreta", "Pala" });
                 SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Rojo", "Morado", "Azul" });
                 break;
 
             case "Mono":
-                answers = new string[5] { "Tití Ornamentado", "50-60 cm", "Mamifero", "Cámara", "Rojo" };
+                answers = new string[5] { "Tití Ornamentado", "50 - 60cm", "Mamifero", "Cámara", "Rojo" };
                 animalImagen.sprite = monoSprite;
 
                 SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Oso Polar", "Tucán Pechiblanco", "Colibrí" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10-20 cm", "5-10 cm", "30-40 cm" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10 - 20cm", "5 - 10cm", "30 - 40cm" });
                 SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Ave", "Reptil", "Insecto" });
                 SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Linterna", "Libreta", "Pala" });
                 SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Gris", "Rosa", "Negro" });
                 break;
             case "Oso":
-                answers = new string[5] { "Oso de Anteojos", "1.5 m", "Mamifero", "Cámara", "Negro" };
+                answers = new string[5] { "Oso de Anteojos", "1.5m", "Mamífero", "Cámara", "Negro" };
                 animalImagen.sprite = osoSprite;
 
                 SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Oso Polar", "Lagarto", "Tití Ornamentado" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10-20 cm", "5-10 m", "3 m" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10 - 20cm", "5 - 10m", "3m" });
                 SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Ave", "Reptil", "Insecto" });
                 SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Linterna", "Libreta", "Pala" });
                 SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Gris", "Azul", "Rojo" });
                 break;
             case "Buitre":
-                answers = new string[5] { "Cóndor Andino", "1 m", "Ave", "Red de Niebla", "Negro" };
+                answers = new string[5] { "Cóndor Andino", "1m", "Ave", "Anillo de registro", "Negro" };
                 animalImagen.sprite = buitreSprite;
 
                 SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Oso Polar", "Lagarto", "Tití Ornamentado" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10-20 cm", "5-10 m", "3 m" });
-                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Ave", "Reptil", "Insecto" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10 - 20cm", "5 - 10m", "3m" });
+                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Mamifero", "Reptil", "Insecto" });
                 SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Dardos", "Caña de Pescar", "Pala" });
                 SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Amarillo", "Azul", "Rojo" });
                 break;
             case "Lagarto":
-                answers = new string[5] { "Lagarto Punteado", "20-30 cm", "Reptil", "Cámara", "Amarillo" };
-                animalImagen.sprite = lagartoSprite;
+                answers = new string[5] { "Lagarto Punteado", "20 - 30 cm", "Reptil", "Cámara", "Amarillo" };
+                animalImagen.sprite = lagartoSprite; 
 
                 SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Salamandra", "Cóndor Andino", "Oso Ornamentado" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10-20 cm", "5-10 cm", "3 m" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10 - 20cm", "5 - 10m", "3m" });
                 SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Ave", "Planta", "Insecto" });
                 SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Linterna", "Libreta", "Pala" });
                 SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Gris", "Azul", "Rojo" });
                 break;
             case "Ave_del_Paraiso":
-                answers = new string[5] { "Ave del Paraiso", "20-30 cm", "Planta", "Lupa", "Naranja" };
+                answers = new string[5] { "Ave del Paraiso", "20 - 30cm", "Planta", "Lupa", "Naranja" };
                 animalImagen.sprite = aveParaisoSprite;
 
-                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Nombre Planta", "Nombre Planta", "Nombre Planta" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "Tamaño Planta", "Tamaño Planta", "Tamaño Planta" });
-                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Tipo Planta", "Planta", "Planta" });
-                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Herramienta", "Herramienta", "Herramienta" });
-                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Color", "Color", "Color" });
+                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Orquídea flor de Mayo", "Palma de Cera del Quindío", "Arbusto de la mermelada" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "5 - 10cm", "10m", "1m" });
+                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Árbol", "Pasto", "Palma" });
+                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Linterna", "Pala", "Libreta" });
+                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Blanco", "Amarillo", "Negro" });
                 break;
             case "Orquidea":
-                answers = new string[5] { "Orquidea Flor de Mayo", "5-10 cm", "Planta", "Lupa", "Morado" };
+                answers = new string[5] { "Orquidea Flor de Mayo", "5 - 10cm", "Flor", "Lupa", "Morado" };
                 animalImagen.sprite = mayoSprite;
 
-                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Nombre Planta", "Nombre Planta", "Nombre Planta" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "Tamaño Planta", "Tamaño Planta", "Tamaño Planta" });
-                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Tipo Planta", "Planta", "Planta" });
-                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Herramienta", "Herramienta", "Herramienta" });
-                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Color", "Color", "Color" });
+                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Ave del Paraíso", "Frailejones", "Árbol de Cacao" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "20 - 30cm", "1m", "4m" });
+                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Palma", "Arbusto", "Árbol" });
+                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Dardos", "Caña de Pescar", "Linterna" });
+                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Gris", "Café", "Rojo" });
                 break;
             case "Palma":
-                answers = new string[5] { "Palma de Cera del Quindío", "10 m", "Planta", "Lupa", "Verde" };
+                answers = new string[5] { "Palma de Cera del Quindío", "10m", "Palma", "Lupa", "Verde" };
                 animalImagen.sprite = palmaSprite;
 
-                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Nombre Planta", "Nombre Planta", "Nombre Planta" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "Tamaño Planta", "Tamaño Planta", "Tamaño Planta" });
-                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Tipo Planta", "Planta", "Planta" });
-                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Herramienta", "Herramienta", "Herramienta" });
-                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Color", "Color", "Color" });
+                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Árbol de Cacao", "Arbusto de la mermelada", "Orquídeas flor de Mayo" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "1m", "5 - 10cm", "2m" });
+                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Pasto", "Arbusto", "Flor" });
+                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Cámara", "Red de Niebla", "Pala" });
+                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Azul", "Amarillo", "Naranja" });
                 break;
             case "PALMAchica":
-                answers = new string[5] { "Frailejones", "1 m", "Planta", "Lupa", "Verde" };
+                answers = new string[5] { "Frailejones", "1 m", "Palma", "Lupa", "Verde" };
                 animalImagen.sprite = frailejonSprite;
 
-                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Nombre Planta", "Nombre Planta", "Nombre Planta" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "Tamaño Planta", "Tamaño Planta", "Tamaño Planta" });
-                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Tipo Planta", "Planta", "Planta" });
-                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Herramienta", "Herramienta", "Herramienta" });
-                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Color", "Color", "Color" });
+                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Ave del Paraíso", "Árbol de Cacao", "Palma de Cera" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "10m", "3 - 6cm", "20 - 30cm" });
+                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Pasto", "Árbol", "Flor" });
+                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Cámara", "Red de Niebla", "Pala" });
+                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Amarillo", "Azul", "Rojo" });
                 break;
             case "arbolCacao":
-                answers = new string[5] { "Árbol de Cacao", "4 m", "Planta", "Lupa", "Verde" };
+                answers = new string[5] { "Árbol de Cacao", "4m", "Árbol", "Lupa", "Verde" };
                 animalImagen.sprite = cacaoSprite;
 
-                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Nombre Planta", "Nombre Planta", "Nombre Planta" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "Tamaño Planta", "Tamaño Planta", "Tamaño Planta" });
-                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Tipo Planta", "Planta", "Planta" });
-                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Herramienta", "Herramienta", "Herramienta" });
-                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Color", "Color", "Color" });
+                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Palma de Cera", "Arbusto de la Mermelada", "Orquídeas flor de Mayo" });
+                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "1m", "10m", "5 - 10cm" });
+                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Palma", "Flor", "Arbusto" });
+                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Linterna", "Libreta", "Pala" });
+                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Morado", "Amarillo", "Rosa" });
                 break;
-            case "Arbusto":
-                answers = new string[5] { "Arbusto de la Mermelada", "2 m", "Planta", "Lupa", "Naranja" };
-                animalImagen.sprite = mermeladaSprite;
+            //case "Arbusto":
+            //    answers = new string[5] { "Arbusto de la Mermelada", "2m", "Planta", "Lupa", "Naranja" };
+            //    animalImagen.sprite = mermeladaSprite;
 
-                SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Nombre Planta", "Nombre Planta", "Nombre Planta" });
-                SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "Tamaño Planta", "Tamaño Planta", "Tamaño Planta" });
-                SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Tipo Planta", "Planta", "Planta" });
-                SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Herramienta", "Herramienta", "Herramienta" });
-                SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Color", "Color", "Color" });
-                break;
+            //    SetDropdownValues(NombreDropdown, new string[4] { answers[0], "Ave del Paraíso", "Frailejones", "Árbol de Cacao" });
+            //    SetDropdownValues(TamanoDropdown, new string[4] { answers[1], "4m", "15 - 20cm", "2m" });
+            //    SetDropdownValues(TipoDropdown, new string[4] { answers[2], "Palma", "Árbol", "Flor" });
+            //    SetDropdownValues(ConteoDropdown, new string[4] { answers[3], "Cámara", "Red de niebla", "Caña de Pescar" });
+            //    SetDropdownValues(ColorDropdown, new string[4] { answers[4], "Gris", "Azul", "Rojo" });
+            //    break;
         }
     }
 

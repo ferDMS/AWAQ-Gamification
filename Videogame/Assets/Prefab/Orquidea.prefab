@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8135185356323219372}
   - component: {fileID: 1433904976561689120}
   - component: {fileID: 9149862825077499958}
+  - component: {fileID: 119001254124654718}
+  - component: {fileID: 4829731983214407366}
   m_Layer: 0
   m_Name: Orquidea
   m_TagString: Orquidea
@@ -148,3 +150,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &119001254124654718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5725504980638133398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e34e1657c61b043a11573c47cd9587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiManager: {fileID: 0}
+  velocity: 0
+  limitePositivo: 999
+  limiteNegativo: -999
+--- !u!114 &4829731983214407366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5725504980638133398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9066f402a64eba47974e8509810a3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
