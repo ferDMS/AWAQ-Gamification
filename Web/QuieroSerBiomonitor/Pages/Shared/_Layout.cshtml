@@ -31,6 +31,9 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="https://www.somosawaq.org" target="_blank">AWAQ Estaciones Biológicas</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-page="/ListaEspecies">Lista de Especies</a>
+                </li>
 
                 <!-- Aparece boton de créditos solo si no está loggeado -->
                 @if (Context.Session.GetString("UserRole") == null)
@@ -49,9 +52,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-page="/Reg">Registrar Usuario</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-page="/ListaEspecies">Lista de Especies</a>
-                    </li>
+
                 }
                 @if (Context.Session.GetString("UserRole") == "User")
                 {
